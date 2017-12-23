@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.license = 'Proprietary'
   s.homepage = 'https://www.channelengine.com'
   s.description = 'ChannelEngine API Client for swift4'
+  s.summary = 'ChannelEngine API Client for swift4'
   s.source_files = 'ChannelEngineApiClient/Classes/**/*.swift'
   s.dependency 'Alamofire', '~> 4.5.0'
 end
