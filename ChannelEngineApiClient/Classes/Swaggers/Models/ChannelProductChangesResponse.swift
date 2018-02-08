@@ -9,40 +9,19 @@ import Foundation
 
 
 
-open class ChannelProductChangesResponse: Codable {
+public struct ChannelProductChangesResponse: Codable {
 
     public var toBeCreated: [ChannelProductResponse]?
     public var toBeUpdated: [ChannelProductResponse]?
     public var toBeRemoved: [String]?
 
 
-    
-    public init(toBeCreated: [ChannelProductResponse]?, toBeUpdated: [ChannelProductResponse]?, toBeRemoved: [String]?) {
-        self.toBeCreated = toBeCreated
-        self.toBeUpdated = toBeUpdated
-        self.toBeRemoved = toBeRemoved
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(toBeCreated, forKey: "ToBeCreated")
-        try container.encodeIfPresent(toBeUpdated, forKey: "ToBeUpdated")
-        try container.encodeIfPresent(toBeRemoved, forKey: "ToBeRemoved")
+    public enum CodingKeys: String, CodingKey { 
+        case toBeCreated = "ToBeCreated"
+        case toBeUpdated = "ToBeUpdated"
+        case toBeRemoved = "ToBeRemoved"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        toBeCreated = try container.decodeIfPresent([ChannelProductResponse].self, forKey: "ToBeCreated")
-        toBeUpdated = try container.decodeIfPresent([ChannelProductResponse].self, forKey: "ToBeUpdated")
-        toBeRemoved = try container.decodeIfPresent([String].self, forKey: "ToBeRemoved")
-    }
 }
 

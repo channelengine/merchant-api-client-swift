@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ChannelProcessedChangesRequest: Codable {
+public struct ChannelProcessedChangesRequest: Codable {
 
     /** A collection of pairs of merchant and channel references  of the products which are successfully created. The channel references  are saved such that in subsequent calls these can be used instead of the   merchant references. */
     public var created: [ChannelReferencesRequest]?
@@ -19,33 +19,12 @@ open class ChannelProcessedChangesRequest: Codable {
     public var removed: [String]?
 
 
-    
-    public init(created: [ChannelReferencesRequest]?, updated: [String]?, removed: [String]?) {
-        self.created = created
-        self.updated = updated
-        self.removed = removed
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(created, forKey: "Created")
-        try container.encodeIfPresent(updated, forKey: "Updated")
-        try container.encodeIfPresent(removed, forKey: "Removed")
+    public enum CodingKeys: String, CodingKey { 
+        case created = "Created"
+        case updated = "Updated"
+        case removed = "Removed"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        created = try container.decodeIfPresent([ChannelReferencesRequest].self, forKey: "Created")
-        updated = try container.decodeIfPresent([String].self, forKey: "Updated")
-        removed = try container.decodeIfPresent([String].self, forKey: "Removed")
-    }
 }
 

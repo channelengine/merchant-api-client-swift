@@ -539,7 +539,9 @@ open class OrderAPI {
      */
     open class func orderInvoiceWithRequestBuilder(merchantOrderNo: String, useCustomerCulture: Bool? = nil) -> RequestBuilder<URL> {
         var path = "/v2/orders/{merchantOrderNo}/invoice"
-        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: "\(merchantOrderNo)", options: .literal, range: nil)
+        let merchantOrderNoPreEscape = "\(merchantOrderNo)"
+        let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
@@ -584,7 +586,9 @@ open class OrderAPI {
      */
     open class func orderPackingSlipWithRequestBuilder(merchantOrderNo: String, useCustomerCulture: Bool? = nil) -> RequestBuilder<URL> {
         var path = "/v2/orders/{merchantOrderNo}/packingslip"
-        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: "\(merchantOrderNo)", options: .literal, range: nil)
+        let merchantOrderNoPreEscape = "\(merchantOrderNo)"
+        let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 

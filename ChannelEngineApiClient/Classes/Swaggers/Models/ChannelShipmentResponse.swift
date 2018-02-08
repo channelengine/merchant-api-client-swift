@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ChannelShipmentResponse: Codable {
+public struct ChannelShipmentResponse: Codable {
 
     public var channelOrderNo: String
     public var lines: [ChannelShipmentLineResponse]
@@ -18,39 +18,14 @@ open class ChannelShipmentResponse: Codable {
     public var method: String?
 
 
-    
-    public init(channelOrderNo: String, lines: [ChannelShipmentLineResponse], trackTraceNo: String?, trackTraceUrl: String?, method: String?) {
-        self.channelOrderNo = channelOrderNo
-        self.lines = lines
-        self.trackTraceNo = trackTraceNo
-        self.trackTraceUrl = trackTraceUrl
-        self.method = method
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(channelOrderNo, forKey: "ChannelOrderNo")
-        try container.encode(lines, forKey: "Lines")
-        try container.encodeIfPresent(trackTraceNo, forKey: "TrackTraceNo")
-        try container.encodeIfPresent(trackTraceUrl, forKey: "TrackTraceUrl")
-        try container.encodeIfPresent(method, forKey: "Method")
+    public enum CodingKeys: String, CodingKey { 
+        case channelOrderNo = "ChannelOrderNo"
+        case lines = "Lines"
+        case trackTraceNo = "TrackTraceNo"
+        case trackTraceUrl = "TrackTraceUrl"
+        case method = "Method"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        channelOrderNo = try container.decode(String.self, forKey: "ChannelOrderNo")
-        lines = try container.decode([ChannelShipmentLineResponse].self, forKey: "Lines")
-        trackTraceNo = try container.decodeIfPresent(String.self, forKey: "TrackTraceNo")
-        trackTraceUrl = try container.decodeIfPresent(String.self, forKey: "TrackTraceUrl")
-        method = try container.decodeIfPresent(String.self, forKey: "Method")
-    }
 }
 

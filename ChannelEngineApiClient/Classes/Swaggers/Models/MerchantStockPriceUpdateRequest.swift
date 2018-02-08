@@ -9,40 +9,19 @@ import Foundation
 
 
 
-open class MerchantStockPriceUpdateRequest: Codable {
+public struct MerchantStockPriceUpdateRequest: Codable {
 
     public var merchantProductNo: String
     public var stock: Int?
     public var price: Double?
 
 
-    
-    public init(merchantProductNo: String, stock: Int?, price: Double?) {
-        self.merchantProductNo = merchantProductNo
-        self.stock = stock
-        self.price = price
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(merchantProductNo, forKey: "MerchantProductNo")
-        try container.encodeIfPresent(stock, forKey: "Stock")
-        try container.encodeIfPresent(price, forKey: "Price")
+    public enum CodingKeys: String, CodingKey { 
+        case merchantProductNo = "MerchantProductNo"
+        case stock = "Stock"
+        case price = "Price"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        merchantProductNo = try container.decode(String.self, forKey: "MerchantProductNo")
-        stock = try container.decodeIfPresent(Int.self, forKey: "Stock")
-        price = try container.decodeIfPresent(Double.self, forKey: "Price")
-    }
 }
 

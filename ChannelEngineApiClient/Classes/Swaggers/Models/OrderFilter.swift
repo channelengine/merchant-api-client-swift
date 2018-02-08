@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class OrderFilter: Codable {
+public struct OrderFilter: Codable {
 
     public enum Statuses: String, Codable { 
         case inProgress = "IN_PROGRESS"
@@ -37,39 +37,14 @@ open class OrderFilter: Codable {
     public var page: Int?
 
 
-    
-    public init(statuses: [Statuses]?, merchantOrderNos: [String]?, excludeMarketplaceFulfilledOrdersAndLines: Bool?, fulfillmentType: FulfillmentType?, page: Int?) {
-        self.statuses = statuses
-        self.merchantOrderNos = merchantOrderNos
-        self.excludeMarketplaceFulfilledOrdersAndLines = excludeMarketplaceFulfilledOrdersAndLines
-        self.fulfillmentType = fulfillmentType
-        self.page = page
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(statuses, forKey: "Statuses")
-        try container.encodeIfPresent(merchantOrderNos, forKey: "MerchantOrderNos")
-        try container.encodeIfPresent(excludeMarketplaceFulfilledOrdersAndLines, forKey: "ExcludeMarketplaceFulfilledOrdersAndLines")
-        try container.encodeIfPresent(fulfillmentType, forKey: "FulfillmentType")
-        try container.encodeIfPresent(page, forKey: "Page")
+    public enum CodingKeys: String, CodingKey { 
+        case statuses = "Statuses"
+        case merchantOrderNos = "MerchantOrderNos"
+        case excludeMarketplaceFulfilledOrdersAndLines = "ExcludeMarketplaceFulfilledOrdersAndLines"
+        case fulfillmentType = "FulfillmentType"
+        case page = "Page"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        statuses = try container.decodeIfPresent([Statuses].self, forKey: "Statuses")
-        merchantOrderNos = try container.decodeIfPresent([String].self, forKey: "MerchantOrderNos")
-        excludeMarketplaceFulfilledOrdersAndLines = try container.decodeIfPresent(Bool.self, forKey: "ExcludeMarketplaceFulfilledOrdersAndLines")
-        fulfillmentType = try container.decodeIfPresent(FulfillmentType.self, forKey: "FulfillmentType")
-        page = try container.decodeIfPresent(Int.self, forKey: "Page")
-    }
 }
 

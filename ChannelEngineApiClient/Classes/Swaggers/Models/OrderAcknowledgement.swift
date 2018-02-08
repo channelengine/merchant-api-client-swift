@@ -9,36 +9,17 @@ import Foundation
 
 
 
-open class OrderAcknowledgement: Codable {
+public struct OrderAcknowledgement: Codable {
 
     public var merchantOrderNo: String
     public var orderId: Int
 
 
-    
-    public init(merchantOrderNo: String, orderId: Int) {
-        self.merchantOrderNo = merchantOrderNo
-        self.orderId = orderId
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(merchantOrderNo, forKey: "MerchantOrderNo")
-        try container.encode(orderId, forKey: "OrderId")
+    public enum CodingKeys: String, CodingKey { 
+        case merchantOrderNo = "MerchantOrderNo"
+        case orderId = "OrderId"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        merchantOrderNo = try container.decode(String.self, forKey: "MerchantOrderNo")
-        orderId = try container.decode(Int.self, forKey: "OrderId")
-    }
 }
 

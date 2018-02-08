@@ -9,36 +9,17 @@ import Foundation
 
 
 
-open class ChannelReferencesRequest: Codable {
+public struct ChannelReferencesRequest: Codable {
 
-    public var id: Int?
+    public var _id: Int?
     public var channelProductNo: String?
 
 
-    
-    public init(id: Int?, channelProductNo: String?) {
-        self.id = id
-        self.channelProductNo = channelProductNo
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(id, forKey: "Id")
-        try container.encodeIfPresent(channelProductNo, forKey: "ChannelProductNo")
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "Id"
+        case channelProductNo = "ChannelProductNo"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        id = try container.decodeIfPresent(Int.self, forKey: "Id")
-        channelProductNo = try container.decodeIfPresent(String.self, forKey: "ChannelProductNo")
-    }
 }
 

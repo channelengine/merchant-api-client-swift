@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ChannelOrderLineRequest: Codable {
+public struct ChannelOrderLineRequest: Codable {
 
     public enum Condition: String, Codable { 
         case new = "NEW"
@@ -32,42 +32,15 @@ open class ChannelOrderLineRequest: Codable {
     public var condition: Condition?
 
 
-    
-    public init(channelProductNo: String, quantity: Int, unitPriceInclVat: Double, feeFixed: Double?, feeRate: Double?, condition: Condition?) {
-        self.channelProductNo = channelProductNo
-        self.quantity = quantity
-        self.unitPriceInclVat = unitPriceInclVat
-        self.feeFixed = feeFixed
-        self.feeRate = feeRate
-        self.condition = condition
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(channelProductNo, forKey: "ChannelProductNo")
-        try container.encode(quantity, forKey: "Quantity")
-        try container.encode(unitPriceInclVat, forKey: "UnitPriceInclVat")
-        try container.encodeIfPresent(feeFixed, forKey: "FeeFixed")
-        try container.encodeIfPresent(feeRate, forKey: "FeeRate")
-        try container.encodeIfPresent(condition, forKey: "Condition")
+    public enum CodingKeys: String, CodingKey { 
+        case channelProductNo = "ChannelProductNo"
+        case quantity = "Quantity"
+        case unitPriceInclVat = "UnitPriceInclVat"
+        case feeFixed = "FeeFixed"
+        case feeRate = "FeeRate"
+        case condition = "Condition"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        channelProductNo = try container.decode(String.self, forKey: "ChannelProductNo")
-        quantity = try container.decode(Int.self, forKey: "Quantity")
-        unitPriceInclVat = try container.decode(Double.self, forKey: "UnitPriceInclVat")
-        feeFixed = try container.decodeIfPresent(Double.self, forKey: "FeeFixed")
-        feeRate = try container.decodeIfPresent(Double.self, forKey: "FeeRate")
-        condition = try container.decodeIfPresent(Condition.self, forKey: "Condition")
-    }
 }
 

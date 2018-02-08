@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class MerchantProductRequest: Codable {
+public struct MerchantProductRequest: Codable {
 
     public enum VatRateType: String, Codable { 
         case standard = "STANDARD"
@@ -21,7 +21,7 @@ open class MerchantProductRequest: Codable {
     /** If this product is a different version of another  product (for example, all fields are the same except  size and/or color), then this field should contain  the &#39;MerchantProductNo&#39; of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether   the parent is behind the child in the list). */
     public var parentMerchantProductNo: String?
     public var name: String?
-    public var description: String?
+    public var _description: String?
     public var brand: String?
     public var size: String?
     public var color: String?
@@ -42,90 +42,53 @@ open class MerchantProductRequest: Codable {
     public var url: String?
     /** A URL at which an image of this product  can be found. */
     public var imageUrl: String?
+    public var extraImageUrl1: String?
+    public var extraImageUrl2: String?
+    public var extraImageUrl3: String?
+    public var extraImageUrl4: String?
+    public var extraImageUrl5: String?
+    public var extraImageUrl6: String?
+    public var extraImageUrl7: String?
+    public var extraImageUrl8: String?
+    public var extraImageUrl9: String?
     /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &amp;gt; category &amp;gt; subcategory&#39;  For example:  &#39;vehicles &amp;gt; bikes &amp;gt; mountainbike&#39; */
     public var categoryTrail: String?
     /** An optional list of key-value pairs containing  extra data about this product. This data can be  sent to channels or used for filtering products. */
     public var extraData: [ExtraDataItem]?
 
 
-    
-    public init(merchantProductNo: String?, parentMerchantProductNo: String?, name: String?, description: String?, brand: String?, size: String?, color: String?, ean: String?, manufacturerProductNumber: String?, stock: Int?, price: Double?, MSRP: Double?, purchasePrice: Double?, vatRateType: VatRateType?, shippingCost: Double?, shippingTime: String?, url: String?, imageUrl: String?, categoryTrail: String?, extraData: [ExtraDataItem]?) {
-        self.merchantProductNo = merchantProductNo
-        self.parentMerchantProductNo = parentMerchantProductNo
-        self.name = name
-        self.description = description
-        self.brand = brand
-        self.size = size
-        self.color = color
-        self.ean = ean
-        self.manufacturerProductNumber = manufacturerProductNumber
-        self.stock = stock
-        self.price = price
-        self.MSRP = MSRP
-        self.purchasePrice = purchasePrice
-        self.vatRateType = vatRateType
-        self.shippingCost = shippingCost
-        self.shippingTime = shippingTime
-        self.url = url
-        self.imageUrl = imageUrl
-        self.categoryTrail = categoryTrail
-        self.extraData = extraData
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(merchantProductNo, forKey: "MerchantProductNo")
-        try container.encodeIfPresent(parentMerchantProductNo, forKey: "ParentMerchantProductNo")
-        try container.encodeIfPresent(name, forKey: "Name")
-        try container.encodeIfPresent(description, forKey: "Description")
-        try container.encodeIfPresent(brand, forKey: "Brand")
-        try container.encodeIfPresent(size, forKey: "Size")
-        try container.encodeIfPresent(color, forKey: "Color")
-        try container.encodeIfPresent(ean, forKey: "Ean")
-        try container.encodeIfPresent(manufacturerProductNumber, forKey: "ManufacturerProductNumber")
-        try container.encodeIfPresent(stock, forKey: "Stock")
-        try container.encodeIfPresent(price, forKey: "Price")
-        try container.encodeIfPresent(MSRP, forKey: "MSRP")
-        try container.encodeIfPresent(purchasePrice, forKey: "PurchasePrice")
-        try container.encodeIfPresent(vatRateType, forKey: "VatRateType")
-        try container.encodeIfPresent(shippingCost, forKey: "ShippingCost")
-        try container.encodeIfPresent(shippingTime, forKey: "ShippingTime")
-        try container.encodeIfPresent(url, forKey: "Url")
-        try container.encodeIfPresent(imageUrl, forKey: "ImageUrl")
-        try container.encodeIfPresent(categoryTrail, forKey: "CategoryTrail")
-        try container.encodeIfPresent(extraData, forKey: "ExtraData")
+    public enum CodingKeys: String, CodingKey { 
+        case merchantProductNo = "MerchantProductNo"
+        case parentMerchantProductNo = "ParentMerchantProductNo"
+        case name = "Name"
+        case _description = "Description"
+        case brand = "Brand"
+        case size = "Size"
+        case color = "Color"
+        case ean = "Ean"
+        case manufacturerProductNumber = "ManufacturerProductNumber"
+        case stock = "Stock"
+        case price = "Price"
+        case MSRP
+        case purchasePrice = "PurchasePrice"
+        case vatRateType = "VatRateType"
+        case shippingCost = "ShippingCost"
+        case shippingTime = "ShippingTime"
+        case url = "Url"
+        case imageUrl = "ImageUrl"
+        case extraImageUrl1 = "ExtraImageUrl1"
+        case extraImageUrl2 = "ExtraImageUrl2"
+        case extraImageUrl3 = "ExtraImageUrl3"
+        case extraImageUrl4 = "ExtraImageUrl4"
+        case extraImageUrl5 = "ExtraImageUrl5"
+        case extraImageUrl6 = "ExtraImageUrl6"
+        case extraImageUrl7 = "ExtraImageUrl7"
+        case extraImageUrl8 = "ExtraImageUrl8"
+        case extraImageUrl9 = "ExtraImageUrl9"
+        case categoryTrail = "CategoryTrail"
+        case extraData = "ExtraData"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        merchantProductNo = try container.decodeIfPresent(String.self, forKey: "MerchantProductNo")
-        parentMerchantProductNo = try container.decodeIfPresent(String.self, forKey: "ParentMerchantProductNo")
-        name = try container.decodeIfPresent(String.self, forKey: "Name")
-        description = try container.decodeIfPresent(String.self, forKey: "Description")
-        brand = try container.decodeIfPresent(String.self, forKey: "Brand")
-        size = try container.decodeIfPresent(String.self, forKey: "Size")
-        color = try container.decodeIfPresent(String.self, forKey: "Color")
-        ean = try container.decodeIfPresent(String.self, forKey: "Ean")
-        manufacturerProductNumber = try container.decodeIfPresent(String.self, forKey: "ManufacturerProductNumber")
-        stock = try container.decodeIfPresent(Int.self, forKey: "Stock")
-        price = try container.decodeIfPresent(Double.self, forKey: "Price")
-        MSRP = try container.decodeIfPresent(Double.self, forKey: "MSRP")
-        purchasePrice = try container.decodeIfPresent(Double.self, forKey: "PurchasePrice")
-        vatRateType = try container.decodeIfPresent(VatRateType.self, forKey: "VatRateType")
-        shippingCost = try container.decodeIfPresent(Double.self, forKey: "ShippingCost")
-        shippingTime = try container.decodeIfPresent(String.self, forKey: "ShippingTime")
-        url = try container.decodeIfPresent(String.self, forKey: "Url")
-        imageUrl = try container.decodeIfPresent(String.self, forKey: "ImageUrl")
-        categoryTrail = try container.decodeIfPresent(String.self, forKey: "CategoryTrail")
-        extraData = try container.decodeIfPresent([ExtraDataItem].self, forKey: "ExtraData")
-    }
 }
 

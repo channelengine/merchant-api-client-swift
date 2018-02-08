@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class MerchantCancellationRequest: Codable {
+public struct MerchantCancellationRequest: Codable {
 
     public var merchantCancellationNo: String
     public var merchantOrderNo: String
@@ -17,36 +17,13 @@ open class MerchantCancellationRequest: Codable {
     public var reason: String?
 
 
-    
-    public init(merchantCancellationNo: String, merchantOrderNo: String, lines: [MerchantCancellationLineRequest], reason: String?) {
-        self.merchantCancellationNo = merchantCancellationNo
-        self.merchantOrderNo = merchantOrderNo
-        self.lines = lines
-        self.reason = reason
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(merchantCancellationNo, forKey: "MerchantCancellationNo")
-        try container.encode(merchantOrderNo, forKey: "MerchantOrderNo")
-        try container.encode(lines, forKey: "Lines")
-        try container.encodeIfPresent(reason, forKey: "Reason")
+    public enum CodingKeys: String, CodingKey { 
+        case merchantCancellationNo = "MerchantCancellationNo"
+        case merchantOrderNo = "MerchantOrderNo"
+        case lines = "Lines"
+        case reason = "Reason"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        merchantCancellationNo = try container.decode(String.self, forKey: "MerchantCancellationNo")
-        merchantOrderNo = try container.decode(String.self, forKey: "MerchantOrderNo")
-        lines = try container.decode([MerchantCancellationLineRequest].self, forKey: "Lines")
-        reason = try container.decodeIfPresent(String.self, forKey: "Reason")
-    }
 }
 

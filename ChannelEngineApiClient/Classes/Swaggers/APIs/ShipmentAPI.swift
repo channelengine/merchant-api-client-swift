@@ -171,7 +171,9 @@ open class ShipmentAPI {
      */
     open class func shipmentUpdateWithRequestBuilder(merchantShipmentNo: String, model: MerchantShipmentTrackingRequest) -> RequestBuilder<ApiResponse> {
         var path = "/v2/shipments/{merchantShipmentNo}"
-        path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: "\(merchantShipmentNo)", options: .literal, range: nil)
+        let merchantShipmentNoPreEscape = "\(merchantShipmentNo)"
+        let merchantShipmentNoPostEscape = merchantShipmentNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 

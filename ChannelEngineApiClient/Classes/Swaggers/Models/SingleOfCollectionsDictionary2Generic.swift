@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class SingleOfCollectionsDictionary2Generic: Codable {
+public struct SingleOfCollectionsDictionary2Generic: Codable {
 
     public var content: [String:[String]]?
     public var statusCode: Int?
@@ -18,39 +18,14 @@ open class SingleOfCollectionsDictionary2Generic: Codable {
     public var validationErrors: [String:[String]]?
 
 
-    
-    public init(content: [String:[String]]?, statusCode: Int?, success: Bool?, message: String?, validationErrors: [String:[String]]?) {
-        self.content = content
-        self.statusCode = statusCode
-        self.success = success
-        self.message = message
-        self.validationErrors = validationErrors
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(content, forKey: "Content")
-        try container.encodeIfPresent(statusCode, forKey: "StatusCode")
-        try container.encodeIfPresent(success, forKey: "Success")
-        try container.encodeIfPresent(message, forKey: "Message")
-        try container.encodeIfPresent(validationErrors, forKey: "ValidationErrors")
+    public enum CodingKeys: String, CodingKey { 
+        case content = "Content"
+        case statusCode = "StatusCode"
+        case success = "Success"
+        case message = "Message"
+        case validationErrors = "ValidationErrors"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        content = try container.decodeIfPresent([String:[String]].self, forKey: "Content")
-        statusCode = try container.decodeIfPresent(Int.self, forKey: "StatusCode")
-        success = try container.decodeIfPresent(Bool.self, forKey: "Success")
-        message = try container.decodeIfPresent(String.self, forKey: "Message")
-        validationErrors = try container.decodeIfPresent([String:[String]].self, forKey: "ValidationErrors")
-    }
 }
 

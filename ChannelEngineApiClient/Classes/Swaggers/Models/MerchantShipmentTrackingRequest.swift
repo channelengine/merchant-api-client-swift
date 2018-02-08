@@ -9,40 +9,19 @@ import Foundation
 
 
 
-open class MerchantShipmentTrackingRequest: Codable {
+public struct MerchantShipmentTrackingRequest: Codable {
 
     public var method: String
     public var trackTraceNo: String
     public var trackTraceUrl: String?
 
 
-    
-    public init(method: String, trackTraceNo: String, trackTraceUrl: String?) {
-        self.method = method
-        self.trackTraceNo = trackTraceNo
-        self.trackTraceUrl = trackTraceUrl
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(method, forKey: "Method")
-        try container.encode(trackTraceNo, forKey: "TrackTraceNo")
-        try container.encodeIfPresent(trackTraceUrl, forKey: "TrackTraceUrl")
+    public enum CodingKeys: String, CodingKey { 
+        case method = "Method"
+        case trackTraceNo = "TrackTraceNo"
+        case trackTraceUrl = "TrackTraceUrl"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        method = try container.decode(String.self, forKey: "Method")
-        trackTraceNo = try container.decode(String.self, forKey: "TrackTraceNo")
-        trackTraceUrl = try container.decodeIfPresent(String.self, forKey: "TrackTraceUrl")
-    }
 }
 

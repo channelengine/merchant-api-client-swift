@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ProductCreationResult: Codable {
+public struct ProductCreationResult: Codable {
 
     public var rejectedCount: Int?
     public var acceptedCount: Int?
@@ -17,33 +17,12 @@ open class ProductCreationResult: Codable {
     public var productMessages: [ProductMessage]?
 
 
-    
-    public init(rejectedCount: Int?, acceptedCount: Int?, productMessages: [ProductMessage]?) {
-        self.rejectedCount = rejectedCount
-        self.acceptedCount = acceptedCount
-        self.productMessages = productMessages
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(rejectedCount, forKey: "RejectedCount")
-        try container.encodeIfPresent(acceptedCount, forKey: "AcceptedCount")
-        try container.encodeIfPresent(productMessages, forKey: "ProductMessages")
+    public enum CodingKeys: String, CodingKey { 
+        case rejectedCount = "RejectedCount"
+        case acceptedCount = "AcceptedCount"
+        case productMessages = "ProductMessages"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        rejectedCount = try container.decodeIfPresent(Int.self, forKey: "RejectedCount")
-        acceptedCount = try container.decodeIfPresent(Int.self, forKey: "AcceptedCount")
-        productMessages = try container.decodeIfPresent([ProductMessage].self, forKey: "ProductMessages")
-    }
 }
 

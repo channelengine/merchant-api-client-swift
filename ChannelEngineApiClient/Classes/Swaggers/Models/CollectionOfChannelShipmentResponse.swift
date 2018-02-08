@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class CollectionOfChannelShipmentResponse: Codable {
+public struct CollectionOfChannelShipmentResponse: Codable {
 
     public var content: [ChannelShipmentResponse]?
     /** The number of items in the current response */
@@ -24,48 +24,17 @@ open class CollectionOfChannelShipmentResponse: Codable {
     public var validationErrors: [String:[String]]?
 
 
-    
-    public init(content: [ChannelShipmentResponse]?, count: Int?, totalCount: Int?, itemsPerPage: Int?, statusCode: Int?, success: Bool?, message: String?, validationErrors: [String:[String]]?) {
-        self.content = content
-        self.count = count
-        self.totalCount = totalCount
-        self.itemsPerPage = itemsPerPage
-        self.statusCode = statusCode
-        self.success = success
-        self.message = message
-        self.validationErrors = validationErrors
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(content, forKey: "Content")
-        try container.encodeIfPresent(count, forKey: "Count")
-        try container.encodeIfPresent(totalCount, forKey: "TotalCount")
-        try container.encodeIfPresent(itemsPerPage, forKey: "ItemsPerPage")
-        try container.encodeIfPresent(statusCode, forKey: "StatusCode")
-        try container.encodeIfPresent(success, forKey: "Success")
-        try container.encodeIfPresent(message, forKey: "Message")
-        try container.encodeIfPresent(validationErrors, forKey: "ValidationErrors")
+    public enum CodingKeys: String, CodingKey { 
+        case content = "Content"
+        case count = "Count"
+        case totalCount = "TotalCount"
+        case itemsPerPage = "ItemsPerPage"
+        case statusCode = "StatusCode"
+        case success = "Success"
+        case message = "Message"
+        case validationErrors = "ValidationErrors"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        content = try container.decodeIfPresent([ChannelShipmentResponse].self, forKey: "Content")
-        count = try container.decodeIfPresent(Int.self, forKey: "Count")
-        totalCount = try container.decodeIfPresent(Int.self, forKey: "TotalCount")
-        itemsPerPage = try container.decodeIfPresent(Int.self, forKey: "ItemsPerPage")
-        statusCode = try container.decodeIfPresent(Int.self, forKey: "StatusCode")
-        success = try container.decodeIfPresent(Bool.self, forKey: "Success")
-        message = try container.decodeIfPresent(String.self, forKey: "Message")
-        validationErrors = try container.decodeIfPresent([String:[String]].self, forKey: "ValidationErrors")
-    }
 }
 

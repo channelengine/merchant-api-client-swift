@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class MerchantShipmentRequest: Codable {
+public struct MerchantShipmentRequest: Codable {
 
     public var merchantShipmentNo: String
     public var merchantOrderNo: String
@@ -19,42 +19,15 @@ open class MerchantShipmentRequest: Codable {
     public var method: String?
 
 
-    
-    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], trackTraceNo: String?, trackTraceUrl: String?, method: String?) {
-        self.merchantShipmentNo = merchantShipmentNo
-        self.merchantOrderNo = merchantOrderNo
-        self.lines = lines
-        self.trackTraceNo = trackTraceNo
-        self.trackTraceUrl = trackTraceUrl
-        self.method = method
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(merchantShipmentNo, forKey: "MerchantShipmentNo")
-        try container.encode(merchantOrderNo, forKey: "MerchantOrderNo")
-        try container.encode(lines, forKey: "Lines")
-        try container.encodeIfPresent(trackTraceNo, forKey: "TrackTraceNo")
-        try container.encodeIfPresent(trackTraceUrl, forKey: "TrackTraceUrl")
-        try container.encodeIfPresent(method, forKey: "Method")
+    public enum CodingKeys: String, CodingKey { 
+        case merchantShipmentNo = "MerchantShipmentNo"
+        case merchantOrderNo = "MerchantOrderNo"
+        case lines = "Lines"
+        case trackTraceNo = "TrackTraceNo"
+        case trackTraceUrl = "TrackTraceUrl"
+        case method = "Method"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        merchantShipmentNo = try container.decode(String.self, forKey: "MerchantShipmentNo")
-        merchantOrderNo = try container.decode(String.self, forKey: "MerchantOrderNo")
-        lines = try container.decode([MerchantShipmentLineRequest].self, forKey: "Lines")
-        trackTraceNo = try container.decodeIfPresent(String.self, forKey: "TrackTraceNo")
-        trackTraceUrl = try container.decodeIfPresent(String.self, forKey: "TrackTraceUrl")
-        method = try container.decodeIfPresent(String.self, forKey: "Method")
-    }
 }
 

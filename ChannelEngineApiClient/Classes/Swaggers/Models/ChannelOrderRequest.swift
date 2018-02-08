@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ChannelOrderRequest: Codable {
+public struct ChannelOrderRequest: Codable {
 
     /** The unique order reference used by the Channel */
     public var channelOrderNo: String
@@ -30,66 +30,23 @@ open class ChannelOrderRequest: Codable {
     public var extraData: [String:String]?
 
 
-    
-    public init(channelOrderNo: String, lines: [ChannelOrderLineRequest], phone: String?, email: String, companyRegistrationNo: String?, vatNo: String?, paymentMethod: String, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String?, billingAddress: EntitiesAddressModels, shippingAddress: EntitiesAddressModels, extraData: [String:String]?) {
-        self.channelOrderNo = channelOrderNo
-        self.lines = lines
-        self.phone = phone
-        self.email = email
-        self.companyRegistrationNo = companyRegistrationNo
-        self.vatNo = vatNo
-        self.paymentMethod = paymentMethod
-        self.shippingCostsInclVat = shippingCostsInclVat
-        self.currencyCode = currencyCode
-        self.orderDate = orderDate
-        self.channelCustomerNo = channelCustomerNo
-        self.billingAddress = billingAddress
-        self.shippingAddress = shippingAddress
-        self.extraData = extraData
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(channelOrderNo, forKey: "ChannelOrderNo")
-        try container.encode(lines, forKey: "Lines")
-        try container.encodeIfPresent(phone, forKey: "Phone")
-        try container.encode(email, forKey: "Email")
-        try container.encodeIfPresent(companyRegistrationNo, forKey: "CompanyRegistrationNo")
-        try container.encodeIfPresent(vatNo, forKey: "VatNo")
-        try container.encode(paymentMethod, forKey: "PaymentMethod")
-        try container.encode(shippingCostsInclVat, forKey: "ShippingCostsInclVat")
-        try container.encode(currencyCode, forKey: "CurrencyCode")
-        try container.encode(orderDate, forKey: "OrderDate")
-        try container.encodeIfPresent(channelCustomerNo, forKey: "ChannelCustomerNo")
-        try container.encode(billingAddress, forKey: "BillingAddress")
-        try container.encode(shippingAddress, forKey: "ShippingAddress")
-        try container.encodeIfPresent(extraData, forKey: "ExtraData")
+    public enum CodingKeys: String, CodingKey { 
+        case channelOrderNo = "ChannelOrderNo"
+        case lines = "Lines"
+        case phone = "Phone"
+        case email = "Email"
+        case companyRegistrationNo = "CompanyRegistrationNo"
+        case vatNo = "VatNo"
+        case paymentMethod = "PaymentMethod"
+        case shippingCostsInclVat = "ShippingCostsInclVat"
+        case currencyCode = "CurrencyCode"
+        case orderDate = "OrderDate"
+        case channelCustomerNo = "ChannelCustomerNo"
+        case billingAddress = "BillingAddress"
+        case shippingAddress = "ShippingAddress"
+        case extraData = "ExtraData"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        channelOrderNo = try container.decode(String.self, forKey: "ChannelOrderNo")
-        lines = try container.decode([ChannelOrderLineRequest].self, forKey: "Lines")
-        phone = try container.decodeIfPresent(String.self, forKey: "Phone")
-        email = try container.decode(String.self, forKey: "Email")
-        companyRegistrationNo = try container.decodeIfPresent(String.self, forKey: "CompanyRegistrationNo")
-        vatNo = try container.decodeIfPresent(String.self, forKey: "VatNo")
-        paymentMethod = try container.decode(String.self, forKey: "PaymentMethod")
-        shippingCostsInclVat = try container.decode(Double.self, forKey: "ShippingCostsInclVat")
-        currencyCode = try container.decode(String.self, forKey: "CurrencyCode")
-        orderDate = try container.decode(Date.self, forKey: "OrderDate")
-        channelCustomerNo = try container.decodeIfPresent(String.self, forKey: "ChannelCustomerNo")
-        billingAddress = try container.decode(EntitiesAddressModels.self, forKey: "BillingAddress")
-        shippingAddress = try container.decode(EntitiesAddressModels.self, forKey: "ShippingAddress")
-        extraData = try container.decodeIfPresent([String:String].self, forKey: "ExtraData")
-    }
 }
 

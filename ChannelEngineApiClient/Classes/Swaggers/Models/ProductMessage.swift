@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ProductMessage: Codable {
+public struct ProductMessage: Codable {
 
     public var name: String?
     public var reference: String?
@@ -17,36 +17,13 @@ open class ProductMessage: Codable {
     public var errors: [String]?
 
 
-    
-    public init(name: String?, reference: String?, warnings: [String]?, errors: [String]?) {
-        self.name = name
-        self.reference = reference
-        self.warnings = warnings
-        self.errors = errors
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(name, forKey: "Name")
-        try container.encodeIfPresent(reference, forKey: "Reference")
-        try container.encodeIfPresent(warnings, forKey: "Warnings")
-        try container.encodeIfPresent(errors, forKey: "Errors")
+    public enum CodingKeys: String, CodingKey { 
+        case name = "Name"
+        case reference = "Reference"
+        case warnings = "Warnings"
+        case errors = "Errors"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        name = try container.decodeIfPresent(String.self, forKey: "Name")
-        reference = try container.decodeIfPresent(String.self, forKey: "Reference")
-        warnings = try container.decodeIfPresent([String].self, forKey: "Warnings")
-        errors = try container.decodeIfPresent([String].self, forKey: "Errors")
-    }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ApiResponse: Codable {
+public struct ApiResponse: Codable {
 
     public var statusCode: Int?
     public var success: Bool?
@@ -17,36 +17,13 @@ open class ApiResponse: Codable {
     public var validationErrors: [String:[String]]?
 
 
-    
-    public init(statusCode: Int?, success: Bool?, message: String?, validationErrors: [String:[String]]?) {
-        self.statusCode = statusCode
-        self.success = success
-        self.message = message
-        self.validationErrors = validationErrors
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(statusCode, forKey: "StatusCode")
-        try container.encodeIfPresent(success, forKey: "Success")
-        try container.encodeIfPresent(message, forKey: "Message")
-        try container.encodeIfPresent(validationErrors, forKey: "ValidationErrors")
+    public enum CodingKeys: String, CodingKey { 
+        case statusCode = "StatusCode"
+        case success = "Success"
+        case message = "Message"
+        case validationErrors = "ValidationErrors"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        statusCode = try container.decodeIfPresent(Int.self, forKey: "StatusCode")
-        success = try container.decodeIfPresent(Bool.self, forKey: "Success")
-        message = try container.decodeIfPresent(String.self, forKey: "Message")
-        validationErrors = try container.decodeIfPresent([String:[String]].self, forKey: "ValidationErrors")
-    }
 }
 

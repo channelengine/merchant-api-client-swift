@@ -199,7 +199,9 @@ open class ProductAPI {
      */
     open class func productDeleteWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<ApiResponse> {
         var path = "/v2/products/{merchantProductNo}"
-        path = path.replacingOccurrences(of: "{merchantProductNo}", with: "\(merchantProductNo)", options: .literal, range: nil)
+        let merchantProductNoPreEscape = "\(merchantProductNo)"
+        let merchantProductNoPostEscape = merchantProductNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
@@ -241,10 +243,19 @@ open class ProductAPI {
     "Description" : "Description",
     "IsActive" : true,
     "Size" : "Size",
+    "PurchasePrice" : 5.962133916683182,
+    "Url" : "Url",
+    "Name" : "Name",
+    "VatRateType" : "STANDARD",
+    "ExtraImageUrl9" : "ExtraImageUrl9",
+    "ExtraImageUrl8" : "ExtraImageUrl8",
+    "ExtraImageUrl7" : "ExtraImageUrl7",
+    "ExtraImageUrl6" : "ExtraImageUrl6",
+    "ExtraImageUrl5" : "ExtraImageUrl5",
     "Color" : "Color",
+    "ExtraImageUrl4" : "ExtraImageUrl4",
     "ImageUrl" : "ImageUrl",
     "ManufacturerProductNumber" : "ManufacturerProductNumber",
-    "PurchasePrice" : 5.962133916683182,
     "ExtraData" : [ {
       "Type" : "TEXT",
       "IsPublic" : true,
@@ -256,14 +267,14 @@ open class ProductAPI {
       "Value" : "Value",
       "Key" : "Key"
     } ],
-    "Url" : "Url",
-    "Name" : "Name",
     "Brand" : "Brand",
     "ShippingTime" : "ShippingTime",
     "Ean" : "Ean",
-    "VatRateType" : "STANDARD",
     "Price" : 6.027456183070403,
     "ShippingCost" : 5.637376656633329,
+    "ExtraImageUrl3" : "ExtraImageUrl3",
+    "ExtraImageUrl2" : "ExtraImageUrl2",
+    "ExtraImageUrl1" : "ExtraImageUrl1",
     "CategoryTrail" : "CategoryTrail",
     "Stock" : 0
   },
@@ -277,7 +288,9 @@ open class ProductAPI {
      */
     open class func productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<SingleOfMerchantProductResponse> {
         var path = "/v2/products/merchant/{merchantProductNo}"
-        path = path.replacingOccurrences(of: "{merchantProductNo}", with: "\(merchantProductNo)", options: .literal, range: nil)
+        let merchantProductNoPreEscape = "\(merchantProductNo)"
+        let merchantProductNoPostEscape = merchantProductNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
@@ -319,10 +332,20 @@ open class ProductAPI {
       "MSRP" : 5.962133916683182,
       "Description" : "Description",
       "Size" : "Size",
+      "PurchasePrice" : 5.637376656633329,
+      "Url" : "Url",
+      "Name" : "Name",
+      "VatRateType" : "STANDARD",
+      "ParentChannelProductNo" : "ParentChannelProductNo",
+      "ExtraImageUrl9" : "ExtraImageUrl9",
+      "ExtraImageUrl8" : "ExtraImageUrl8",
+      "ExtraImageUrl7" : "ExtraImageUrl7",
+      "ExtraImageUrl6" : "ExtraImageUrl6",
+      "ExtraImageUrl5" : "ExtraImageUrl5",
       "Color" : "Color",
+      "ExtraImageUrl4" : "ExtraImageUrl4",
       "ImageUrl" : "ImageUrl",
       "ManufacturerProductNumber" : "ManufacturerProductNumber",
-      "PurchasePrice" : 5.637376656633329,
       "ExtraData" : [ {
         "Type" : "TEXT",
         "IsPublic" : true,
@@ -334,18 +357,17 @@ open class ProductAPI {
         "Value" : "Value",
         "Key" : "Key"
       } ],
-      "Url" : "Url",
-      "Name" : "Name",
       "Brand" : "Brand",
       "ShippingTime" : "ShippingTime",
       "Ean" : "Ean",
-      "VatRateType" : "STANDARD",
-      "ParentChannelProductNo" : "ParentChannelProductNo",
       "MappedFields" : {
         "key" : "MappedFields"
       },
       "Price" : 1.4658129805029452,
       "ShippingCost" : 2.3021358869347655,
+      "ExtraImageUrl3" : "ExtraImageUrl3",
+      "ExtraImageUrl2" : "ExtraImageUrl2",
+      "ExtraImageUrl1" : "ExtraImageUrl1",
       "Id" : 0,
       "CategoryTrail" : "CategoryTrail",
       "Stock" : 6
@@ -353,10 +375,20 @@ open class ProductAPI {
       "MSRP" : 5.962133916683182,
       "Description" : "Description",
       "Size" : "Size",
+      "PurchasePrice" : 5.637376656633329,
+      "Url" : "Url",
+      "Name" : "Name",
+      "VatRateType" : "STANDARD",
+      "ParentChannelProductNo" : "ParentChannelProductNo",
+      "ExtraImageUrl9" : "ExtraImageUrl9",
+      "ExtraImageUrl8" : "ExtraImageUrl8",
+      "ExtraImageUrl7" : "ExtraImageUrl7",
+      "ExtraImageUrl6" : "ExtraImageUrl6",
+      "ExtraImageUrl5" : "ExtraImageUrl5",
       "Color" : "Color",
+      "ExtraImageUrl4" : "ExtraImageUrl4",
       "ImageUrl" : "ImageUrl",
       "ManufacturerProductNumber" : "ManufacturerProductNumber",
-      "PurchasePrice" : 5.637376656633329,
       "ExtraData" : [ {
         "Type" : "TEXT",
         "IsPublic" : true,
@@ -368,18 +400,17 @@ open class ProductAPI {
         "Value" : "Value",
         "Key" : "Key"
       } ],
-      "Url" : "Url",
-      "Name" : "Name",
       "Brand" : "Brand",
       "ShippingTime" : "ShippingTime",
       "Ean" : "Ean",
-      "VatRateType" : "STANDARD",
-      "ParentChannelProductNo" : "ParentChannelProductNo",
       "MappedFields" : {
         "key" : "MappedFields"
       },
       "Price" : 1.4658129805029452,
       "ShippingCost" : 2.3021358869347655,
+      "ExtraImageUrl3" : "ExtraImageUrl3",
+      "ExtraImageUrl2" : "ExtraImageUrl2",
+      "ExtraImageUrl1" : "ExtraImageUrl1",
       "Id" : 0,
       "CategoryTrail" : "CategoryTrail",
       "Stock" : 6
@@ -389,10 +420,20 @@ open class ProductAPI {
       "MSRP" : 5.962133916683182,
       "Description" : "Description",
       "Size" : "Size",
+      "PurchasePrice" : 5.637376656633329,
+      "Url" : "Url",
+      "Name" : "Name",
+      "VatRateType" : "STANDARD",
+      "ParentChannelProductNo" : "ParentChannelProductNo",
+      "ExtraImageUrl9" : "ExtraImageUrl9",
+      "ExtraImageUrl8" : "ExtraImageUrl8",
+      "ExtraImageUrl7" : "ExtraImageUrl7",
+      "ExtraImageUrl6" : "ExtraImageUrl6",
+      "ExtraImageUrl5" : "ExtraImageUrl5",
       "Color" : "Color",
+      "ExtraImageUrl4" : "ExtraImageUrl4",
       "ImageUrl" : "ImageUrl",
       "ManufacturerProductNumber" : "ManufacturerProductNumber",
-      "PurchasePrice" : 5.637376656633329,
       "ExtraData" : [ {
         "Type" : "TEXT",
         "IsPublic" : true,
@@ -404,18 +445,17 @@ open class ProductAPI {
         "Value" : "Value",
         "Key" : "Key"
       } ],
-      "Url" : "Url",
-      "Name" : "Name",
       "Brand" : "Brand",
       "ShippingTime" : "ShippingTime",
       "Ean" : "Ean",
-      "VatRateType" : "STANDARD",
-      "ParentChannelProductNo" : "ParentChannelProductNo",
       "MappedFields" : {
         "key" : "MappedFields"
       },
       "Price" : 1.4658129805029452,
       "ShippingCost" : 2.3021358869347655,
+      "ExtraImageUrl3" : "ExtraImageUrl3",
+      "ExtraImageUrl2" : "ExtraImageUrl2",
+      "ExtraImageUrl1" : "ExtraImageUrl1",
       "Id" : 0,
       "CategoryTrail" : "CategoryTrail",
       "Stock" : 6
@@ -423,10 +463,20 @@ open class ProductAPI {
       "MSRP" : 5.962133916683182,
       "Description" : "Description",
       "Size" : "Size",
+      "PurchasePrice" : 5.637376656633329,
+      "Url" : "Url",
+      "Name" : "Name",
+      "VatRateType" : "STANDARD",
+      "ParentChannelProductNo" : "ParentChannelProductNo",
+      "ExtraImageUrl9" : "ExtraImageUrl9",
+      "ExtraImageUrl8" : "ExtraImageUrl8",
+      "ExtraImageUrl7" : "ExtraImageUrl7",
+      "ExtraImageUrl6" : "ExtraImageUrl6",
+      "ExtraImageUrl5" : "ExtraImageUrl5",
       "Color" : "Color",
+      "ExtraImageUrl4" : "ExtraImageUrl4",
       "ImageUrl" : "ImageUrl",
       "ManufacturerProductNumber" : "ManufacturerProductNumber",
-      "PurchasePrice" : 5.637376656633329,
       "ExtraData" : [ {
         "Type" : "TEXT",
         "IsPublic" : true,
@@ -438,18 +488,17 @@ open class ProductAPI {
         "Value" : "Value",
         "Key" : "Key"
       } ],
-      "Url" : "Url",
-      "Name" : "Name",
       "Brand" : "Brand",
       "ShippingTime" : "ShippingTime",
       "Ean" : "Ean",
-      "VatRateType" : "STANDARD",
-      "ParentChannelProductNo" : "ParentChannelProductNo",
       "MappedFields" : {
         "key" : "MappedFields"
       },
       "Price" : 1.4658129805029452,
       "ShippingCost" : 2.3021358869347655,
+      "ExtraImageUrl3" : "ExtraImageUrl3",
+      "ExtraImageUrl2" : "ExtraImageUrl2",
+      "ExtraImageUrl1" : "ExtraImageUrl1",
       "Id" : 0,
       "CategoryTrail" : "CategoryTrail",
       "Stock" : 6

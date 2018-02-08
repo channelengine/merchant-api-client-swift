@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ExtraDataItem: Codable {
+public struct ExtraDataItem: Codable {
 
     public enum ModelType: String, Codable { 
         case text = "TEXT"
@@ -23,36 +23,13 @@ open class ExtraDataItem: Codable {
     public var isPublic: Bool?
 
 
-    
-    public init(key: String?, value: String?, type: ModelType?, isPublic: Bool?) {
-        self.key = key
-        self.value = value
-        self.type = type
-        self.isPublic = isPublic
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(key, forKey: "Key")
-        try container.encodeIfPresent(value, forKey: "Value")
-        try container.encodeIfPresent(type, forKey: "Type")
-        try container.encodeIfPresent(isPublic, forKey: "IsPublic")
+    public enum CodingKeys: String, CodingKey { 
+        case key = "Key"
+        case value = "Value"
+        case type = "Type"
+        case isPublic = "IsPublic"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        key = try container.decodeIfPresent(String.self, forKey: "Key")
-        value = try container.decodeIfPresent(String.self, forKey: "Value")
-        type = try container.decodeIfPresent(ModelType.self, forKey: "Type")
-        isPublic = try container.decodeIfPresent(Bool.self, forKey: "IsPublic")
-    }
 }
 

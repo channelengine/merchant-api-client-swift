@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class ChannelReturnResponse: Codable {
+public struct ChannelReturnResponse: Codable {
 
     public enum Reason: String, Codable { 
         case productDefect = "PRODUCT_DEFECT"
@@ -30,48 +30,17 @@ open class ChannelReturnResponse: Codable {
     public var refundExclVat: Double?
 
 
-    
-    public init(channelReturnNo: String, channelOrderNo: String, lines: [ChannelReturnLineResponse], reason: Reason?, customerComment: String?, merchantComment: String?, refundInclVat: Double?, refundExclVat: Double?) {
-        self.channelReturnNo = channelReturnNo
-        self.channelOrderNo = channelOrderNo
-        self.lines = lines
-        self.reason = reason
-        self.customerComment = customerComment
-        self.merchantComment = merchantComment
-        self.refundInclVat = refundInclVat
-        self.refundExclVat = refundExclVat
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(channelReturnNo, forKey: "ChannelReturnNo")
-        try container.encode(channelOrderNo, forKey: "ChannelOrderNo")
-        try container.encode(lines, forKey: "Lines")
-        try container.encodeIfPresent(reason, forKey: "Reason")
-        try container.encodeIfPresent(customerComment, forKey: "CustomerComment")
-        try container.encodeIfPresent(merchantComment, forKey: "MerchantComment")
-        try container.encodeIfPresent(refundInclVat, forKey: "RefundInclVat")
-        try container.encodeIfPresent(refundExclVat, forKey: "RefundExclVat")
+    public enum CodingKeys: String, CodingKey { 
+        case channelReturnNo = "ChannelReturnNo"
+        case channelOrderNo = "ChannelOrderNo"
+        case lines = "Lines"
+        case reason = "Reason"
+        case customerComment = "CustomerComment"
+        case merchantComment = "MerchantComment"
+        case refundInclVat = "RefundInclVat"
+        case refundExclVat = "RefundExclVat"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        channelReturnNo = try container.decode(String.self, forKey: "ChannelReturnNo")
-        channelOrderNo = try container.decode(String.self, forKey: "ChannelOrderNo")
-        lines = try container.decode([ChannelReturnLineResponse].self, forKey: "Lines")
-        reason = try container.decodeIfPresent(Reason.self, forKey: "Reason")
-        customerComment = try container.decodeIfPresent(String.self, forKey: "CustomerComment")
-        merchantComment = try container.decodeIfPresent(String.self, forKey: "MerchantComment")
-        refundInclVat = try container.decodeIfPresent(Double.self, forKey: "RefundInclVat")
-        refundExclVat = try container.decodeIfPresent(Double.self, forKey: "RefundExclVat")
-    }
 }
 

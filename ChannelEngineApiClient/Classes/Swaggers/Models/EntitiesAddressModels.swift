@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class EntitiesAddressModels: Codable {
+public struct EntitiesAddressModels: Codable {
 
     public enum Gender: String, Codable { 
         case male = "MALE"
@@ -30,60 +30,21 @@ open class EntitiesAddressModels: Codable {
     public var original: String?
 
 
-    
-    public init(gender: Gender?, companyName: String?, firstName: String?, lastName: String?, streetName: String?, houseNr: String?, houseNrAddition: String?, zipCode: String?, city: String?, region: String?, countryIso: String?, original: String?) {
-        self.gender = gender
-        self.companyName = companyName
-        self.firstName = firstName
-        self.lastName = lastName
-        self.streetName = streetName
-        self.houseNr = houseNr
-        self.houseNrAddition = houseNrAddition
-        self.zipCode = zipCode
-        self.city = city
-        self.region = region
-        self.countryIso = countryIso
-        self.original = original
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(gender, forKey: "Gender")
-        try container.encodeIfPresent(companyName, forKey: "CompanyName")
-        try container.encodeIfPresent(firstName, forKey: "FirstName")
-        try container.encodeIfPresent(lastName, forKey: "LastName")
-        try container.encodeIfPresent(streetName, forKey: "StreetName")
-        try container.encodeIfPresent(houseNr, forKey: "HouseNr")
-        try container.encodeIfPresent(houseNrAddition, forKey: "HouseNrAddition")
-        try container.encodeIfPresent(zipCode, forKey: "ZipCode")
-        try container.encodeIfPresent(city, forKey: "City")
-        try container.encodeIfPresent(region, forKey: "Region")
-        try container.encodeIfPresent(countryIso, forKey: "CountryIso")
-        try container.encodeIfPresent(original, forKey: "Original")
+    public enum CodingKeys: String, CodingKey { 
+        case gender = "Gender"
+        case companyName = "CompanyName"
+        case firstName = "FirstName"
+        case lastName = "LastName"
+        case streetName = "StreetName"
+        case houseNr = "HouseNr"
+        case houseNrAddition = "HouseNrAddition"
+        case zipCode = "ZipCode"
+        case city = "City"
+        case region = "Region"
+        case countryIso = "CountryIso"
+        case original = "Original"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        gender = try container.decodeIfPresent(Gender.self, forKey: "Gender")
-        companyName = try container.decodeIfPresent(String.self, forKey: "CompanyName")
-        firstName = try container.decodeIfPresent(String.self, forKey: "FirstName")
-        lastName = try container.decodeIfPresent(String.self, forKey: "LastName")
-        streetName = try container.decodeIfPresent(String.self, forKey: "StreetName")
-        houseNr = try container.decodeIfPresent(String.self, forKey: "HouseNr")
-        houseNrAddition = try container.decodeIfPresent(String.self, forKey: "HouseNrAddition")
-        zipCode = try container.decodeIfPresent(String.self, forKey: "ZipCode")
-        city = try container.decodeIfPresent(String.self, forKey: "City")
-        region = try container.decodeIfPresent(String.self, forKey: "Region")
-        countryIso = try container.decodeIfPresent(String.self, forKey: "CountryIso")
-        original = try container.decodeIfPresent(String.self, forKey: "Original")
-    }
 }
 

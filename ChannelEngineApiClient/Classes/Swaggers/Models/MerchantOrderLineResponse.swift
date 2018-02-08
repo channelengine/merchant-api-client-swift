@@ -9,7 +9,7 @@ import Foundation
 
 
 
-open class MerchantOrderLineResponse: Codable {
+public struct MerchantOrderLineResponse: Codable {
 
     public enum Status: String, Codable { 
         case inProgress = "IN_PROGRESS"
@@ -47,51 +47,18 @@ open class MerchantOrderLineResponse: Codable {
     public var condition: Condition?
 
 
-    
-    public init(status: Status?, isFulfillmentByMarketplace: Bool?, merchantProductNo: String?, channelProductNo: String, quantity: Int, unitPriceInclVat: Double, feeFixed: Double?, feeRate: Double?, condition: Condition?) {
-        self.status = status
-        self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
-        self.merchantProductNo = merchantProductNo
-        self.channelProductNo = channelProductNo
-        self.quantity = quantity
-        self.unitPriceInclVat = unitPriceInclVat
-        self.feeFixed = feeFixed
-        self.feeRate = feeRate
-        self.condition = condition
-    }
-    
-
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(status, forKey: "Status")
-        try container.encodeIfPresent(isFulfillmentByMarketplace, forKey: "IsFulfillmentByMarketplace")
-        try container.encodeIfPresent(merchantProductNo, forKey: "MerchantProductNo")
-        try container.encode(channelProductNo, forKey: "ChannelProductNo")
-        try container.encode(quantity, forKey: "Quantity")
-        try container.encode(unitPriceInclVat, forKey: "UnitPriceInclVat")
-        try container.encodeIfPresent(feeFixed, forKey: "FeeFixed")
-        try container.encodeIfPresent(feeRate, forKey: "FeeRate")
-        try container.encodeIfPresent(condition, forKey: "Condition")
+    public enum CodingKeys: String, CodingKey { 
+        case status = "Status"
+        case isFulfillmentByMarketplace = "IsFulfillmentByMarketplace"
+        case merchantProductNo = "MerchantProductNo"
+        case channelProductNo = "ChannelProductNo"
+        case quantity = "Quantity"
+        case unitPriceInclVat = "UnitPriceInclVat"
+        case feeFixed = "FeeFixed"
+        case feeRate = "FeeRate"
+        case condition = "Condition"
     }
 
-    // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        status = try container.decodeIfPresent(Status.self, forKey: "Status")
-        isFulfillmentByMarketplace = try container.decodeIfPresent(Bool.self, forKey: "IsFulfillmentByMarketplace")
-        merchantProductNo = try container.decodeIfPresent(String.self, forKey: "MerchantProductNo")
-        channelProductNo = try container.decode(String.self, forKey: "ChannelProductNo")
-        quantity = try container.decode(Int.self, forKey: "Quantity")
-        unitPriceInclVat = try container.decode(Double.self, forKey: "UnitPriceInclVat")
-        feeFixed = try container.decodeIfPresent(Double.self, forKey: "FeeFixed")
-        feeRate = try container.decodeIfPresent(Double.self, forKey: "FeeRate")
-        condition = try container.decodeIfPresent(Condition.self, forKey: "Condition")
-    }
 }
 
