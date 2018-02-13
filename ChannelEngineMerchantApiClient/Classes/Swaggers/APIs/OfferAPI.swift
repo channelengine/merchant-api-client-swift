@@ -48,13 +48,13 @@ open class OfferAPI {
      */
     open class func offerStockPriceUpdateWithRequestBuilder(updates: [MerchantStockPriceUpdateRequest]) -> RequestBuilder<SingleOfCollectionsDictionary2Generic> {
         let path = "/v2/offer"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updates)
 
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<SingleOfCollectionsDictionary2Generic>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<SingleOfCollectionsDictionary2Generic>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

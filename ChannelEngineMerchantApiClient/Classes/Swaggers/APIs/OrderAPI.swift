@@ -12,7 +12,7 @@ import Alamofire
 
 open class OrderAPI {
     /**
-     Merchant: Acknowledge Order
+     Acknowledge Order
      
      - parameter model: (body) Relations between the id&#39;s returned by ChannelEngine and the references which the merchant uses 
      - parameter completion: completion handler to receive the data and the error objects
@@ -25,9 +25,9 @@ open class OrderAPI {
 
 
     /**
-     Merchant: Acknowledge Order
+     Acknowledge Order
      - POST /v2/orders/acknowledge
-     - For merchants.    Acknowledge an order. By acknowledging the order the merchant can confirm that  the order has been imported. When acknowledging an order the merchant has to supply  references that uniquely identify the order and the order lines. These references  will be used in the other API calls.
+     - Acknowledge an order. By acknowledging the order the merchant can confirm that  the order has been imported. When acknowledging an order the merchant has to supply  references that uniquely identify the order and the order lines. These references  will be used in the other API calls.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -46,59 +46,13 @@ open class OrderAPI {
      */
     open class func orderAcknowledgeWithRequestBuilder(model: OrderAcknowledgement) -> RequestBuilder<ApiResponse> {
         let path = "/v2/orders/acknowledge"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
-    }
-
-    /**
-     Channel: Create Order
-     
-     - parameter model: (body)  
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func orderCreate(model: ChannelOrderRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
-        orderCreateWithRequestBuilder(model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
-        }
-    }
-
-
-    /**
-     Channel: Create Order
-     - POST /v2/orders
-     - For channels.    Create a new order in ChannelEngine.
-     - API Key:
-       - type: apiKey apikey (QUERY)
-       - name: apikey
-     - examples: [{contentType=application/json, example={
-  "Message" : "Message",
-  "ValidationErrors" : {
-    "key" : [ "ValidationErrors", "ValidationErrors" ]
-  },
-  "StatusCode" : 0,
-  "Success" : true
-}}]
-     
-     - parameter model: (body)  
-
-     - returns: RequestBuilder<ApiResponse> 
-     */
-    open class func orderCreateWithRequestBuilder(model: ChannelOrderRequest) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/orders"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
-
-        let url = NSURLComponents(string: URLString)
-
-
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -130,7 +84,7 @@ open class OrderAPI {
     }
 
     /**
-     Merchant: Get Orders By Filter
+     Get Orders By Filter
      
      - parameter filterStatuses: (query)  (optional)
      - parameter filterMerchantOrderNos: (query)  (optional)
@@ -147,9 +101,9 @@ open class OrderAPI {
 
 
     /**
-     Merchant: Get Orders By Filter
+     Get Orders By Filter
      - GET /v2/orders
-     - For merchants.                Fetch orders based on the provided OrderFilter
+     - Fetch orders based on the provided OrderFilter
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -310,7 +264,7 @@ open class OrderAPI {
      */
     open class func orderGetByFilterWithRequestBuilder(filterStatuses: [String]? = nil, filterMerchantOrderNos: [String]? = nil, filterExcludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, filterFulfillmentType: FilterFulfillmentType_orderGetByFilter? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
@@ -323,13 +277,13 @@ open class OrderAPI {
         ])
         
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
-     Merchant: Get New Orders
+     Get New Orders
      
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -341,9 +295,9 @@ open class OrderAPI {
 
 
     /**
-     Merchant: Get New Orders
+     Get New Orders
      - GET /v2/orders/new
-     - For merchants.                Fetch newly placed orders (order with status NEW).
+     - Fetch newly placed orders (order with status NEW).
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -498,19 +452,19 @@ open class OrderAPI {
      */
     open class func orderGetNewWithRequestBuilder() -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders/new"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
-     Merchant: Download Invoice
+     Download Invoice
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
      - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
@@ -524,9 +478,9 @@ open class OrderAPI {
 
 
     /**
-     Merchant: Download Invoice
+     Download Invoice
      - GET /v2/orders/{merchantOrderNo}/invoice
-     - For merchants.    Generates the ChannelEngine VAT invoice for this order in PDF
+     - Generates the ChannelEngine VAT invoice for this order in PDF
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -542,7 +496,7 @@ open class OrderAPI {
         let merchantOrderNoPreEscape = "\(merchantOrderNo)"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
@@ -551,13 +505,13 @@ open class OrderAPI {
         ])
         
 
-        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
-     Merchant: Download Packing Slip
+     Download Packing Slip
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
      - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
@@ -571,9 +525,9 @@ open class OrderAPI {
 
 
     /**
-     Merchant: Download Packing Slip
+     Download Packing Slip
      - GET /v2/orders/{merchantOrderNo}/packingslip
-     - For merchants.    Generates the ChannelEngine packing slip for this order in PDF
+     - Generates the ChannelEngine packing slip for this order in PDF
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -589,7 +543,7 @@ open class OrderAPI {
         let merchantOrderNoPreEscape = "\(merchantOrderNo)"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
@@ -598,7 +552,7 @@ open class OrderAPI {
         ])
         
 
-        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

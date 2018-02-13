@@ -12,7 +12,7 @@ import Alamofire
 
 open class ShipmentAPI {
     /**
-     Merchant: Create Shipment
+     Create Shipment
      
      - parameter model: (body)  
      - parameter completion: completion handler to receive the data and the error objects
@@ -25,9 +25,9 @@ open class ShipmentAPI {
 
 
     /**
-     Merchant: Create Shipment
+     Create Shipment
      - POST /v2/shipments
-     - For merchants.    Mark (part of) an order as shipped.
+     - Mark (part of) an order as shipped.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -46,96 +46,19 @@ open class ShipmentAPI {
      */
     open class func shipmentCreateWithRequestBuilder(model: MerchantShipmentRequest) -> RequestBuilder<ApiResponse> {
         let path = "/v2/shipments"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
-     Channel: Get Shipments
-     
-     - parameter createdSince: (query)  
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func shipmentIndex(createdSince: Date, completion: @escaping ((_ data: CollectionOfChannelShipmentResponse?,_ error: Error?) -> Void)) {
-        shipmentIndexWithRequestBuilder(createdSince: createdSince).execute { (response, error) -> Void in
-            completion(response?.body, error);
-        }
-    }
-
-
-    /**
-     Channel: Get Shipments
-     - GET /v2/shipments
-     - For channels.    Gets all shipments created since the supplied date.
-     - API Key:
-       - type: apiKey apikey (QUERY)
-       - name: apikey
-     - examples: [{contentType=application/json, example={
-  "TotalCount" : 1,
-  "Message" : "Message",
-  "ValidationErrors" : {
-    "key" : [ "ValidationErrors", "ValidationErrors" ]
-  },
-  "Content" : [ {
-    "ChannelOrderNo" : "ChannelOrderNo",
-    "TrackTraceUrl" : "TrackTraceUrl",
-    "TrackTraceNo" : "TrackTraceNo",
-    "Method" : "Method",
-    "Lines" : [ {
-      "Quantity" : 0,
-      "ChannelProductNo" : "ChannelProductNo"
-    }, {
-      "Quantity" : 0,
-      "ChannelProductNo" : "ChannelProductNo"
-    } ]
-  }, {
-    "ChannelOrderNo" : "ChannelOrderNo",
-    "TrackTraceUrl" : "TrackTraceUrl",
-    "TrackTraceNo" : "TrackTraceNo",
-    "Method" : "Method",
-    "Lines" : [ {
-      "Quantity" : 0,
-      "ChannelProductNo" : "ChannelProductNo"
-    }, {
-      "Quantity" : 0,
-      "ChannelProductNo" : "ChannelProductNo"
-    } ]
-  } ],
-  "ItemsPerPage" : 5,
-  "Count" : 6,
-  "StatusCode" : 5,
-  "Success" : true
-}}]
-     
-     - parameter createdSince: (query)  
-
-     - returns: RequestBuilder<CollectionOfChannelShipmentResponse> 
-     */
-    open class func shipmentIndexWithRequestBuilder(createdSince: Date) -> RequestBuilder<CollectionOfChannelShipmentResponse> {
-        let path = "/v2/shipments"
-        let URLString = ChannelEngineApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "createdSince": createdSince.encodeToJSON()
-        ])
-        
-
-        let requestBuilder: RequestBuilder<CollectionOfChannelShipmentResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
-    }
-
-    /**
-     Merchant: Update Shipment
+     Update Shipment
      
      - parameter merchantShipmentNo: (path) The merchant&#39;s shipment reference 
      - parameter model: (body) The updated tracking information 
@@ -149,9 +72,9 @@ open class ShipmentAPI {
 
 
     /**
-     Merchant: Update Shipment
+     Update Shipment
      - PUT /v2/shipments/{merchantShipmentNo}
-     - For merchants.    Update an existing shipment with tracking information
+     - Update an existing shipment with tracking information
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
@@ -174,13 +97,13 @@ open class ShipmentAPI {
         let merchantShipmentNoPreEscape = "\(merchantShipmentNo)"
         let merchantShipmentNoPostEscape = merchantShipmentNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineApiClientAPI.basePath + path
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

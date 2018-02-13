@@ -46,8 +46,8 @@ public struct MerchantOrderResponse: Codable {
     public var currencyCode: String
     public var orderDate: Date
     public var channelCustomerNo: String?
-    public var billingAddress: EntitiesAddressModels
-    public var shippingAddress: EntitiesAddressModels
+    public var billingAddress: Address
+    public var shippingAddress: Address
     public var extraData: [String:String]?
 
 

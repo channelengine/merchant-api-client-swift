@@ -23,6 +23,7 @@ public struct MerchantReturnRequest: Codable {
     public var merchantOrderNo: String
     public var merchantReturnNo: String
     public var lines: [MerchantReturnLineRequest]
+    public var _id: Int?
     public var reason: Reason?
     public var customerComment: String?
     public var merchantComment: String?
@@ -34,6 +35,7 @@ public struct MerchantReturnRequest: Codable {
         case merchantOrderNo = "MerchantOrderNo"
         case merchantReturnNo = "MerchantReturnNo"
         case lines = "Lines"
+        case _id = "Id"
         case reason = "Reason"
         case customerComment = "CustomerComment"
         case merchantComment = "MerchantComment"

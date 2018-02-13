@@ -6,8 +6,8 @@
 
 import Foundation
 
-open class ChannelEngineApiClientAPI {
-    open static var basePath = "https://demo.channelengine.net/api"
+open class ChannelEngineMerchantApiClientAPI {
+    open static var basePath = "http://dev.channelengine.local/api"
     open static var credential: URLCredential?
     open static var customHeaders: [String:String] = [:]
     open static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
@@ -31,7 +31,7 @@ open class RequestBuilder<T> {
         self.isBody = isBody
         self.headers = headers
 
-        addHeaders(ChannelEngineApiClientAPI.customHeaders)
+        addHeaders(ChannelEngineMerchantApiClientAPI.customHeaders)
     }
 
     open func addHeaders(_ aHeaders:[String:String]) {
@@ -50,7 +50,7 @@ open class RequestBuilder<T> {
     }
 
     open func addCredential() -> Self {
-        self.credential = ChannelEngineApiClientAPI.credential
+        self.credential = ChannelEngineMerchantApiClientAPI.credential
         return self
     }
 }
