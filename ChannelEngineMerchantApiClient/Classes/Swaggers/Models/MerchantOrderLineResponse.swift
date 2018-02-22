@@ -41,13 +41,13 @@ public struct MerchantOrderLineResponse: Codable {
     public var lineTotalInclVat: Double?
     /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var lineVat: Double?
-    /** The value of a single unit of the ordered product including VAT  (in the currency in which the order was paid for). */
+    /** The value of a single unit of the ordered product including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalUnitPriceInclVat: Double?
-    /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the currency in which the order was paid for). */
+    /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalUnitVat: Double?
-    /** The total value of the order line (quantity * unit price) including VAT  (in the currency in which the order was paid for). */
+    /** The total value of the order line (quantity * unit price) including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalLineTotalInclVat: Double?
-    /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the currency in which the order was paid for). */
+    /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalLineVat: Double?
     public var channelProductNo: String
     public var quantity: Int

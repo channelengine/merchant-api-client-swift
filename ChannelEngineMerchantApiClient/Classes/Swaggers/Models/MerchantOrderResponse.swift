@@ -45,17 +45,17 @@ public struct MerchantOrderResponse: Codable {
     public var totalInclVat: Double?
     /** The total amount of VAT charged over the total value of te order  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var totalVat: Double?
-    /** The total value of the order lines including VAT  (in the currency in which the order was paid for). */
+    /** The total value of the order lines including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalSubTotalInclVat: Double?
-    /** The total amount of VAT charged over the order lines  (in the currency in which the order was paid for). */
+    /** The total amount of VAT charged over the order lines  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalSubTotalVat: Double?
-    /** The shipping fee including VAT  (in the currency in which the order was paid for). */
+    /** The shipping fee including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalShippingCostsInclVat: Double?
-    /** The total amount of VAT charged over the shipping fee  (in the currency in which the order was paid for). */
+    /** The total amount of VAT charged over the shipping fee  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalShippingCostsVat: Double?
-    /** The total value of the order including VAT  (in the currency in which the order was paid for). */
+    /** The total value of the order including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalTotalInclVat: Double?
-    /** The total amount of VAT charged over the total value of te order  (in the currency in which the order was paid for). */
+    /** The total amount of VAT charged over the total value of te order  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalTotalVat: Double?
     public var lines: [MerchantOrderLineResponse]?
     public var phone: String?
