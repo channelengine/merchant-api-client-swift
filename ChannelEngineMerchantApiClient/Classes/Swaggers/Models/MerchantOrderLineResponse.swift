@@ -35,9 +35,23 @@ public struct MerchantOrderLineResponse: Codable {
     public var status: Status?
     public var isFulfillmentByMarketplace: Bool?
     public var merchantProductNo: String?
+    /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var unitVat: Double?
+    /** The total value of the order line (quantity * unit price) including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var lineTotalInclVat: Double?
+    /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var lineVat: Double?
+    /** The value of a single unit of the ordered product including VAT  (in the currency in which the order was paid for). */
+    public var originalUnitPriceInclVat: Double?
+    /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the currency in which the order was paid for). */
+    public var originalUnitVat: Double?
+    /** The total value of the order line (quantity * unit price) including VAT  (in the currency in which the order was paid for). */
+    public var originalLineTotalInclVat: Double?
+    /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the currency in which the order was paid for). */
+    public var originalLineVat: Double?
     public var channelProductNo: String
     public var quantity: Int
-    /** The value of a single unit of the ordered product including VAT  (in the tenant&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The value of a single unit of the ordered product including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var unitPriceInclVat: Double
     /** A fixed fee that is charged by the Channel for this orderline.  This field is optional, send 0 if not applicable. */
     public var feeFixed: Double?
@@ -51,6 +65,13 @@ public struct MerchantOrderLineResponse: Codable {
         case status = "Status"
         case isFulfillmentByMarketplace = "IsFulfillmentByMarketplace"
         case merchantProductNo = "MerchantProductNo"
+        case unitVat = "UnitVat"
+        case lineTotalInclVat = "LineTotalInclVat"
+        case lineVat = "LineVat"
+        case originalUnitPriceInclVat = "OriginalUnitPriceInclVat"
+        case originalUnitVat = "OriginalUnitVat"
+        case originalLineTotalInclVat = "OriginalLineTotalInclVat"
+        case originalLineVat = "OriginalLineVat"
         case channelProductNo = "ChannelProductNo"
         case quantity = "Quantity"
         case unitPriceInclVat = "UnitPriceInclVat"

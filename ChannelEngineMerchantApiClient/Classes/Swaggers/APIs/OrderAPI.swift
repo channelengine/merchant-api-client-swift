@@ -108,20 +108,17 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 9,
+  "TotalCount" : 6,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "Content" : [ {
-    "Status" : "IN_PROGRESS",
-    "ChannelOrderNo" : "ChannelOrderNo",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "ExtraData" : {
-      "key" : "ExtraData"
-    },
-    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "SubTotalInclVat" : 6.027456183070403,
+    "OriginalShippingCostsVat" : 2.027123023002322,
+    "OriginalSubTotalVat" : 9.301444243932576,
     "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
@@ -138,8 +135,20 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "ChannelName" : "ChannelName",
+    "TotalVat" : 2.3021358869347655,
     "Phone" : "Phone",
+    "ChannelCustomerNo" : "ChannelCustomerNo",
+    "ChannelOrderSupport" : "NONE",
+    "ShippingCostsVat" : 5.962133916683182,
+    "SubTotalVat" : 1.4658129805029452,
+    "TotalInclVat" : 5.637376656633329,
+    "Status" : "IN_PROGRESS",
+    "ChannelOrderNo" : "ChannelOrderNo",
+    "ExtraData" : {
+      "key" : "ExtraData"
+    },
+    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
       "CompanyName" : "CompanyName",
@@ -154,41 +163,54 @@ open class OrderAPI {
       "City" : "City",
       "Original" : "Original"
     },
-    "ShippingCostsInclVat" : 2.3021358869347655,
+    "OriginalTotalVat" : 7.386281948385884,
+    "ShippingCostsInclVat" : 8.762042012749001,
+    "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
-    "ChannelCustomerNo" : "ChannelCustomerNo",
     "Id" : 0,
-    "ChannelOrderSupport" : "NONE",
+    "OriginalShippingCostsInclVat" : 3.616076749251911,
+    "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   }, {
-    "Status" : "IN_PROGRESS",
-    "ChannelOrderNo" : "ChannelOrderNo",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "ExtraData" : {
-      "key" : "ExtraData"
-    },
-    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "SubTotalInclVat" : 6.027456183070403,
+    "OriginalShippingCostsVat" : 2.027123023002322,
+    "OriginalSubTotalVat" : 9.301444243932576,
     "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
@@ -205,8 +227,20 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "ChannelName" : "ChannelName",
+    "TotalVat" : 2.3021358869347655,
     "Phone" : "Phone",
+    "ChannelCustomerNo" : "ChannelCustomerNo",
+    "ChannelOrderSupport" : "NONE",
+    "ShippingCostsVat" : 5.962133916683182,
+    "SubTotalVat" : 1.4658129805029452,
+    "TotalInclVat" : 5.637376656633329,
+    "Status" : "IN_PROGRESS",
+    "ChannelOrderNo" : "ChannelOrderNo",
+    "ExtraData" : {
+      "key" : "ExtraData"
+    },
+    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
       "CompanyName" : "CompanyName",
@@ -221,36 +255,52 @@ open class OrderAPI {
       "City" : "City",
       "Original" : "Original"
     },
-    "ShippingCostsInclVat" : 2.3021358869347655,
+    "OriginalTotalVat" : 7.386281948385884,
+    "ShippingCostsInclVat" : 8.762042012749001,
+    "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
-    "ChannelCustomerNo" : "ChannelCustomerNo",
     "Id" : 0,
-    "ChannelOrderSupport" : "NONE",
+    "OriginalShippingCostsInclVat" : 3.616076749251911,
+    "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
   "ItemsPerPage" : 3,
-  "Count" : 7,
-  "StatusCode" : 2,
+  "Count" : 9,
+  "StatusCode" : 6,
   "Success" : true
 }}]
      
@@ -302,20 +352,17 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 9,
+  "TotalCount" : 6,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "Content" : [ {
-    "Status" : "IN_PROGRESS",
-    "ChannelOrderNo" : "ChannelOrderNo",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "ExtraData" : {
-      "key" : "ExtraData"
-    },
-    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "SubTotalInclVat" : 6.027456183070403,
+    "OriginalShippingCostsVat" : 2.027123023002322,
+    "OriginalSubTotalVat" : 9.301444243932576,
     "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
@@ -332,8 +379,20 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "ChannelName" : "ChannelName",
+    "TotalVat" : 2.3021358869347655,
     "Phone" : "Phone",
+    "ChannelCustomerNo" : "ChannelCustomerNo",
+    "ChannelOrderSupport" : "NONE",
+    "ShippingCostsVat" : 5.962133916683182,
+    "SubTotalVat" : 1.4658129805029452,
+    "TotalInclVat" : 5.637376656633329,
+    "Status" : "IN_PROGRESS",
+    "ChannelOrderNo" : "ChannelOrderNo",
+    "ExtraData" : {
+      "key" : "ExtraData"
+    },
+    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
       "CompanyName" : "CompanyName",
@@ -348,41 +407,54 @@ open class OrderAPI {
       "City" : "City",
       "Original" : "Original"
     },
-    "ShippingCostsInclVat" : 2.3021358869347655,
+    "OriginalTotalVat" : 7.386281948385884,
+    "ShippingCostsInclVat" : 8.762042012749001,
+    "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
-    "ChannelCustomerNo" : "ChannelCustomerNo",
     "Id" : 0,
-    "ChannelOrderSupport" : "NONE",
+    "OriginalShippingCostsInclVat" : 3.616076749251911,
+    "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   }, {
-    "Status" : "IN_PROGRESS",
-    "ChannelOrderNo" : "ChannelOrderNo",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "ExtraData" : {
-      "key" : "ExtraData"
-    },
-    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "SubTotalInclVat" : 6.027456183070403,
+    "OriginalShippingCostsVat" : 2.027123023002322,
+    "OriginalSubTotalVat" : 9.301444243932576,
     "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
@@ -399,8 +471,20 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "ChannelName" : "ChannelName",
+    "TotalVat" : 2.3021358869347655,
     "Phone" : "Phone",
+    "ChannelCustomerNo" : "ChannelCustomerNo",
+    "ChannelOrderSupport" : "NONE",
+    "ShippingCostsVat" : 5.962133916683182,
+    "SubTotalVat" : 1.4658129805029452,
+    "TotalInclVat" : 5.637376656633329,
+    "Status" : "IN_PROGRESS",
+    "ChannelOrderNo" : "ChannelOrderNo",
+    "ExtraData" : {
+      "key" : "ExtraData"
+    },
+    "OrderDate" : "2000-01-23T04:56:07.000+00:00",
+    "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
       "CompanyName" : "CompanyName",
@@ -415,36 +499,52 @@ open class OrderAPI {
       "City" : "City",
       "Original" : "Original"
     },
-    "ShippingCostsInclVat" : 2.3021358869347655,
+    "OriginalTotalVat" : 7.386281948385884,
+    "ShippingCostsInclVat" : 8.762042012749001,
+    "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
-    "ChannelCustomerNo" : "ChannelCustomerNo",
     "Id" : 0,
-    "ChannelOrderSupport" : "NONE",
+    "OriginalShippingCostsInclVat" : 3.616076749251911,
+    "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 1.4658129805029452,
+      "UnitPriceInclVat" : 9.965781217890562,
       "Condition" : "NEW",
-      "FeeFixed" : 5.962133916683182,
-      "FeeRate" : 5.637376656633329,
-      "Quantity" : 6,
+      "UnitVat" : 1.2315135367772556,
+      "FeeFixed" : 9.369310271410669,
+      "FeeRate" : 6.683562403749608,
+      "Quantity" : 5,
+      "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
+      "OriginalLineTotalInclVat" : 1.1730742509559433,
+      "OriginalUnitPriceInclVat" : 6.84685269835264,
+      "LineVat" : 1.4894159098541704,
+      "OriginalLineVat" : 4.965218492984954,
       "MerchantProductNo" : "MerchantProductNo",
+      "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
   "ItemsPerPage" : 3,
-  "Count" : 7,
-  "StatusCode" : 2,
+  "Count" : 9,
+  "StatusCode" : 6,
   "Success" : true
 }}]
 

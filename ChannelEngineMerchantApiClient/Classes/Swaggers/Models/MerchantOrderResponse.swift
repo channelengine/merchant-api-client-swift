@@ -35,13 +35,35 @@ public struct MerchantOrderResponse: Codable {
     public var channelOrderSupport: ChannelOrderSupport?
     public var channelOrderNo: String?
     public var status: Status?
+    /** The total value of the order lines including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var subTotalInclVat: Double?
+    /** The total amount of VAT charged over the order lines  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var subTotalVat: Double?
+    /** The total amount of VAT charged over the shipping fee  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var shippingCostsVat: Double?
+    /** The total value of the order including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var totalInclVat: Double?
+    /** The total amount of VAT charged over the total value of te order  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    public var totalVat: Double?
+    /** The total value of the order lines including VAT  (in the currency in which the order was paid for). */
+    public var originalSubTotalInclVat: Double?
+    /** The total amount of VAT charged over the order lines  (in the currency in which the order was paid for). */
+    public var originalSubTotalVat: Double?
+    /** The shipping fee including VAT  (in the currency in which the order was paid for). */
+    public var originalShippingCostsInclVat: Double?
+    /** The total amount of VAT charged over the shipping fee  (in the currency in which the order was paid for). */
+    public var originalShippingCostsVat: Double?
+    /** The total value of the order including VAT  (in the currency in which the order was paid for). */
+    public var originalTotalInclVat: Double?
+    /** The total amount of VAT charged over the total value of te order  (in the currency in which the order was paid for). */
+    public var originalTotalVat: Double?
     public var lines: [MerchantOrderLineResponse]?
     public var phone: String?
     public var email: String
     public var companyRegistrationNo: String?
     public var vatNo: String?
     public var paymentMethod: String
-    /** The shipping fee including VAT  (in the tenant&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The shipping fee including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var shippingCostsInclVat: Double
     public var currencyCode: String
     public var orderDate: Date
@@ -57,6 +79,17 @@ public struct MerchantOrderResponse: Codable {
         case channelOrderSupport = "ChannelOrderSupport"
         case channelOrderNo = "ChannelOrderNo"
         case status = "Status"
+        case subTotalInclVat = "SubTotalInclVat"
+        case subTotalVat = "SubTotalVat"
+        case shippingCostsVat = "ShippingCostsVat"
+        case totalInclVat = "TotalInclVat"
+        case totalVat = "TotalVat"
+        case originalSubTotalInclVat = "OriginalSubTotalInclVat"
+        case originalSubTotalVat = "OriginalSubTotalVat"
+        case originalShippingCostsInclVat = "OriginalShippingCostsInclVat"
+        case originalShippingCostsVat = "OriginalShippingCostsVat"
+        case originalTotalInclVat = "OriginalTotalInclVat"
+        case originalTotalVat = "OriginalTotalVat"
         case lines = "Lines"
         case phone = "Phone"
         case email = "Email"
