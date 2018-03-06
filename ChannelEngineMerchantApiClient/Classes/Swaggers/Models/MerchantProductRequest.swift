@@ -18,8 +18,10 @@ public struct MerchantProductRequest: Codable {
     }
     /** A unique identifier of the product. */
     public var merchantProductNo: String?
-    /** If this product is a different version of another  product (for example, all fields are the same except  size and/or color), then this field should contain  the &#39;MerchantProductNo&#39; of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether   the parent is behind the child in the list). */
+    /** If this product is a different version of another  product (for example, all fields are the same except  size), then this field should contain  the &#39;MerchantProductNo&#39; of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether   the parent is behind the child in the list). */
     public var parentMerchantProductNo: String?
+    /** If this product is a different version of another  product (for example, all fields are the same except  color) and itself is a parent with child products (e.g. of sizes),   then this field should contain the &#39;MerchantProductNo&#39; of the grandparent. The grandparent  should already exist (or be present between the products  in the content of the API call, it does not matter whether   the grandparent is behind the child in the list).    Use this field in case of three level product hierarchy,   e.g. model - color - size.   This is required for channels like Otto. */
+    public var parentMerchantProductNo2: String?
     public var name: String?
     public var _description: String?
     public var brand: String?
@@ -60,6 +62,7 @@ public struct MerchantProductRequest: Codable {
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"
         case parentMerchantProductNo = "ParentMerchantProductNo"
+        case parentMerchantProductNo2 = "ParentMerchantProductNo2"
         case name = "Name"
         case _description = "Description"
         case brand = "Brand"
