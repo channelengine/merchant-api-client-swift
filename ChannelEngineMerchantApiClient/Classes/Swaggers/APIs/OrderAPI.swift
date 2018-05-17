@@ -108,7 +108,7 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 6,
+  "TotalCount" : 3,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
@@ -164,7 +164,7 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "OriginalTotalVat" : 7.386281948385884,
-    "ShippingCostsInclVat" : 8.762042012749001,
+    "ShippingCostsInclVat" : 9.018348186070783,
     "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -172,11 +172,11 @@ open class OrderAPI {
     "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -184,16 +184,17 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -201,6 +202,7 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
@@ -256,7 +258,7 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "OriginalTotalVat" : 7.386281948385884,
-    "ShippingCostsInclVat" : 8.762042012749001,
+    "ShippingCostsInclVat" : 9.018348186070783,
     "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -264,11 +266,11 @@ open class OrderAPI {
     "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -276,16 +278,17 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -293,14 +296,15 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
-  "ItemsPerPage" : 3,
-  "Count" : 9,
-  "StatusCode" : 6,
+  "ItemsPerPage" : 6,
+  "Count" : 6,
+  "StatusCode" : 1,
   "Success" : true
 }}]
      
@@ -352,7 +356,7 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 6,
+  "TotalCount" : 3,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
@@ -408,7 +412,7 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "OriginalTotalVat" : 7.386281948385884,
-    "ShippingCostsInclVat" : 8.762042012749001,
+    "ShippingCostsInclVat" : 9.018348186070783,
     "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -416,11 +420,11 @@ open class OrderAPI {
     "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -428,16 +432,17 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -445,6 +450,7 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
@@ -500,7 +506,7 @@ open class OrderAPI {
       "Original" : "Original"
     },
     "OriginalTotalVat" : 7.386281948385884,
-    "ShippingCostsInclVat" : 8.762042012749001,
+    "ShippingCostsInclVat" : 9.018348186070783,
     "OriginalSubTotalInclVat" : 7.061401241503109,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -508,11 +514,11 @@ open class OrderAPI {
     "OriginalTotalInclVat" : 4.145608029883936,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -520,16 +526,17 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.965781217890562,
+      "UnitPriceInclVat" : 9.369310271410669,
       "Condition" : "NEW",
       "UnitVat" : 1.2315135367772556,
-      "FeeFixed" : 9.369310271410669,
-      "FeeRate" : 6.683562403749608,
+      "FeeFixed" : 6.683562403749608,
+      "FeeRate" : 8.762042012749001,
       "Quantity" : 5,
       "OriginalUnitVat" : 7.457744773683766,
       "IsFulfillmentByMarketplace" : true,
@@ -537,14 +544,15 @@ open class OrderAPI {
       "OriginalUnitPriceInclVat" : 6.84685269835264,
       "LineVat" : 1.4894159098541704,
       "OriginalLineVat" : 4.965218492984954,
+      "CancellationRequestedQuantity" : 9,
       "MerchantProductNo" : "MerchantProductNo",
       "LineTotalInclVat" : 1.0246457001441578,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
-  "ItemsPerPage" : 3,
-  "Count" : 9,
-  "StatusCode" : 6,
+  "ItemsPerPage" : 6,
+  "Count" : 6,
+  "StatusCode" : 1,
   "Success" : true
 }}]
 
