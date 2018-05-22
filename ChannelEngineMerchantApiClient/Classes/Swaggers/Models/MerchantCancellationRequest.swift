@@ -11,10 +11,19 @@ import Foundation
 
 public struct MerchantCancellationRequest: Codable {
 
+    public enum ReasonCode: String, Codable { 
+        case notInStock = "NOT_IN_STOCK"
+        case damaged = "DAMAGED"
+        case incomplete = "INCOMPLETE"
+        case clientCancelled = "CLIENT_CANCELLED"
+        case invalidAddress = "INVALID_ADDRESS"
+        case other = "OTHER"
+    }
     public var merchantCancellationNo: String
     public var merchantOrderNo: String
     public var lines: [MerchantCancellationLineRequest]
     public var reason: String?
+    public var reasonCode: ReasonCode?
 
 
     public enum CodingKeys: String, CodingKey { 
@@ -22,6 +31,7 @@ public struct MerchantCancellationRequest: Codable {
         case merchantOrderNo = "MerchantOrderNo"
         case lines = "Lines"
         case reason = "Reason"
+        case reasonCode = "ReasonCode"
     }
 
 

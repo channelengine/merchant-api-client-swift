@@ -11,7 +11,9 @@ import Foundation
 
 public struct OrderAcknowledgement: Codable {
 
+    /** Your own order reference, this will be used in consecutive order processing API calls */
     public var merchantOrderNo: String
+    /** The ChannelEngine order ID of the order you would like to acknowledge */
     public var orderId: Int
 
 
