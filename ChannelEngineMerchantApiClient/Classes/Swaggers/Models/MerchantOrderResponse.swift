@@ -31,9 +31,13 @@ public struct MerchantOrderResponse: Codable {
     }
     /** The unique identifier used by ChannelEngine. This identifier does  not have to be saved. It should only be used in a call to acknowledge the order. */
     public var _id: Int?
+    /** The name of the channel */
     public var channelName: String?
+    /** The type of orders the channel support. */
     public var channelOrderSupport: ChannelOrderSupport?
+    /** The unique order reference used by the channel */
     public var channelOrderNo: String?
+    /** The status of the order */
     public var status: Status?
     /** The total value of the order lines including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var subTotalInclVat: Double?
@@ -58,20 +62,29 @@ public struct MerchantOrderResponse: Codable {
     /** The total amount of VAT charged over the total value of te order  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalTotalVat: Double?
     public var lines: [MerchantOrderLineResponse]?
+    /** The customer&#39;s telephone number */
     public var phone: String?
+    /** The customer&#39;s email */
     public var email: String
     /** Optional. A company&#39;s chamber of commerce number */
     public var companyRegistrationNo: String?
     /** Optional. A company&#39;s VAT number */
     public var vatNo: String?
+    /** The payment method used on the order */
     public var paymentMethod: String
     /** The shipping fee including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var shippingCostsInclVat: Double
+    /** The currency code for the amounts of the order */
     public var currencyCode: String
+    /** The date the order was done */
     public var orderDate: Date
+    /** The unique customer reference used by the channel */
     public var channelCustomerNo: String?
+    /** The billing or invoice address */
     public var billingAddress: Address
+    /** The shipping address */
     public var shippingAddress: Address
+    /** Extra data on the order */
     public var extraData: [String:String]?
 
 

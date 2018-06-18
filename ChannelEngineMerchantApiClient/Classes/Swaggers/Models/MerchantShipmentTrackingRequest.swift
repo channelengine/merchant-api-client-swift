@@ -11,8 +11,11 @@ import Foundation
 
 public struct MerchantShipmentTrackingRequest: Codable {
 
+    /** Shipment method (carrier) */
     public var method: String
+    /** The unique shipping reference used by the Shipping carrier (track &amp;amp; trace number) */
     public var trackTraceNo: String
+    /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
 
 

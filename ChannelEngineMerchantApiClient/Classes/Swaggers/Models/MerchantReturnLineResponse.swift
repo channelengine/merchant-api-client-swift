@@ -11,7 +11,9 @@ import Foundation
 
 public struct MerchantReturnLineResponse: Codable {
 
+    /** The unique product reference used by the Merchant (sku) */
     public var merchantProductNo: String?
+    /** Number of items of the product in this return */
     public var quantity: Int
 
 

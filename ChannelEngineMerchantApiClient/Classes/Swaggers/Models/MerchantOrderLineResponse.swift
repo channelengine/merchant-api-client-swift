@@ -32,8 +32,11 @@ public struct MerchantOrderLineResponse: Codable {
         case usedMediocre = "USED_MEDIOCRE"
         case unknown = "UNKNOWN"
     }
+    /** The status of the order */
     public var status: Status?
+    /** Is the order fulfilled by the marketplace (amazon: FBA, bol: LVB, etc.)? */
     public var isFulfillmentByMarketplace: Bool?
+    /** The unique product reference used by the Merchant (sku) */
     public var merchantProductNo: String?
     /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var unitVat: Double?
@@ -49,7 +52,9 @@ public struct MerchantOrderLineResponse: Codable {
     public var originalLineTotalInclVat: Double?
     /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalLineVat: Double?
+    /** The unique order reference used by the channel */
     public var channelProductNo: String
+    /** The number of items of the product */
     public var quantity: Int
     /** The number of items for which cancellation was requested by the customer.  Some channels allow a customer to cancel an order until it has been shipped.  When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation.  Use this field to check whether it is still possible to cancel the order. If this is the case, submit a cancellation to ChannelEngine */
     public var cancellationRequestedQuantity: Int

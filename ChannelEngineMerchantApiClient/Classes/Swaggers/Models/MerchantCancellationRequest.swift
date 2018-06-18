@@ -19,10 +19,14 @@ public struct MerchantCancellationRequest: Codable {
         case invalidAddress = "INVALID_ADDRESS"
         case other = "OTHER"
     }
+    /** The unique cancellation reference used by the Merchant (sku) */
     public var merchantCancellationNo: String
+    /** The unique order reference used by the Merchant (sku) */
     public var merchantOrderNo: String
     public var lines: [MerchantCancellationLineRequest]
+    /** Reason for cancellation (text) */
     public var reason: String?
+    /** Reason code for cancellation */
     public var reasonCode: ReasonCode?
 
 

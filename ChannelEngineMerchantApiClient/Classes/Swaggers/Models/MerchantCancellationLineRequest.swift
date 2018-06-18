@@ -11,7 +11,9 @@ import Foundation
 
 public struct MerchantCancellationLineRequest: Codable {
 
+    /** The unique product reference used by the Merchant (sku) */
     public var merchantProductNo: String
+    /** Quantity of the product to cancel */
     public var quantity: Int
 
 

@@ -140,4 +140,50 @@ open class ReturnAPI {
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
+    /**
+     Mark a return as received
+     
+     - parameter model: (body)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func returnUpdateForMerchant(model: MerchantReturnUpdateRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+        returnUpdateForMerchantWithRequestBuilder(model: model).execute { (response, error) -> Void in
+            completion(response?.body, error);
+        }
+    }
+
+
+    /**
+     Mark a return as received
+     - PUT /v2/returns
+     - Mark a return as received
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apikey
+     - examples: [{contentType=application/json, example={
+  "Message" : "Message",
+  "ValidationErrors" : {
+    "key" : [ "ValidationErrors", "ValidationErrors" ]
+  },
+  "StatusCode" : 0,
+  "Success" : true
+}}]
+     
+     - parameter model: (body)  
+
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func returnUpdateForMerchantWithRequestBuilder(model: MerchantReturnUpdateRequest) -> RequestBuilder<ApiResponse> {
+        let path = "/v2/returns"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
 }

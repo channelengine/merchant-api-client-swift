@@ -11,8 +11,11 @@ import Foundation
 
 public struct MerchantStockPriceUpdateRequest: Codable {
 
+    /** The unique product reference used by the Merchant (sku) */
     public var merchantProductNo: String
+    /** The stock of the product. Should not be negative */
     public var stock: Int?
+    /** The price of the product. Should not be negative */
     public var price: Double?
 
 

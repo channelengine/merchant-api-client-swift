@@ -29,11 +29,15 @@ public struct OrderFilter: Codable {
         case onlyChannel = "ONLY_CHANNEL"
         case mixed = "MIXED"
     }
+    /** Order status(es) to filter on */
     public var statuses: [Statuses]?
+    /** Filter on unique order reference used by the merchant */
     public var merchantOrderNos: [String]?
+    /** Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) */
     public var excludeMarketplaceFulfilledOrdersAndLines: Bool?
     /** Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. */
     public var fulfillmentType: FulfillmentType?
+    /** The page to filter on. Starts at 1. */
     public var page: Int?
 
 

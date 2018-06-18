@@ -86,11 +86,11 @@ open class OrderAPI {
     /**
      Get Orders By Filter
      
-     - parameter filterStatuses: (query)  (optional)
-     - parameter filterMerchantOrderNos: (query)  (optional)
-     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query)  (optional)
+     - parameter filterStatuses: (query) Order status(es) to filter on (optional)
+     - parameter filterMerchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter filterFulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
-     - parameter filterPage: (query)  (optional)
+     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderGetByFilter(filterStatuses: [String]? = nil, filterMerchantOrderNos: [String]? = nil, filterExcludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, filterFulfillmentType: FilterFulfillmentType_orderGetByFilter? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
@@ -308,11 +308,11 @@ open class OrderAPI {
   "Success" : true
 }}]
      
-     - parameter filterStatuses: (query)  (optional)
-     - parameter filterMerchantOrderNos: (query)  (optional)
-     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query)  (optional)
+     - parameter filterStatuses: (query) Order status(es) to filter on (optional)
+     - parameter filterMerchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter filterFulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
-     - parameter filterPage: (query)  (optional)
+     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
