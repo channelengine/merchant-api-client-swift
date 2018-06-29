@@ -33,6 +33,10 @@ public struct OrderFilter: Codable {
     public var statuses: [Statuses]?
     /** Filter on unique order reference used by the merchant */
     public var merchantOrderNos: [String]?
+    /** Filter on the order date, starting from this date. This date is inclusive. */
+    public var fromDate: Date?
+    /** Filter on the order date, until this date. This date is exclusive. */
+    public var toDate: Date?
     /** Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) */
     public var excludeMarketplaceFulfilledOrdersAndLines: Bool?
     /** Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. */
@@ -44,6 +48,8 @@ public struct OrderFilter: Codable {
     public enum CodingKeys: String, CodingKey { 
         case statuses = "Statuses"
         case merchantOrderNos = "MerchantOrderNos"
+        case fromDate = "FromDate"
+        case toDate = "ToDate"
         case excludeMarketplaceFulfilledOrdersAndLines = "ExcludeMarketplaceFulfilledOrdersAndLines"
         case fulfillmentType = "FulfillmentType"
         case page = "Page"

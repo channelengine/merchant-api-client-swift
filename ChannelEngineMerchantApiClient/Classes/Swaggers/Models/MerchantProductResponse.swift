@@ -18,6 +18,8 @@ public struct MerchantProductResponse: Codable {
     }
     /** Is the product active for the Merchant? */
     public var isActive: Bool?
+    /** A unique identifier of the product. (sku) */
+    public var merchantProductNo: String?
     /** The name of the product */
     public var name: String?
     /** A description of the product */
@@ -76,6 +78,7 @@ public struct MerchantProductResponse: Codable {
 
     public enum CodingKeys: String, CodingKey { 
         case isActive = "IsActive"
+        case merchantProductNo = "MerchantProductNo"
         case name = "Name"
         case _description = "Description"
         case brand = "Brand"

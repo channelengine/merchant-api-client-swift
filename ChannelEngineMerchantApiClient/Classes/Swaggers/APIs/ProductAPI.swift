@@ -122,36 +122,38 @@ open class ProductAPI {
     }
 
     /**
-     Get Product
+     Get Products
      
-     - parameter merchantProductNo: (path)  
+     - parameter filterSearch: (query) Search products by Name, MerchantProductNo, Ean or Brand (optional)
+     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productGetByMerchantProductNo(merchantProductNo: String, completion: @escaping ((_ data: SingleOfMerchantProductResponse?,_ error: Error?) -> Void)) {
-        productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: merchantProductNo).execute { (response, error) -> Void in
+    open class func productGetByFilter(filterSearch: String? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
+        productGetByFilterWithRequestBuilder(filterSearch: filterSearch, filterPage: filterPage).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
 
 
     /**
-     Get Product
-     - GET /v2/products/{merchantProductNo}
-     - Retrieve a product based on the merchant reference.
+     Get Products
+     - GET /v2/products
+     - Retrieve all products
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
+  "TotalCount" : 7,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
-  "Content" : {
-    "MSRP" : 1.4658129805029452,
+  "Content" : [ {
+    "MSRP" : 1.46581298050294517310021547018550336360931396484375,
     "Description" : "Description",
     "IsActive" : true,
     "Size" : "Size",
-    "PurchasePrice" : 5.962133916683182,
+    "PurchasePrice" : 5.962133916683182377482808078639209270477294921875,
     "Url" : "Url",
     "Name" : "Name",
     "VatRateType" : "STANDARD",
@@ -178,15 +180,150 @@ open class ProductAPI {
     "Brand" : "Brand",
     "ShippingTime" : "ShippingTime",
     "Ean" : "Ean",
-    "Price" : 6.027456183070403,
-    "ShippingCost" : 5.637376656633329,
+    "Price" : 6.02745618307040320615897144307382404804229736328125,
+    "ShippingCost" : 5.63737665663332876420099637471139430999755859375,
     "ExtraImageUrl3" : "ExtraImageUrl3",
     "ExtraImageUrl2" : "ExtraImageUrl2",
     "ExtraImageUrl1" : "ExtraImageUrl1",
+    "MerchantProductNo" : "MerchantProductNo",
+    "CategoryTrail" : "CategoryTrail",
+    "Stock" : 0
+  }, {
+    "MSRP" : 1.46581298050294517310021547018550336360931396484375,
+    "Description" : "Description",
+    "IsActive" : true,
+    "Size" : "Size",
+    "PurchasePrice" : 5.962133916683182377482808078639209270477294921875,
+    "Url" : "Url",
+    "Name" : "Name",
+    "VatRateType" : "STANDARD",
+    "ExtraImageUrl9" : "ExtraImageUrl9",
+    "ExtraImageUrl8" : "ExtraImageUrl8",
+    "ExtraImageUrl7" : "ExtraImageUrl7",
+    "ExtraImageUrl6" : "ExtraImageUrl6",
+    "ExtraImageUrl5" : "ExtraImageUrl5",
+    "Color" : "Color",
+    "ExtraImageUrl4" : "ExtraImageUrl4",
+    "ImageUrl" : "ImageUrl",
+    "ManufacturerProductNumber" : "ManufacturerProductNumber",
+    "ExtraData" : [ {
+      "Type" : "TEXT",
+      "IsPublic" : true,
+      "Value" : "Value",
+      "Key" : "Key"
+    }, {
+      "Type" : "TEXT",
+      "IsPublic" : true,
+      "Value" : "Value",
+      "Key" : "Key"
+    } ],
+    "Brand" : "Brand",
+    "ShippingTime" : "ShippingTime",
+    "Ean" : "Ean",
+    "Price" : 6.02745618307040320615897144307382404804229736328125,
+    "ShippingCost" : 5.63737665663332876420099637471139430999755859375,
+    "ExtraImageUrl3" : "ExtraImageUrl3",
+    "ExtraImageUrl2" : "ExtraImageUrl2",
+    "ExtraImageUrl1" : "ExtraImageUrl1",
+    "MerchantProductNo" : "MerchantProductNo",
+    "CategoryTrail" : "CategoryTrail",
+    "Stock" : 0
+  } ],
+  "ItemsPerPage" : 9,
+  "Count" : 2,
+  "StatusCode" : 3,
+  "Success" : true
+}}]
+     
+     - parameter filterSearch: (query) Search products by Name, MerchantProductNo, Ean or Brand (optional)
+     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
+
+     - returns: RequestBuilder<CollectionOfMerchantProductResponse> 
+     */
+    open class func productGetByFilterWithRequestBuilder(filterSearch: String? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
+        let path = "/v2/products"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+            "filter.search": filterSearch, 
+            "filter.page": filterPage?.encodeToJSON()
+        ])
+        
+
+        let requestBuilder: RequestBuilder<CollectionOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Get Product
+     
+     - parameter merchantProductNo: (path)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func productGetByMerchantProductNo(merchantProductNo: String, completion: @escaping ((_ data: SingleOfMerchantProductResponse?,_ error: Error?) -> Void)) {
+        productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: merchantProductNo).execute { (response, error) -> Void in
+            completion(response?.body, error);
+        }
+    }
+
+
+    /**
+     Get Product
+     - GET /v2/products/{merchantProductNo}
+     - Retrieve a product based on the merchant reference.
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apikey
+     - examples: [{contentType=application/json, example={
+  "Message" : "Message",
+  "ValidationErrors" : {
+    "key" : [ "ValidationErrors", "ValidationErrors" ]
+  },
+  "Content" : {
+    "MSRP" : 1.46581298050294517310021547018550336360931396484375,
+    "Description" : "Description",
+    "IsActive" : true,
+    "Size" : "Size",
+    "PurchasePrice" : 5.962133916683182377482808078639209270477294921875,
+    "Url" : "Url",
+    "Name" : "Name",
+    "VatRateType" : "STANDARD",
+    "ExtraImageUrl9" : "ExtraImageUrl9",
+    "ExtraImageUrl8" : "ExtraImageUrl8",
+    "ExtraImageUrl7" : "ExtraImageUrl7",
+    "ExtraImageUrl6" : "ExtraImageUrl6",
+    "ExtraImageUrl5" : "ExtraImageUrl5",
+    "Color" : "Color",
+    "ExtraImageUrl4" : "ExtraImageUrl4",
+    "ImageUrl" : "ImageUrl",
+    "ManufacturerProductNumber" : "ManufacturerProductNumber",
+    "ExtraData" : [ {
+      "Type" : "TEXT",
+      "IsPublic" : true,
+      "Value" : "Value",
+      "Key" : "Key"
+    }, {
+      "Type" : "TEXT",
+      "IsPublic" : true,
+      "Value" : "Value",
+      "Key" : "Key"
+    } ],
+    "Brand" : "Brand",
+    "ShippingTime" : "ShippingTime",
+    "Ean" : "Ean",
+    "Price" : 6.02745618307040320615897144307382404804229736328125,
+    "ShippingCost" : 5.63737665663332876420099637471139430999755859375,
+    "ExtraImageUrl3" : "ExtraImageUrl3",
+    "ExtraImageUrl2" : "ExtraImageUrl2",
+    "ExtraImageUrl1" : "ExtraImageUrl1",
+    "MerchantProductNo" : "MerchantProductNo",
     "CategoryTrail" : "CategoryTrail",
     "Stock" : 0
   },
-  "StatusCode" : 2,
+  "StatusCode" : 0,
   "Success" : true
 }}]
      

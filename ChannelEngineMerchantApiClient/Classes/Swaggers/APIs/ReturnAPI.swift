@@ -85,7 +85,7 @@ open class ReturnAPI {
   },
   "Content" : [ {
     "MerchantComment" : "MerchantComment",
-    "RefundExclVat" : 5.962133916683182,
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
@@ -97,10 +97,10 @@ open class ReturnAPI {
       "Quantity" : 0,
       "MerchantProductNo" : "MerchantProductNo"
     } ],
-    "RefundInclVat" : 1.4658129805029452
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
   }, {
     "MerchantComment" : "MerchantComment",
-    "RefundExclVat" : 5.962133916683182,
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
@@ -112,7 +112,7 @@ open class ReturnAPI {
       "Quantity" : 0,
       "MerchantProductNo" : "MerchantProductNo"
     } ],
-    "RefundInclVat" : 1.4658129805029452
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
   } ],
   "ItemsPerPage" : 7,
   "Count" : 5,
