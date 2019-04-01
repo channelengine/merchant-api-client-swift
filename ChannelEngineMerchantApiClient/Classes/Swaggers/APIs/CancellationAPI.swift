@@ -37,6 +37,7 @@ open class CancellationAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      

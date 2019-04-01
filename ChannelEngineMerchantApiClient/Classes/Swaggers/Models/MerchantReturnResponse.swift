@@ -20,11 +20,16 @@ public struct MerchantReturnResponse: Codable {
         case refusedDamaged = "REFUSED_DAMAGED"
         case wrongAddress = "WRONG_ADDRESS"
         case notCollected = "NOT_COLLECTED"
+        case wrongSize = "WRONG_SIZE"
         case other = "OTHER"
     }
     /** The unique order reference used by the Merchant */
     public var merchantOrderNo: String?
     public var lines: [MerchantReturnLineResponse]?
+    /** The date at which the return was created in ChannelEngine */
+    public var createdAt: Date?
+    /** The date at which the return was last modified in ChannelEngine */
+    public var updatedAt: Date?
     /** The unique return reference used by ChannelEngine */
     public var _id: Int?
     /** The reason code of the return */
@@ -42,6 +47,8 @@ public struct MerchantReturnResponse: Codable {
     public enum CodingKeys: String, CodingKey { 
         case merchantOrderNo = "MerchantOrderNo"
         case lines = "Lines"
+        case createdAt = "CreatedAt"
+        case updatedAt = "UpdatedAt"
         case _id = "Id"
         case reason = "Reason"
         case customerComment = "CustomerComment"

@@ -21,7 +21,6 @@ public struct MerchantOrderResponse: Codable {
         case inProgress = "IN_PROGRESS"
         case shipped = "SHIPPED"
         case inBackorder = "IN_BACKORDER"
-        case canceled = "CANCELED"
         case manco = "MANCO"
         case inCombi = "IN_COMBI"
         case closed = "CLOSED"

@@ -37,6 +37,7 @@ open class ShipmentAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      
@@ -84,6 +85,7 @@ open class ShipmentAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      

@@ -13,6 +13,7 @@ public struct SingleOfCollectionsDictionary2Generic: Codable {
 
     public var content: [String:[String]]?
     public var statusCode: Int?
+    public var logId: Int?
     public var success: Bool?
     public var message: String?
     public var validationErrors: [String:[String]]?
@@ -21,6 +22,7 @@ public struct SingleOfCollectionsDictionary2Generic: Codable {
     public enum CodingKeys: String, CodingKey { 
         case content = "Content"
         case statusCode = "StatusCode"
+        case logId = "LogId"
         case success = "Success"
         case message = "Message"
         case validationErrors = "ValidationErrors"

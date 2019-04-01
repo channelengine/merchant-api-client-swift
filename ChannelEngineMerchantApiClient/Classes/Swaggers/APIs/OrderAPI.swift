@@ -37,6 +37,7 @@ open class OrderAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      
@@ -64,7 +65,6 @@ open class OrderAPI {
         case inProgress = "IN_PROGRESS"
         case shipped = "SHIPPED"
         case inBackorder = "IN_BACKORDER"
-        case canceled = "CANCELED"
         case manco = "MANCO"
         case inCombi = "IN_COMBI"
         case closed = "CLOSED"
@@ -183,6 +183,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -201,6 +202,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -277,6 +279,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -295,6 +298,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -307,6 +311,7 @@ open class OrderAPI {
   "ItemsPerPage" : 6,
   "Count" : 6,
   "StatusCode" : 1,
+  "LogId" : 2,
   "Success" : true
 }}]
      
@@ -435,6 +440,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -453,6 +459,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -529,6 +536,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -547,6 +555,7 @@ open class OrderAPI {
       "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
       "IsFulfillmentByMarketplace" : true,
       "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "Gtin" : "Gtin",
       "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "LineVat" : 1.489415909854170383397331534069962799549102783203125,
       "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
@@ -559,6 +568,7 @@ open class OrderAPI {
   "ItemsPerPage" : 6,
   "Count" : 6,
   "StatusCode" : 1,
+  "LogId" : 2,
   "Success" : true
 }}]
 
@@ -581,7 +591,7 @@ open class OrderAPI {
      Download Invoice
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
-     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
+     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderInvoice(merchantOrderNo: String, useCustomerCulture: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
@@ -601,7 +611,7 @@ open class OrderAPI {
      - examples: [{output=none}]
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
-     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
+     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional, default to false)
 
      - returns: RequestBuilder<URL> 
      */
@@ -628,7 +638,7 @@ open class OrderAPI {
      Download Packing Slip
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
-     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
+     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderPackingSlip(merchantOrderNo: String, useCustomerCulture: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
@@ -648,7 +658,7 @@ open class OrderAPI {
      - examples: [{output=none}]
      
      - parameter merchantOrderNo: (path) The unique order reference as used by the merchant 
-     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional)
+     - parameter useCustomerCulture: (query) Generate the invoice in the billing address&#39; country&#39;s language (optional, default to false)
 
      - returns: RequestBuilder<URL> 
      */

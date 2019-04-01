@@ -52,6 +52,7 @@ open class ProductAPI {
     } ]
   },
   "StatusCode" : 1,
+  "LogId" : 5,
   "Success" : true
 }}]
      
@@ -98,6 +99,7 @@ open class ProductAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      
@@ -124,12 +126,14 @@ open class ProductAPI {
     /**
      Get Products
      
-     - parameter filterSearch: (query) Search products by Name, MerchantProductNo, Ean or Brand (optional)
+     - parameter filterSearch: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
+     - parameter filterEanList: (query) Search products by submitting a list of EAN&#39;s (optional)
+     - parameter filterMerchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
      - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productGetByFilter(filterSearch: String? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
-        productGetByFilterWithRequestBuilder(filterSearch: filterSearch, filterPage: filterPage).execute { (response, error) -> Void in
+    open class func productGetByFilter(filterSearch: String? = nil, filterEanList: [String]? = nil, filterMerchantProductNoList: [String]? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
+        productGetByFilterWithRequestBuilder(filterSearch: filterSearch, filterEanList: filterEanList, filterMerchantProductNoList: filterMerchantProductNoList, filterPage: filterPage).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
@@ -232,15 +236,18 @@ open class ProductAPI {
   "ItemsPerPage" : 9,
   "Count" : 2,
   "StatusCode" : 3,
+  "LogId" : 2,
   "Success" : true
 }}]
      
-     - parameter filterSearch: (query) Search products by Name, MerchantProductNo, Ean or Brand (optional)
+     - parameter filterSearch: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
+     - parameter filterEanList: (query) Search products by submitting a list of EAN&#39;s (optional)
+     - parameter filterMerchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
      - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantProductResponse> 
      */
-    open class func productGetByFilterWithRequestBuilder(filterSearch: String? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
+    open class func productGetByFilterWithRequestBuilder(filterSearch: String? = nil, filterEanList: [String]? = nil, filterMerchantProductNoList: [String]? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -248,6 +255,8 @@ open class ProductAPI {
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "filter.search": filterSearch, 
+            "filter.eanList": filterEanList, 
+            "filter.merchantProductNoList": filterMerchantProductNoList, 
             "filter.page": filterPage?.encodeToJSON()
         ])
         
@@ -324,6 +333,7 @@ open class ProductAPI {
     "Stock" : 0
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      

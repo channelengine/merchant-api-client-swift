@@ -20,7 +20,7 @@ public struct MerchantShipmentRequest: Codable {
     public var trackTraceNo: String?
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
-    /** Shipment method (carrier) */
+    /** Shipment method: the carrier used for shipping the package. E.g. DHL, postNL */
     public var method: String?
 
 

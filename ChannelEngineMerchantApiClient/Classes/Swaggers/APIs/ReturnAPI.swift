@@ -37,6 +37,7 @@ open class ReturnAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      
@@ -60,10 +61,10 @@ open class ReturnAPI {
     /**
      Get Returns
      
-     - parameter createdSince: (query)  
+     - parameter createdSince: (query)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetDeclaredByChannel(createdSince: Date, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
+    open class func returnGetDeclaredByChannel(createdSince: Date? = nil, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
         returnGetDeclaredByChannelWithRequestBuilder(createdSince: createdSince).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
@@ -87,8 +88,10 @@ open class ReturnAPI {
     "MerchantComment" : "MerchantComment",
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Reason" : "PRODUCT_DEFECT",
     "Lines" : [ {
       "Quantity" : 0,
@@ -102,8 +105,10 @@ open class ReturnAPI {
     "MerchantComment" : "MerchantComment",
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Reason" : "PRODUCT_DEFECT",
     "Lines" : [ {
       "Quantity" : 0,
@@ -117,23 +122,106 @@ open class ReturnAPI {
   "ItemsPerPage" : 7,
   "Count" : 5,
   "StatusCode" : 9,
+  "LogId" : 3,
   "Success" : true
 }}]
      
-     - parameter createdSince: (query)  
+     - parameter createdSince: (query)  (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetDeclaredByChannelWithRequestBuilder(createdSince: Date) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetDeclaredByChannelWithRequestBuilder(createdSince: Date? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let path = "/v2/returns/merchant"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "createdSince": createdSince.encodeToJSON()
+            "createdSince": createdSince?.encodeToJSON()
         ])
         
+
+        let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Get Unhandled Returns
+     
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func returnGetUnhandled(completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
+        returnGetUnhandledWithRequestBuilder().execute { (response, error) -> Void in
+            completion(response?.body, error);
+        }
+    }
+
+
+    /**
+     Get Unhandled Returns
+     - GET /v2/returns/merchant/new
+     - Get all new / unhandled returns created by channels. This call is supposed  to be used by merchants. Channels should use the 'GET /v2/returns/channel'  call.
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apikey
+     - examples: [{contentType=application/json, example={
+  "TotalCount" : 2,
+  "Message" : "Message",
+  "ValidationErrors" : {
+    "key" : [ "ValidationErrors", "ValidationErrors" ]
+  },
+  "Content" : [ {
+    "MerchantComment" : "MerchantComment",
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "Reason" : "PRODUCT_DEFECT",
+    "Lines" : [ {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    }, {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    } ],
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+  }, {
+    "MerchantComment" : "MerchantComment",
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "Reason" : "PRODUCT_DEFECT",
+    "Lines" : [ {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    }, {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    } ],
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "ItemsPerPage" : 7,
+  "Count" : 5,
+  "StatusCode" : 9,
+  "LogId" : 3,
+  "Success" : true
+}}]
+
+     - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
+     */
+    open class func returnGetUnhandledWithRequestBuilder() -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+        let path = "/v2/returns/merchant/new"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -166,6 +254,7 @@ open class ReturnAPI {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "StatusCode" : 0,
+  "LogId" : 6,
   "Success" : true
 }}]
      
