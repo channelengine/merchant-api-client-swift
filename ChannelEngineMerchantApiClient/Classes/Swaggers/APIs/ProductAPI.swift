@@ -126,14 +126,14 @@ open class ProductAPI {
     /**
      Get Products
      
-     - parameter filterSearch: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
-     - parameter filterEanList: (query) Search products by submitting a list of EAN&#39;s (optional)
-     - parameter filterMerchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
-     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
+     - parameter search: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
+     - parameter eanList: (query) Search products by submitting a list of EAN&#39;s (optional)
+     - parameter merchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productGetByFilter(filterSearch: String? = nil, filterEanList: [String]? = nil, filterMerchantProductNoList: [String]? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
-        productGetByFilterWithRequestBuilder(filterSearch: filterSearch, filterEanList: filterEanList, filterMerchantProductNoList: filterMerchantProductNoList, filterPage: filterPage).execute { (response, error) -> Void in
+    open class func productGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
+        productGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
@@ -240,24 +240,24 @@ open class ProductAPI {
   "Success" : true
 }}]
      
-     - parameter filterSearch: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
-     - parameter filterEanList: (query) Search products by submitting a list of EAN&#39;s (optional)
-     - parameter filterMerchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
-     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
+     - parameter search: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand      This search is applied to the result after applying the other filters. (optional)
+     - parameter eanList: (query) Search products by submitting a list of EAN&#39;s (optional)
+     - parameter merchantProductNoList: (query) Search products by submitting a list of MerchantProductNo&#39;s (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantProductResponse> 
      */
-    open class func productGetByFilterWithRequestBuilder(filterSearch: String? = nil, filterEanList: [String]? = nil, filterMerchantProductNoList: [String]? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
+    open class func productGetByFilterWithRequestBuilder(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "filter.search": filterSearch, 
-            "filter.eanList": filterEanList, 
-            "filter.merchantProductNoList": filterMerchantProductNoList, 
-            "filter.page": filterPage?.encodeToJSON()
+            "search": search, 
+            "eanList": eanList, 
+            "merchantProductNoList": merchantProductNoList, 
+            "page": page?.encodeToJSON()
         ])
         
 

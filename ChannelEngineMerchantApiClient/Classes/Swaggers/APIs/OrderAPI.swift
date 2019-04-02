@@ -59,9 +59,9 @@ open class OrderAPI {
     }
 
     /**
-     * enum for parameter filterStatuses
+     * enum for parameter statuses
      */
-    public enum FilterStatuses_orderGetByFilter: String { 
+    public enum Statuses_orderGetByFilter: String { 
         case inProgress = "IN_PROGRESS"
         case shipped = "SHIPPED"
         case inBackorder = "IN_BACKORDER"
@@ -74,9 +74,9 @@ open class OrderAPI {
     }
 
     /**
-     * enum for parameter filterFulfillmentType
+     * enum for parameter fulfillmentType
      */
-    public enum FilterFulfillmentType_orderGetByFilter: String { 
+    public enum FulfillmentType_orderGetByFilter: String { 
         case all = "ALL"
         case onlyMerchant = "ONLY_MERCHANT"
         case onlyChannel = "ONLY_CHANNEL"
@@ -86,17 +86,17 @@ open class OrderAPI {
     /**
      Get Orders By Filter
      
-     - parameter filterStatuses: (query) Order status(es) to filter on (optional)
-     - parameter filterMerchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
-     - parameter filterFromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
-     - parameter filterToDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
-     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
-     - parameter filterFulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
-     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
+     - parameter statuses: (query) Order status(es) to filter on (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
+     - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
+     - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(filterStatuses: [String]? = nil, filterMerchantOrderNos: [String]? = nil, filterFromDate: Date? = nil, filterToDate: Date? = nil, filterExcludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, filterFulfillmentType: FilterFulfillmentType_orderGetByFilter? = nil, filterPage: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(filterStatuses: filterStatuses, filterMerchantOrderNos: filterMerchantOrderNos, filterFromDate: filterFromDate, filterToDate: filterToDate, filterExcludeMarketplaceFulfilledOrdersAndLines: filterExcludeMarketplaceFulfilledOrdersAndLines, filterFulfillmentType: filterFulfillmentType, filterPage: filterPage).execute { (response, error) -> Void in
+    open class func orderGetByFilter(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, merchantOrderNos: merchantOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, page: page).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
@@ -315,30 +315,30 @@ open class OrderAPI {
   "Success" : true
 }}]
      
-     - parameter filterStatuses: (query) Order status(es) to filter on (optional)
-     - parameter filterMerchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
-     - parameter filterFromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
-     - parameter filterToDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
-     - parameter filterExcludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
-     - parameter filterFulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
-     - parameter filterPage: (query) The page to filter on. Starts at 1. (optional)
+     - parameter statuses: (query) Order status(es) to filter on (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
+     - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
+     - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(filterStatuses: [String]? = nil, filterMerchantOrderNos: [String]? = nil, filterFromDate: Date? = nil, filterToDate: Date? = nil, filterExcludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, filterFulfillmentType: FilterFulfillmentType_orderGetByFilter? = nil, filterPage: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "filter.statuses": filterStatuses, 
-            "filter.merchantOrderNos": filterMerchantOrderNos, 
-            "filter.fromDate": filterFromDate?.encodeToJSON(), 
-            "filter.toDate": filterToDate?.encodeToJSON(), 
-            "filter.excludeMarketplaceFulfilledOrdersAndLines": filterExcludeMarketplaceFulfilledOrdersAndLines, 
-            "filter.fulfillmentType": filterFulfillmentType?.rawValue, 
-            "filter.page": filterPage?.encodeToJSON()
+            "statuses": statuses, 
+            "merchantOrderNos": merchantOrderNos, 
+            "fromDate": fromDate?.encodeToJSON(), 
+            "toDate": toDate?.encodeToJSON(), 
+            "excludeMarketplaceFulfilledOrdersAndLines": excludeMarketplaceFulfilledOrdersAndLines, 
+            "fulfillmentType": fulfillmentType?.rawValue, 
+            "page": page?.encodeToJSON()
         ])
         
 
