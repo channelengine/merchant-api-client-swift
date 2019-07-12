@@ -20,6 +20,7 @@ public struct MerchantProductResponse: Codable {
     public var isActive: Bool?
     /** A unique identifier of the product. (sku) */
     public var merchantProductNo: String?
+    public var extraData: [MerchantProductExtraDataItemResponse]?
     /** The name of the product */
     public var name: String?
     /** A description of the product. Can contain these HTML tags:  div, span, pre, p, br, hr, hgroup, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, strong, em, b, i, u, img, a, abbr, address, blockquote, area, audio, video, caption, table, tbody, td, tfoot, th, thead, tr */
@@ -72,13 +73,12 @@ public struct MerchantProductResponse: Codable {
     public var extraImageUrl9: String?
     /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &amp;gt; category &amp;gt; subcategory&#39;  For example:  &#39;vehicles &amp;gt; bikes &amp;gt; mountainbike&#39; */
     public var categoryTrail: String?
-    /** An optional list of key-value pairs containing  extra data about this product. This data can be  sent to channels or used for filtering products. */
-    public var extraData: [ExtraDataItem]?
 
 
     public enum CodingKeys: String, CodingKey { 
         case isActive = "IsActive"
         case merchantProductNo = "MerchantProductNo"
+        case extraData = "ExtraData"
         case name = "Name"
         case _description = "Description"
         case brand = "Brand"
@@ -105,7 +105,6 @@ public struct MerchantProductResponse: Codable {
         case extraImageUrl8 = "ExtraImageUrl8"
         case extraImageUrl9 = "ExtraImageUrl9"
         case categoryTrail = "CategoryTrail"
-        case extraData = "ExtraData"
     }
 
 

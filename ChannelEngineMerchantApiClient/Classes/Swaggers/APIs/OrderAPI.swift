@@ -17,7 +17,7 @@ open class OrderAPI {
      - parameter model: (body) Relations between the id&#39;s returned by ChannelEngine and the references which the merchant uses 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderAcknowledge(model: OrderAcknowledgement, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+    open class func orderAcknowledge(model: MerchantOrderAcknowledgementRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         orderAcknowledgeWithRequestBuilder(model: model).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
@@ -45,7 +45,7 @@ open class OrderAPI {
 
      - returns: RequestBuilder<ApiResponse> 
      */
-    open class func orderAcknowledgeWithRequestBuilder(model: OrderAcknowledgement) -> RequestBuilder<ApiResponse> {
+    open class func orderAcknowledgeWithRequestBuilder(model: MerchantOrderAcknowledgementRequest) -> RequestBuilder<ApiResponse> {
         let path = "/v2/orders/acknowledge"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
@@ -88,15 +88,17 @@ open class OrderAPI {
      
      - parameter statuses: (query) Order status(es) to filter on (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel (optional)
      - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
      - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
+     - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.  Some channels allow a customer to cancel an order until it has been shipped.  When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, merchantOrderNos: merchantOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, page: page).execute { (response, error) -> Void in
+    open class func orderGetByFilter(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
@@ -120,22 +122,25 @@ open class OrderAPI {
     "VatNo" : "VatNo",
     "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
     "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
-    "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
+    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
     "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
     "Phone" : "Phone",
@@ -153,20 +158,24 @@ open class OrderAPI {
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
     "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
     "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "IsBusinessOrder" : true,
     "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -177,6 +186,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -196,6 +206,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -216,22 +227,25 @@ open class OrderAPI {
     "VatNo" : "VatNo",
     "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
     "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
-    "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
+    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
     "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
     "Phone" : "Phone",
@@ -249,20 +263,24 @@ open class OrderAPI {
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
     "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
     "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "IsBusinessOrder" : true,
     "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -273,6 +291,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -292,6 +311,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -317,15 +337,17 @@ open class OrderAPI {
      
      - parameter statuses: (query) Order status(es) to filter on (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel (optional)
      - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
      - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.  To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
+     - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.  Some channels allow a customer to cancel an order until it has been shipped.  When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -334,10 +356,12 @@ open class OrderAPI {
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "statuses": statuses, 
             "merchantOrderNos": merchantOrderNos, 
+            "channelOrderNos": channelOrderNos, 
             "fromDate": fromDate?.encodeToJSON(), 
             "toDate": toDate?.encodeToJSON(), 
             "excludeMarketplaceFulfilledOrdersAndLines": excludeMarketplaceFulfilledOrdersAndLines, 
             "fulfillmentType": fulfillmentType?.rawValue, 
+            "onlyWithCancellationRequests": onlyWithCancellationRequests, 
             "page": page?.encodeToJSON()
         ])
         
@@ -377,22 +401,25 @@ open class OrderAPI {
     "VatNo" : "VatNo",
     "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
     "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
-    "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
+    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
     "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
     "Phone" : "Phone",
@@ -410,20 +437,24 @@ open class OrderAPI {
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
     "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
     "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "IsBusinessOrder" : true,
     "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -434,6 +465,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -453,6 +485,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -473,22 +506,25 @@ open class OrderAPI {
     "VatNo" : "VatNo",
     "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
     "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
-    "CurrencyCode" : "CurrencyCode",
     "BillingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
+    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
     "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
     "Phone" : "Phone",
@@ -506,20 +542,24 @@ open class OrderAPI {
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
       "StreetName" : "StreetName",
-      "CompanyName" : "CompanyName",
       "HouseNrAddition" : "HouseNrAddition",
       "CountryIso" : "CountryIso",
-      "HouseNr" : "HouseNr",
       "FirstName" : "FirstName",
       "ZipCode" : "ZipCode",
-      "Region" : "Region",
       "Gender" : "MALE",
-      "LastName" : "LastName",
       "City" : "City",
-      "Original" : "Original"
+      "CompanyName" : "CompanyName",
+      "HouseNr" : "HouseNr",
+      "Region" : "Region",
+      "LastName" : "LastName",
+      "Line1" : "Line1",
+      "Original" : "Original",
+      "Line2" : "Line2",
+      "Line3" : "Line3"
     },
     "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
     "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "IsBusinessOrder" : true,
     "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
@@ -530,6 +570,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,
@@ -549,6 +590,7 @@ open class OrderAPI {
       "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
       "Condition" : "NEW",
       "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
       "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
       "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
       "Quantity" : 5,

@@ -54,6 +54,8 @@ public struct MerchantOrderLineResponse: Codable {
     public var originalLineTotalInclVat: Double?
     /** The total amount of VAT charged over the total value of the order line (quantity * unit price)  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalLineVat: Double?
+    /** If the product is ordered part of a bundle, this field contains the MerchantProductNo of  the product bundle. */
+    public var bundleProductMerchantProductNo: String?
     /** The unique order reference used by the channel */
     public var channelProductNo: String
     /** The number of items of the product */
@@ -82,6 +84,7 @@ public struct MerchantOrderLineResponse: Codable {
         case originalUnitVat = "OriginalUnitVat"
         case originalLineTotalInclVat = "OriginalLineTotalInclVat"
         case originalLineVat = "OriginalLineVat"
+        case bundleProductMerchantProductNo = "BundleProductMerchantProductNo"
         case channelProductNo = "ChannelProductNo"
         case quantity = "Quantity"
         case cancellationRequestedQuantity = "CancellationRequestedQuantity"

@@ -38,6 +38,12 @@ public struct MerchantOrderResponse: Codable {
     public var channelOrderNo: String?
     /** The status of the order */
     public var status: Status?
+    /** Indicating whether the order is a business order */
+    public var isBusinessOrder: Bool?
+    /** The billing or invoice address */
+    public var billingAddress: MerchantAddressResponse?
+    /** The shipping address */
+    public var shippingAddress: MerchantAddressResponse?
     /** The total value of the order lines including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var subTotalInclVat: Double?
     /** The total amount of VAT charged over the order lines  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
@@ -79,10 +85,6 @@ public struct MerchantOrderResponse: Codable {
     public var orderDate: Date
     /** The unique customer reference used by the channel */
     public var channelCustomerNo: String?
-    /** The billing or invoice address */
-    public var billingAddress: Address
-    /** The shipping address */
-    public var shippingAddress: Address
     /** Extra data on the order */
     public var extraData: [String:String]?
 
@@ -93,6 +95,9 @@ public struct MerchantOrderResponse: Codable {
         case channelOrderSupport = "ChannelOrderSupport"
         case channelOrderNo = "ChannelOrderNo"
         case status = "Status"
+        case isBusinessOrder = "IsBusinessOrder"
+        case billingAddress = "BillingAddress"
+        case shippingAddress = "ShippingAddress"
         case subTotalInclVat = "SubTotalInclVat"
         case subTotalVat = "SubTotalVat"
         case shippingCostsVat = "ShippingCostsVat"
@@ -114,8 +119,6 @@ public struct MerchantOrderResponse: Codable {
         case currencyCode = "CurrencyCode"
         case orderDate = "OrderDate"
         case channelCustomerNo = "ChannelCustomerNo"
-        case billingAddress = "BillingAddress"
-        case shippingAddress = "ShippingAddress"
         case extraData = "ExtraData"
     }
 

@@ -30,6 +30,10 @@ public struct MerchantReturnResponse: Codable {
     public var createdAt: Date?
     /** The date at which the return was last modified in ChannelEngine */
     public var updatedAt: Date?
+    /** The unique return reference used by the Merchant, will be empty in case of a channel or unacknowledged return */
+    public var merchantReturnNo: String?
+    /** The unique return reference used by the Channel, will be empty in case of a merchant return */
+    public var channelReturnNo: String?
     /** The unique return reference used by ChannelEngine */
     public var _id: Int?
     /** The reason code of the return */
@@ -49,6 +53,8 @@ public struct MerchantReturnResponse: Codable {
         case lines = "Lines"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
+        case merchantReturnNo = "MerchantReturnNo"
+        case channelReturnNo = "ChannelReturnNo"
         case _id = "Id"
         case reason = "Reason"
         case customerComment = "CustomerComment"

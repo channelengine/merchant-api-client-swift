@@ -22,6 +22,8 @@ public struct MerchantProductRequest: Codable {
     public var parentMerchantProductNo: String?
     /** If this product is a different version of another  product (for example, all fields are the same except  color) and itself is a parent with child products (e.g. of sizes),   then this field should contain the &#39;MerchantProductNo&#39; of the grandparent. The grandparent  should already exist (or be present between the products  in the content of the API call, it does not matter whether   the grandparent is behind the child in the list).  When you set this field, the ParentMerchantProductNo should be left empty.    Use this field in case of three level product hierarchy,   e.g. model - color - size.   This is required for channels like Otto. */
     public var parentMerchantProductNo2: String?
+    /** An optional list of key-value pairs containing  extra data about this product. This data can be  sent to channels or used for filtering products. */
+    public var extraData: [MerchantProductExtraDataItemRequest]?
     /** The name of the product */
     public var name: String?
     /** A description of the product. Can contain these HTML tags:  div, span, pre, p, br, hr, hgroup, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, strong, em, b, i, u, img, a, abbr, address, blockquote, area, audio, video, caption, table, tbody, td, tfoot, th, thead, tr */
@@ -74,14 +76,13 @@ public struct MerchantProductRequest: Codable {
     public var extraImageUrl9: String?
     /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &amp;gt; category &amp;gt; subcategory&#39;  For example:  &#39;vehicles &amp;gt; bikes &amp;gt; mountainbike&#39; */
     public var categoryTrail: String?
-    /** An optional list of key-value pairs containing  extra data about this product. This data can be  sent to channels or used for filtering products. */
-    public var extraData: [ExtraDataItem]?
 
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"
         case parentMerchantProductNo = "ParentMerchantProductNo"
         case parentMerchantProductNo2 = "ParentMerchantProductNo2"
+        case extraData = "ExtraData"
         case name = "Name"
         case _description = "Description"
         case brand = "Brand"
@@ -108,7 +109,6 @@ public struct MerchantProductRequest: Codable {
         case extraImageUrl8 = "ExtraImageUrl8"
         case extraImageUrl9 = "ExtraImageUrl9"
         case categoryTrail = "CategoryTrail"
-        case extraData = "ExtraData"
     }
 
 

@@ -59,6 +59,98 @@ open class ReturnAPI {
     }
 
     /**
+     Get Return
+     
+     - parameter merchantOrderNo: (path)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func returnGetByMerchantOrderNo(merchantOrderNo: String, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
+        returnGetByMerchantOrderNoWithRequestBuilder(merchantOrderNo: merchantOrderNo).execute { (response, error) -> Void in
+            completion(response?.body, error);
+        }
+    }
+
+
+    /**
+     Get Return
+     - GET /v2/returns/merchant/{merchantOrderNo}
+     - Retrieve a return based on the supplied merchant order number. This call is supposed  to be used by merchants. Channels should use the 'GET /v2/returns/channel'  call.
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apikey
+     - examples: [{contentType=application/json, example={
+  "TotalCount" : 2,
+  "Message" : "Message",
+  "ValidationErrors" : {
+    "key" : [ "ValidationErrors", "ValidationErrors" ]
+  },
+  "Content" : [ {
+    "MerchantComment" : "MerchantComment",
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "Reason" : "PRODUCT_DEFECT",
+    "Lines" : [ {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    }, {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    } ],
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+  }, {
+    "MerchantComment" : "MerchantComment",
+    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CustomerComment" : "CustomerComment",
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 6,
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "Reason" : "PRODUCT_DEFECT",
+    "Lines" : [ {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    }, {
+      "Quantity" : 0,
+      "MerchantProductNo" : "MerchantProductNo"
+    } ],
+    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "ItemsPerPage" : 7,
+  "Count" : 5,
+  "StatusCode" : 9,
+  "LogId" : 3,
+  "Success" : true
+}}]
+     
+     - parameter merchantOrderNo: (path)  
+
+     - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
+     */
+    open class func returnGetByMerchantOrderNoWithRequestBuilder(merchantOrderNo: String) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+        var path = "/v2/returns/merchant/{merchantOrderNo}"
+        let merchantOrderNoPreEscape = "\(merchantOrderNo)"
+        let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
      Get Returns
      
      - parameter createdSince: (query)  (optional)
@@ -89,6 +181,8 @@ open class ReturnAPI {
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -106,6 +200,8 @@ open class ReturnAPI {
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -176,6 +272,8 @@ open class ReturnAPI {
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -193,6 +291,8 @@ open class ReturnAPI {
     "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
     "CustomerComment" : "CustomerComment",
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "MerchantReturnNo" : "MerchantReturnNo",
+    "ChannelReturnNo" : "ChannelReturnNo",
     "MerchantOrderNo" : "MerchantOrderNo",
     "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",

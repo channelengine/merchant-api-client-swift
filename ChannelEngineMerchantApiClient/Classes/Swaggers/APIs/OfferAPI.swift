@@ -82,7 +82,7 @@ open class OfferAPI {
      - parameter updates: (body) References to the products that should be updated, and the new values  for the stock or price fields. It is possible to supply only one of the two fields  or both. 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func offerStockPriceUpdate(updates: [MerchantStockPriceUpdateRequest], completion: @escaping ((_ data: SingleOfCollectionsDictionary2Generic?,_ error: Error?) -> Void)) {
+    open class func offerStockPriceUpdate(updates: [MerchantStockPriceUpdateRequest], completion: @escaping ((_ data: SingleOfDictionary2?,_ error: Error?) -> Void)) {
         offerStockPriceUpdateWithRequestBuilder(updates: updates).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
@@ -110,9 +110,9 @@ open class OfferAPI {
      
      - parameter updates: (body) References to the products that should be updated, and the new values  for the stock or price fields. It is possible to supply only one of the two fields  or both. 
 
-     - returns: RequestBuilder<SingleOfCollectionsDictionary2Generic> 
+     - returns: RequestBuilder<SingleOfDictionary2> 
      */
-    open class func offerStockPriceUpdateWithRequestBuilder(updates: [MerchantStockPriceUpdateRequest]) -> RequestBuilder<SingleOfCollectionsDictionary2Generic> {
+    open class func offerStockPriceUpdateWithRequestBuilder(updates: [MerchantStockPriceUpdateRequest]) -> RequestBuilder<SingleOfDictionary2> {
         let path = "/v2/offer"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updates)
@@ -120,7 +120,7 @@ open class OfferAPI {
         let url = NSURLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<SingleOfCollectionsDictionary2Generic>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<SingleOfDictionary2>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
