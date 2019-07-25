@@ -151,13 +151,44 @@ open class ReturnAPI {
     }
 
     /**
+     * enum for parameter statuses
+     */
+    public enum Statuses_returnGetDeclaredByChannel: String { 
+        case inProgress = "IN_PROGRESS"
+        case received = "RECEIVED"
+        case cancelled = "CANCELLED"
+    }
+
+    /**
+     * enum for parameter reasons
+     */
+    public enum Reasons_returnGetDeclaredByChannel: String { 
+        case productDefect = "PRODUCT_DEFECT"
+        case productUnsatisfactory = "PRODUCT_UNSATISFACTORY"
+        case wrongProduct = "WRONG_PRODUCT"
+        case tooManyProducts = "TOO_MANY_PRODUCTS"
+        case refused = "REFUSED"
+        case refusedDamaged = "REFUSED_DAMAGED"
+        case wrongAddress = "WRONG_ADDRESS"
+        case notCollected = "NOT_COLLECTED"
+        case wrongSize = "WRONG_SIZE"
+        case other = "OTHER"
+    }
+
+    /**
      Get Returns
      
-     - parameter createdSince: (query)  (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
+     - parameter statuses: (query) Return status(es) to filter on (optional)
+     - parameter reasons: (query) Return reason(s) to filter on (optional)
+     - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetDeclaredByChannel(createdSince: Date? = nil, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
-        returnGetDeclaredByChannelWithRequestBuilder(createdSince: createdSince).execute { (response, error) -> Void in
+    open class func returnGetDeclaredByChannel(merchantOrderNos: [String]? = nil, createdSince: Date? = nil, statuses: [String]? = nil, reasons: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
+        returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: merchantOrderNos, createdSince: createdSince, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
     }
@@ -222,18 +253,30 @@ open class ReturnAPI {
   "Success" : true
 }}]
      
-     - parameter createdSince: (query)  (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
+     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
+     - parameter statuses: (query) Return status(es) to filter on (optional)
+     - parameter reasons: (query) Return reason(s) to filter on (optional)
+     - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
 
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetDeclaredByChannelWithRequestBuilder(createdSince: Date? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: [String]? = nil, createdSince: Date? = nil, statuses: [String]? = nil, reasons: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let path = "/v2/returns/merchant"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "createdSince": createdSince?.encodeToJSON()
+            "merchantOrderNos": merchantOrderNos, 
+            "createdSince": createdSince?.encodeToJSON(), 
+            "statuses": statuses, 
+            "reasons": reasons, 
+            "fromDate": fromDate?.encodeToJSON(), 
+            "toDate": toDate?.encodeToJSON(), 
+            "page": page?.encodeToJSON()
         ])
         
 
