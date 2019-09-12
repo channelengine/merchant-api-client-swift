@@ -16,6 +16,10 @@ public struct MerchantReturnLineRequest: Codable {
     /** Number of items of the product in this return */
     public var quantity: Int
 
+    public init(merchantProductNo: String, quantity: Int) {
+        self.merchantProductNo = merchantProductNo
+        self.quantity = quantity
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"

@@ -18,7 +18,7 @@ open class StockLocationAPI {
      */
     open class func stockLocationIndex(completion: @escaping ((_ data: CollectionOfMerchantStockLocationResponse?,_ error: Error?) -> Void)) {
         stockLocationIndexWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -56,9 +56,10 @@ open class StockLocationAPI {
         let path = "/v2/stocklocations"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantStockLocationResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

@@ -29,6 +29,13 @@ public struct MerchantCancellationRequest: Codable {
     /** Reason code for cancellation */
     public var reasonCode: ReasonCode?
 
+    public init(merchantCancellationNo: String, merchantOrderNo: String, lines: [MerchantCancellationLineRequest], reason: String?, reasonCode: ReasonCode?) {
+        self.merchantCancellationNo = merchantCancellationNo
+        self.merchantOrderNo = merchantOrderNo
+        self.lines = lines
+        self.reason = reason
+        self.reasonCode = reasonCode
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantCancellationNo = "MerchantCancellationNo"

@@ -18,6 +18,11 @@ public struct MerchantReturnLineUpdateRequest: Codable {
     /** The amount of items that have been rejected */
     public var rejectedQuantity: Int
 
+    public init(merchantProductNo: String, acceptedQuantity: Int, rejectedQuantity: Int) {
+        self.merchantProductNo = merchantProductNo
+        self.acceptedQuantity = acceptedQuantity
+        self.rejectedQuantity = rejectedQuantity
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"

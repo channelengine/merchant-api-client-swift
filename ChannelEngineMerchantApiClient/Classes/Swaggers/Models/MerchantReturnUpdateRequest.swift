@@ -15,6 +15,10 @@ public struct MerchantReturnUpdateRequest: Codable {
     public var returnId: Int
     public var lines: [MerchantReturnLineUpdateRequest]
 
+    public init(returnId: Int, lines: [MerchantReturnLineUpdateRequest]) {
+        self.returnId = returnId
+        self.lines = lines
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case returnId = "ReturnId"

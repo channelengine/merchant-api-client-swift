@@ -18,6 +18,11 @@ public struct MerchantStockPriceUpdateRequest: Codable {
     /** The price of the product. Should not be negative */
     public var price: Double?
 
+    public init(merchantProductNo: String, stock: Int?, price: Double?) {
+        self.merchantProductNo = merchantProductNo
+        self.stock = stock
+        self.price = price
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"

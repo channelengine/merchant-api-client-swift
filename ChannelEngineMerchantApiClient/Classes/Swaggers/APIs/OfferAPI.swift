@@ -20,7 +20,7 @@ open class OfferAPI {
      */
     open class func offerGetStock(skus: [String], stockLocationIds: [Int], completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?,_ error: Error?) -> Void)) {
         offerGetStockWithRequestBuilder(skus: skus, stockLocationIds: stockLocationIds).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -41,10 +41,12 @@ open class OfferAPI {
   "Content" : [ {
     "StockLocationId" : 0,
     "MerchantProductNo" : "MerchantProductNo",
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Stock" : 6
   }, {
     "StockLocationId" : 0,
     "MerchantProductNo" : "MerchantProductNo",
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Stock" : 6
   } ],
   "ItemsPerPage" : 5,
@@ -63,13 +65,12 @@ open class OfferAPI {
         let path = "/v2/offer/stock"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "skus": skus, 
             "stockLocationIds": stockLocationIds
         ])
-        
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantOfferGetStockResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -84,7 +85,7 @@ open class OfferAPI {
      */
     open class func offerStockPriceUpdate(updates: [MerchantStockPriceUpdateRequest], completion: @escaping ((_ data: SingleOfDictionary2?,_ error: Error?) -> Void)) {
         offerStockPriceUpdateWithRequestBuilder(updates: updates).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -117,8 +118,9 @@ open class OfferAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updates)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<SingleOfDictionary2>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

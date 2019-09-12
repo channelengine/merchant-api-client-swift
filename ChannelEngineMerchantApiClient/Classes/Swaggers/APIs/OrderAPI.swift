@@ -19,7 +19,7 @@ open class OrderAPI {
      */
     open class func orderAcknowledge(model: MerchantOrderAcknowledgementRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         orderAcknowledgeWithRequestBuilder(model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -50,8 +50,9 @@ open class OrderAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -99,7 +100,7 @@ open class OrderAPI {
      */
     open class func orderGetByFilter(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
         orderGetByFilterWithRequestBuilder(statuses: statuses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -351,9 +352,9 @@ open class OrderAPI {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "statuses": statuses, 
             "merchantOrderNos": merchantOrderNos, 
             "channelOrderNos": channelOrderNos, 
@@ -364,7 +365,6 @@ open class OrderAPI {
             "onlyWithCancellationRequests": onlyWithCancellationRequests, 
             "page": page?.encodeToJSON()
         ])
-        
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -378,7 +378,7 @@ open class OrderAPI {
      */
     open class func orderGetNew(completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
         orderGetNewWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -620,9 +620,10 @@ open class OrderAPI {
         let path = "/v2/orders/new"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -638,7 +639,7 @@ open class OrderAPI {
      */
     open class func orderInvoice(merchantOrderNo: String, useCustomerCulture: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
         orderInvoiceWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -664,12 +665,11 @@ open class OrderAPI {
         path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "useCustomerCulture": useCustomerCulture
         ])
-        
 
         let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -685,7 +685,7 @@ open class OrderAPI {
      */
     open class func orderPackingSlip(merchantOrderNo: String, useCustomerCulture: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
         orderPackingSlipWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -711,12 +711,11 @@ open class OrderAPI {
         path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "useCustomerCulture": useCustomerCulture
         ])
-        
 
         let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

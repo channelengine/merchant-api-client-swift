@@ -88,6 +88,38 @@ public struct MerchantOrderResponse: Codable {
     /** Extra data on the order */
     public var extraData: [String:String]?
 
+    public init(_id: Int?, channelName: String?, channelOrderSupport: ChannelOrderSupport?, channelOrderNo: String?, status: Status?, isBusinessOrder: Bool?, billingAddress: MerchantAddressResponse?, shippingAddress: MerchantAddressResponse?, subTotalInclVat: Double?, subTotalVat: Double?, shippingCostsVat: Double?, totalInclVat: Double?, totalVat: Double?, originalSubTotalInclVat: Double?, originalSubTotalVat: Double?, originalShippingCostsInclVat: Double?, originalShippingCostsVat: Double?, originalTotalInclVat: Double?, originalTotalVat: Double?, lines: [MerchantOrderLineResponse]?, phone: String?, email: String, companyRegistrationNo: String?, vatNo: String?, paymentMethod: String?, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String?, extraData: [String:String]?) {
+        self._id = _id
+        self.channelName = channelName
+        self.channelOrderSupport = channelOrderSupport
+        self.channelOrderNo = channelOrderNo
+        self.status = status
+        self.isBusinessOrder = isBusinessOrder
+        self.billingAddress = billingAddress
+        self.shippingAddress = shippingAddress
+        self.subTotalInclVat = subTotalInclVat
+        self.subTotalVat = subTotalVat
+        self.shippingCostsVat = shippingCostsVat
+        self.totalInclVat = totalInclVat
+        self.totalVat = totalVat
+        self.originalSubTotalInclVat = originalSubTotalInclVat
+        self.originalSubTotalVat = originalSubTotalVat
+        self.originalShippingCostsInclVat = originalShippingCostsInclVat
+        self.originalShippingCostsVat = originalShippingCostsVat
+        self.originalTotalInclVat = originalTotalInclVat
+        self.originalTotalVat = originalTotalVat
+        self.lines = lines
+        self.phone = phone
+        self.email = email
+        self.companyRegistrationNo = companyRegistrationNo
+        self.vatNo = vatNo
+        self.paymentMethod = paymentMethod
+        self.shippingCostsInclVat = shippingCostsInclVat
+        self.currencyCode = currencyCode
+        self.orderDate = orderDate
+        self.channelCustomerNo = channelCustomerNo
+        self.extraData = extraData
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "Id"

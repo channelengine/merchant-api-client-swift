@@ -19,7 +19,7 @@ open class ProductAPI {
      */
     open class func productCreate(products: [MerchantProductRequest], completion: @escaping ((_ data: SingleOfProductCreationResult?,_ error: Error?) -> Void)) {
         productCreateWithRequestBuilder(products: products).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -65,8 +65,9 @@ open class ProductAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: products)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -81,7 +82,7 @@ open class ProductAPI {
      */
     open class func productDelete(merchantProductNo: String, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         productDeleteWithRequestBuilder(merchantProductNo: merchantProductNo).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -114,9 +115,10 @@ open class ProductAPI {
         path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -134,7 +136,7 @@ open class ProductAPI {
      */
     open class func productGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?,_ error: Error?) -> Void)) {
         productGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -251,15 +253,14 @@ open class ProductAPI {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "search": search, 
             "eanList": eanList, 
             "merchantProductNoList": merchantProductNoList, 
             "page": page?.encodeToJSON()
         ])
-        
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -274,7 +275,7 @@ open class ProductAPI {
      */
     open class func productGetByMerchantProductNo(merchantProductNo: String, completion: @escaping ((_ data: SingleOfMerchantProductResponse?,_ error: Error?) -> Void)) {
         productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: merchantProductNo).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -348,9 +349,10 @@ open class ProductAPI {
         path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<SingleOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

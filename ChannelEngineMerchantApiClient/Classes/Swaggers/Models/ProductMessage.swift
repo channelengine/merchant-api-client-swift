@@ -16,6 +16,12 @@ public struct ProductMessage: Codable {
     public var warnings: [String]?
     public var errors: [String]?
 
+    public init(name: String?, reference: String?, warnings: [String]?, errors: [String]?) {
+        self.name = name
+        self.reference = reference
+        self.warnings = warnings
+        self.errors = errors
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case name = "Name"

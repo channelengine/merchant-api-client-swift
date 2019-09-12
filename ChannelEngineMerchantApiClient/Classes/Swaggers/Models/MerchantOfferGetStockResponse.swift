@@ -17,12 +17,21 @@ public struct MerchantOfferGetStockResponse: Codable {
     public var stockLocationId: Int?
     /** The quantity of products in stock at the stock location */
     public var stock: Int?
+    /** The timestamp of the last stock update for the stock location */
+    public var updatedAt: Date?
 
+    public init(merchantProductNo: String?, stockLocationId: Int?, stock: Int?, updatedAt: Date?) {
+        self.merchantProductNo = merchantProductNo
+        self.stockLocationId = stockLocationId
+        self.stock = stock
+        self.updatedAt = updatedAt
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"
         case stockLocationId = "StockLocationId"
         case stock = "Stock"
+        case updatedAt = "UpdatedAt"
     }
 
 

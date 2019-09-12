@@ -71,6 +71,27 @@ public struct MerchantOrderLineResponse: Codable {
     /** The condition of the product, this can be used to indicate that a product is a second-hand product */
     public var condition: Condition?
 
+    public init(status: Status?, isFulfillmentByMarketplace: Bool?, merchantProductNo: String?, gtin: String?, unitVat: Double?, lineTotalInclVat: Double?, lineVat: Double?, originalUnitPriceInclVat: Double?, originalUnitVat: Double?, originalLineTotalInclVat: Double?, originalLineVat: Double?, bundleProductMerchantProductNo: String?, channelProductNo: String, quantity: Int, cancellationRequestedQuantity: Int?, unitPriceInclVat: Double, feeFixed: Double?, feeRate: Double?, condition: Condition?) {
+        self.status = status
+        self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
+        self.merchantProductNo = merchantProductNo
+        self.gtin = gtin
+        self.unitVat = unitVat
+        self.lineTotalInclVat = lineTotalInclVat
+        self.lineVat = lineVat
+        self.originalUnitPriceInclVat = originalUnitPriceInclVat
+        self.originalUnitVat = originalUnitVat
+        self.originalLineTotalInclVat = originalLineTotalInclVat
+        self.originalLineVat = originalLineVat
+        self.bundleProductMerchantProductNo = bundleProductMerchantProductNo
+        self.channelProductNo = channelProductNo
+        self.quantity = quantity
+        self.cancellationRequestedQuantity = cancellationRequestedQuantity
+        self.unitPriceInclVat = unitPriceInclVat
+        self.feeFixed = feeFixed
+        self.feeRate = feeRate
+        self.condition = condition
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case status = "Status"

@@ -22,7 +22,7 @@ open class ProductBundleAPI {
      */
     open class func productBundleGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantProductBundleResponse?,_ error: Error?) -> Void)) {
         productBundleGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -94,15 +94,14 @@ open class ProductBundleAPI {
         let path = "/v2/productbundles"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "search": search, 
             "eanList": eanList, 
             "merchantProductNoList": merchantProductNoList, 
             "page": page?.encodeToJSON()
         ])
-        
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantProductBundleResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

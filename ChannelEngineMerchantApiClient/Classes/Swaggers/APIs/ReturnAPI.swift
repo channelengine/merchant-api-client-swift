@@ -19,7 +19,7 @@ open class ReturnAPI {
      */
     open class func returnDeclareForMerchant(model: MerchantReturnRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         returnDeclareForMerchantWithRequestBuilder(model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -50,8 +50,9 @@ open class ReturnAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -64,9 +65,9 @@ open class ReturnAPI {
      - parameter merchantOrderNo: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetByMerchantOrderNo(merchantOrderNo: String, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
+    open class func returnGetByMerchantOrderNo(merchantOrderNo: String, completion: @escaping ((_ data: CollectionOfMerchantSingleOrderReturnResponse?,_ error: Error?) -> Void)) {
         returnGetByMerchantOrderNoWithRequestBuilder(merchantOrderNo: merchantOrderNo).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -74,78 +75,89 @@ open class ReturnAPI {
     /**
      Get Return
      - GET /v2/returns/merchant/{merchantOrderNo}
-     - Retrieve a return based on the supplied merchant order number. This call is supposed  to be used by merchants. Channels should use the 'GET /v2/returns/channel'  call.
+     - Retrieve returns based on the supplied merchant order number. May return more than 1 result.  This call is supposed to be used by merchants. Channels should use the 'GET /v2/returns/channel'  call.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 2,
+  "TotalCount" : 9,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "Content" : [ {
+    "Status" : "IN_PROGRESS",
     "MerchantComment" : "MerchantComment",
-    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
-    "CustomerComment" : "CustomerComment",
+    "RefundExclVat" : 2.3021358869347654518833223846741020679473876953125,
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
     "MerchantReturnNo" : "MerchantReturnNo",
-    "ChannelReturnNo" : "ChannelReturnNo",
-    "MerchantOrderNo" : "MerchantOrderNo",
-    "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Reason" : "PRODUCT_DEFECT",
+    "CustomerComment" : "CustomerComment",
+    "ChannelReturnNo" : "ChannelReturnNo",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 5,
     "Lines" : [ {
-      "Quantity" : 0,
+      "RejectedQuantity" : 6,
+      "AcceptedQuantity" : 0,
+      "Quantity" : 1,
       "MerchantProductNo" : "MerchantProductNo"
     }, {
-      "Quantity" : 0,
+      "RejectedQuantity" : 6,
+      "AcceptedQuantity" : 0,
+      "Quantity" : 1,
       "MerchantProductNo" : "MerchantProductNo"
     } ],
-    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+    "RefundInclVat" : 5.63737665663332876420099637471139430999755859375
   }, {
+    "Status" : "IN_PROGRESS",
     "MerchantComment" : "MerchantComment",
-    "RefundExclVat" : 5.962133916683182377482808078639209270477294921875,
-    "CustomerComment" : "CustomerComment",
+    "RefundExclVat" : 2.3021358869347654518833223846741020679473876953125,
     "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
     "MerchantReturnNo" : "MerchantReturnNo",
-    "ChannelReturnNo" : "ChannelReturnNo",
-    "MerchantOrderNo" : "MerchantOrderNo",
-    "Id" : 6,
     "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
     "Reason" : "PRODUCT_DEFECT",
+    "CustomerComment" : "CustomerComment",
+    "ChannelReturnNo" : "ChannelReturnNo",
+    "MerchantOrderNo" : "MerchantOrderNo",
+    "Id" : 5,
     "Lines" : [ {
-      "Quantity" : 0,
+      "RejectedQuantity" : 6,
+      "AcceptedQuantity" : 0,
+      "Quantity" : 1,
       "MerchantProductNo" : "MerchantProductNo"
     }, {
-      "Quantity" : 0,
+      "RejectedQuantity" : 6,
+      "AcceptedQuantity" : 0,
+      "Quantity" : 1,
       "MerchantProductNo" : "MerchantProductNo"
     } ],
-    "RefundInclVat" : 1.46581298050294517310021547018550336360931396484375
+    "RefundInclVat" : 5.63737665663332876420099637471139430999755859375
   } ],
-  "ItemsPerPage" : 7,
-  "Count" : 5,
-  "StatusCode" : 9,
-  "LogId" : 3,
+  "ItemsPerPage" : 3,
+  "Count" : 7,
+  "StatusCode" : 2,
+  "LogId" : 4,
   "Success" : true
 }}]
      
      - parameter merchantOrderNo: (path)  
 
-     - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
+     - returns: RequestBuilder<CollectionOfMerchantSingleOrderReturnResponse> 
      */
-    open class func returnGetByMerchantOrderNoWithRequestBuilder(merchantOrderNo: String) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetByMerchantOrderNoWithRequestBuilder(merchantOrderNo: String) -> RequestBuilder<CollectionOfMerchantSingleOrderReturnResponse> {
         var path = "/v2/returns/merchant/{merchantOrderNo}"
         let merchantOrderNoPreEscape = "\(merchantOrderNo)"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
-        let url = NSURLComponents(string: URLString)
-
-
-        let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<CollectionOfMerchantSingleOrderReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -189,7 +201,7 @@ open class ReturnAPI {
      */
     open class func returnGetDeclaredByChannel(merchantOrderNos: [String]? = nil, createdSince: Date? = nil, statuses: [String]? = nil, reasons: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
         returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: merchantOrderNos, createdSince: createdSince, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -267,9 +279,9 @@ open class ReturnAPI {
         let path = "/v2/returns/merchant"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "merchantOrderNos": merchantOrderNos, 
             "createdSince": createdSince?.encodeToJSON(), 
             "statuses": statuses, 
@@ -278,7 +290,6 @@ open class ReturnAPI {
             "toDate": toDate?.encodeToJSON(), 
             "page": page?.encodeToJSON()
         ])
-        
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -292,7 +303,7 @@ open class ReturnAPI {
      */
     open class func returnGetUnhandled(completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?,_ error: Error?) -> Void)) {
         returnGetUnhandledWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -362,9 +373,10 @@ open class ReturnAPI {
         let path = "/v2/returns/merchant/new"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
-        let url = NSURLComponents(string: URLString)
-
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantReturnResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -379,7 +391,7 @@ open class ReturnAPI {
      */
     open class func returnUpdateForMerchant(model: MerchantReturnUpdateRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         returnUpdateForMerchantWithRequestBuilder(model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -410,8 +422,9 @@ open class ReturnAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

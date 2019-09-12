@@ -16,6 +16,10 @@ public struct MerchantStockLocationResponse: Codable {
     /** The ChannelEngine name of the stock location */
     public var name: String?
 
+    public init(_id: Int?, name: String?) {
+        self._id = _id
+        self.name = name
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "Id"

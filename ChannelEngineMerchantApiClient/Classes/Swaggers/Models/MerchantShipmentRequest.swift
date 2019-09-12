@@ -23,6 +23,14 @@ public struct MerchantShipmentRequest: Codable {
     /** Shipment method: the carrier used for shipping the package. E.g. DHL, postNL */
     public var method: String?
 
+    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], trackTraceNo: String?, trackTraceUrl: String?, method: String?) {
+        self.merchantShipmentNo = merchantShipmentNo
+        self.merchantOrderNo = merchantOrderNo
+        self.lines = lines
+        self.trackTraceNo = trackTraceNo
+        self.trackTraceUrl = trackTraceUrl
+        self.method = method
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantShipmentNo = "MerchantShipmentNo"

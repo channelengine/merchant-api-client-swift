@@ -16,6 +16,10 @@ public struct MerchantOrderAcknowledgementRequest: Codable {
     /** The ChannelEngine order ID of the order you would like to acknowledge */
     public var orderId: Int
 
+    public init(merchantOrderNo: String, orderId: Int) {
+        self.merchantOrderNo = merchantOrderNo
+        self.orderId = orderId
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantOrderNo = "MerchantOrderNo"

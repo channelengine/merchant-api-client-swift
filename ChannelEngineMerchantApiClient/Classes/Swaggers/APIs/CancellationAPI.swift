@@ -19,7 +19,7 @@ open class CancellationAPI {
      */
     open class func cancellationCreate(cancellation: MerchantCancellationRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         cancellationCreateWithRequestBuilder(cancellation: cancellation).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -50,8 +50,9 @@ open class CancellationAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: cancellation)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

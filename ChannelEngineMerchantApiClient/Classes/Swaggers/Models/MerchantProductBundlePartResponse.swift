@@ -17,6 +17,13 @@ public struct MerchantProductBundlePartResponse: Codable {
     public var quantity: Int?
     public var price: Double?
 
+    public init(merchantProductNo: String?, ean: String?, name: String?, quantity: Int?, price: Double?) {
+        self.merchantProductNo = merchantProductNo
+        self.ean = ean
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"

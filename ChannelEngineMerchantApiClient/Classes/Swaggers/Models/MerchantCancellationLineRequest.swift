@@ -16,6 +16,10 @@ public struct MerchantCancellationLineRequest: Codable {
     /** Quantity of the product to cancel */
     public var quantity: Int
 
+    public init(merchantProductNo: String, quantity: Int) {
+        self.merchantProductNo = merchantProductNo
+        self.quantity = quantity
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case merchantProductNo = "MerchantProductNo"

@@ -16,6 +16,11 @@ public struct ProductCreationResult: Codable {
     /** Messages about the rejected products. */
     public var productMessages: [ProductMessage]?
 
+    public init(rejectedCount: Int?, acceptedCount: Int?, productMessages: [ProductMessage]?) {
+        self.rejectedCount = rejectedCount
+        self.acceptedCount = acceptedCount
+        self.productMessages = productMessages
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case rejectedCount = "RejectedCount"

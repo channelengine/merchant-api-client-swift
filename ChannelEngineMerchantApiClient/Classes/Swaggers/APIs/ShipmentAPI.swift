@@ -19,7 +19,7 @@ open class ShipmentAPI {
      */
     open class func shipmentCreate(model: MerchantShipmentRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         shipmentCreateWithRequestBuilder(model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -50,8 +50,9 @@ open class ShipmentAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
@@ -67,7 +68,7 @@ open class ShipmentAPI {
      */
     open class func shipmentUpdate(merchantShipmentNo: String, model: MerchantShipmentTrackingRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
         shipmentUpdateWithRequestBuilder(merchantShipmentNo: merchantShipmentNo, model: model).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -102,8 +103,9 @@ open class ShipmentAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
 
-        let url = NSURLComponents(string: URLString)
-
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
 
         let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 

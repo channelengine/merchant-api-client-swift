@@ -18,6 +18,11 @@ public struct MerchantShipmentTrackingRequest: Codable {
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
 
+    public init(method: String, trackTraceNo: String, trackTraceUrl: String?) {
+        self.method = method
+        self.trackTraceNo = trackTraceNo
+        self.trackTraceUrl = trackTraceUrl
+    }
 
     public enum CodingKeys: String, CodingKey { 
         case method = "Method"
