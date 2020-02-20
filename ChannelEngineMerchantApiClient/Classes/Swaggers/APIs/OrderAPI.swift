@@ -88,6 +88,7 @@ open class OrderAPI {
      Get Orders By Filter
      
      - parameter statuses: (query) Order status(es) to filter on (optional)
+     - parameter emailAddresses: (query) Client emailaddresses to filter on (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel (optional)
      - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
@@ -98,8 +99,8 @@ open class OrderAPI {
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute { (response, error) -> Void in
+    open class func orderGetByFilter(statuses: [String]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -113,16 +114,20 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 3,
+  "TotalCount" : 1,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "Content" : [ {
+    "MerchantComment" : "MerchantComment",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
-    "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
+    "SubTotalInclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "OriginalShippingCostsVat" : 7.3862819483858839220147274318151175975799560546875,
+    "GlobalChannelId" : 1,
+    "ChannelId" : 6,
     "BillingAddress" : {
       "StreetName" : "StreetName",
       "HouseNrAddition" : "HouseNrAddition",
@@ -140,21 +145,23 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "OriginalSubTotalVat" : 2.027123023002321833274663731572218239307403564453125,
     "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
+    "TotalVat" : 9.301444243932575517419536481611430644989013671875,
     "Phone" : "Phone",
     "ChannelCustomerNo" : "ChannelCustomerNo",
     "ChannelOrderSupport" : "NONE",
-    "ShippingCostsVat" : 5.962133916683182377482808078639209270477294921875,
-    "SubTotalVat" : 1.46581298050294517310021547018550336360931396484375,
-    "TotalInclVat" : 5.63737665663332876420099637471139430999755859375,
+    "ShippingCostsVat" : 2.3021358869347654518833223846741020679473876953125,
+    "SubTotalVat" : 5.63737665663332876420099637471139430999755859375,
+    "TotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "Status" : "IN_PROGRESS",
     "ChannelOrderNo" : "ChannelOrderNo",
     "ExtraData" : {
       "key" : "ExtraData"
     },
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "GlobalChannelName" : "GlobalChannelName",
     "OrderDate" : "2000-01-23T04:56:07.000+00:00",
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
@@ -174,60 +181,78 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
-    "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "OriginalTotalVat" : 1.024645700144157789424070870154537260532379150390625,
+    "ShippingCostsInclVat" : 3.557195227068097320710649000830017030239105224609375,
     "IsBusinessOrder" : true,
-    "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
+    "OriginalSubTotalInclVat" : 3.61607674925191080461672754609026014804840087890625,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
-    "OriginalShippingCostsInclVat" : 3.61607674925191080461672754609026014804840087890625,
-    "OriginalTotalInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalShippingCostsInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalTotalInclVat" : 1.231513536777255612975068288506008684635162353515625,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   }, {
+    "MerchantComment" : "MerchantComment",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
-    "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
+    "SubTotalInclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "OriginalShippingCostsVat" : 7.3862819483858839220147274318151175975799560546875,
+    "GlobalChannelId" : 1,
+    "ChannelId" : 6,
     "BillingAddress" : {
       "StreetName" : "StreetName",
       "HouseNrAddition" : "HouseNrAddition",
@@ -245,21 +270,23 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "OriginalSubTotalVat" : 2.027123023002321833274663731572218239307403564453125,
     "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
+    "TotalVat" : 9.301444243932575517419536481611430644989013671875,
     "Phone" : "Phone",
     "ChannelCustomerNo" : "ChannelCustomerNo",
     "ChannelOrderSupport" : "NONE",
-    "ShippingCostsVat" : 5.962133916683182377482808078639209270477294921875,
-    "SubTotalVat" : 1.46581298050294517310021547018550336360931396484375,
-    "TotalInclVat" : 5.63737665663332876420099637471139430999755859375,
+    "ShippingCostsVat" : 2.3021358869347654518833223846741020679473876953125,
+    "SubTotalVat" : 5.63737665663332876420099637471139430999755859375,
+    "TotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "Status" : "IN_PROGRESS",
     "ChannelOrderNo" : "ChannelOrderNo",
     "ExtraData" : {
       "key" : "ExtraData"
     },
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "GlobalChannelName" : "GlobalChannelName",
     "OrderDate" : "2000-01-23T04:56:07.000+00:00",
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
@@ -279,64 +306,79 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
-    "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "OriginalTotalVat" : 1.024645700144157789424070870154537260532379150390625,
+    "ShippingCostsInclVat" : 3.557195227068097320710649000830017030239105224609375,
     "IsBusinessOrder" : true,
-    "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
+    "OriginalSubTotalInclVat" : 3.61607674925191080461672754609026014804840087890625,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
-    "OriginalShippingCostsInclVat" : 3.61607674925191080461672754609026014804840087890625,
-    "OriginalTotalInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalShippingCostsInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalTotalInclVat" : 1.231513536777255612975068288506008684635162353515625,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
-  "ItemsPerPage" : 6,
+  "ItemsPerPage" : 2,
   "Count" : 6,
-  "StatusCode" : 1,
-  "LogId" : 2,
+  "StatusCode" : 6,
+  "LogId" : 6,
   "Success" : true
 }}]
      
      - parameter statuses: (query) Order status(es) to filter on (optional)
+     - parameter emailAddresses: (query) Client emailaddresses to filter on (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel (optional)
      - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
@@ -348,7 +390,7 @@ open class OrderAPI {
 
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(statuses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [String]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType_orderGetByFilter? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -356,6 +398,7 @@ open class OrderAPI {
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems([
             "statuses": statuses, 
+            "emailAddresses": emailAddresses, 
             "merchantOrderNos": merchantOrderNos, 
             "channelOrderNos": channelOrderNos, 
             "fromDate": fromDate?.encodeToJSON(), 
@@ -391,16 +434,20 @@ open class OrderAPI {
        - type: apiKey apikey (QUERY)
        - name: apikey
      - examples: [{contentType=application/json, example={
-  "TotalCount" : 3,
+  "TotalCount" : 1,
   "Message" : "Message",
   "ValidationErrors" : {
     "key" : [ "ValidationErrors", "ValidationErrors" ]
   },
   "Content" : [ {
+    "MerchantComment" : "MerchantComment",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
-    "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
+    "SubTotalInclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "OriginalShippingCostsVat" : 7.3862819483858839220147274318151175975799560546875,
+    "GlobalChannelId" : 1,
+    "ChannelId" : 6,
     "BillingAddress" : {
       "StreetName" : "StreetName",
       "HouseNrAddition" : "HouseNrAddition",
@@ -418,21 +465,23 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "OriginalSubTotalVat" : 2.027123023002321833274663731572218239307403564453125,
     "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
+    "TotalVat" : 9.301444243932575517419536481611430644989013671875,
     "Phone" : "Phone",
     "ChannelCustomerNo" : "ChannelCustomerNo",
     "ChannelOrderSupport" : "NONE",
-    "ShippingCostsVat" : 5.962133916683182377482808078639209270477294921875,
-    "SubTotalVat" : 1.46581298050294517310021547018550336360931396484375,
-    "TotalInclVat" : 5.63737665663332876420099637471139430999755859375,
+    "ShippingCostsVat" : 2.3021358869347654518833223846741020679473876953125,
+    "SubTotalVat" : 5.63737665663332876420099637471139430999755859375,
+    "TotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "Status" : "IN_PROGRESS",
     "ChannelOrderNo" : "ChannelOrderNo",
     "ExtraData" : {
       "key" : "ExtraData"
     },
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "GlobalChannelName" : "GlobalChannelName",
     "OrderDate" : "2000-01-23T04:56:07.000+00:00",
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
@@ -452,60 +501,78 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
-    "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "OriginalTotalVat" : 1.024645700144157789424070870154537260532379150390625,
+    "ShippingCostsInclVat" : 3.557195227068097320710649000830017030239105224609375,
     "IsBusinessOrder" : true,
-    "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
+    "OriginalSubTotalInclVat" : 3.61607674925191080461672754609026014804840087890625,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
-    "OriginalShippingCostsInclVat" : 3.61607674925191080461672754609026014804840087890625,
-    "OriginalTotalInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalShippingCostsInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalTotalInclVat" : 1.231513536777255612975068288506008684635162353515625,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   }, {
+    "MerchantComment" : "MerchantComment",
     "Email" : "Email",
     "VatNo" : "VatNo",
-    "SubTotalInclVat" : 6.02745618307040320615897144307382404804229736328125,
-    "OriginalShippingCostsVat" : 2.027123023002321833274663731572218239307403564453125,
+    "SubTotalInclVat" : 5.962133916683182377482808078639209270477294921875,
+    "CreatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "OriginalShippingCostsVat" : 7.3862819483858839220147274318151175975799560546875,
+    "GlobalChannelId" : 1,
+    "ChannelId" : 6,
     "BillingAddress" : {
       "StreetName" : "StreetName",
       "HouseNrAddition" : "HouseNrAddition",
@@ -523,21 +590,23 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalSubTotalVat" : 9.301444243932575517419536481611430644989013671875,
+    "OriginalSubTotalVat" : 2.027123023002321833274663731572218239307403564453125,
     "CurrencyCode" : "CurrencyCode",
     "CompanyRegistrationNo" : "CompanyRegistrationNo",
-    "TotalVat" : 2.3021358869347654518833223846741020679473876953125,
+    "TotalVat" : 9.301444243932575517419536481611430644989013671875,
     "Phone" : "Phone",
     "ChannelCustomerNo" : "ChannelCustomerNo",
     "ChannelOrderSupport" : "NONE",
-    "ShippingCostsVat" : 5.962133916683182377482808078639209270477294921875,
-    "SubTotalVat" : 1.46581298050294517310021547018550336360931396484375,
-    "TotalInclVat" : 5.63737665663332876420099637471139430999755859375,
+    "ShippingCostsVat" : 2.3021358869347654518833223846741020679473876953125,
+    "SubTotalVat" : 5.63737665663332876420099637471139430999755859375,
+    "TotalInclVat" : 7.061401241503109105224211816675961017608642578125,
     "Status" : "IN_PROGRESS",
     "ChannelOrderNo" : "ChannelOrderNo",
     "ExtraData" : {
       "key" : "ExtraData"
     },
+    "UpdatedAt" : "2000-01-23T04:56:07.000+00:00",
+    "GlobalChannelName" : "GlobalChannelName",
     "OrderDate" : "2000-01-23T04:56:07.000+00:00",
     "ChannelName" : "ChannelName",
     "ShippingAddress" : {
@@ -557,60 +626,74 @@ open class OrderAPI {
       "Line2" : "Line2",
       "Line3" : "Line3"
     },
-    "OriginalTotalVat" : 7.3862819483858839220147274318151175975799560546875,
-    "ShippingCostsInclVat" : 9.0183481860707832566959041287191212177276611328125,
+    "OriginalTotalVat" : 1.024645700144157789424070870154537260532379150390625,
+    "ShippingCostsInclVat" : 3.557195227068097320710649000830017030239105224609375,
     "IsBusinessOrder" : true,
-    "OriginalSubTotalInclVat" : 7.061401241503109105224211816675961017608642578125,
+    "OriginalSubTotalInclVat" : 3.61607674925191080461672754609026014804840087890625,
     "PaymentMethod" : "PaymentMethod",
     "Id" : 0,
-    "OriginalShippingCostsInclVat" : 3.61607674925191080461672754609026014804840087890625,
-    "OriginalTotalInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalShippingCostsInclVat" : 4.1456080298839363962315474054776132106781005859375,
+    "OriginalTotalInclVat" : 1.231513536777255612975068288506008684635162353515625,
     "Lines" : [ {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     }, {
       "Status" : "IN_PROGRESS",
-      "UnitPriceInclVat" : 9.3693102714106686335071572102606296539306640625,
+      "UnitPriceInclVat" : 8.7620420127490010742121739895083010196685791015625,
       "Condition" : "NEW",
-      "UnitVat" : 1.231513536777255612975068288506008684635162353515625,
+      "UnitVat" : 1.489415909854170383397331534069962799549102783203125,
       "BundleProductMerchantProductNo" : "BundleProductMerchantProductNo",
-      "FeeFixed" : 6.683562403749608193948006373830139636993408203125,
-      "FeeRate" : 8.7620420127490010742121739895083010196685791015625,
-      "Quantity" : 5,
-      "OriginalUnitVat" : 7.4577447736837658709418974467553198337554931640625,
+      "FeeFixed" : 9.0183481860707832566959041287191212177276611328125,
+      "FeeRate" : 6.438423552598546706349225132726132869720458984375,
+      "Quantity" : 9,
+      "OriginalUnitVat" : 4.9652184929849543237878606305457651615142822265625,
+      "ExtraData" : [ {
+        "Value" : "Value",
+        "Key" : "Key"
+      }, {
+        "Value" : "Value",
+        "Key" : "Key"
+      } ],
       "IsFulfillmentByMarketplace" : true,
-      "OriginalLineTotalInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "OriginalLineTotalInclVat" : 5.02500479152029466689555192715488374233245849609375,
       "Gtin" : "Gtin",
-      "OriginalUnitPriceInclVat" : 6.8468526983526398765889098285697400569915771484375,
-      "LineVat" : 1.489415909854170383397331534069962799549102783203125,
-      "OriginalLineVat" : 4.9652184929849543237878606305457651615142822265625,
-      "CancellationRequestedQuantity" : 9,
+      "OriginalUnitPriceInclVat" : 1.173074250955943309548956676735542714595794677734375,
+      "LineVat" : 7.4577447736837658709418974467553198337554931640625,
+      "OriginalLineVat" : 9.965781217890562260208753286860883235931396484375,
+      "CancellationRequestedQuantity" : 6,
       "MerchantProductNo" : "MerchantProductNo",
-      "LineTotalInclVat" : 1.024645700144157789424070870154537260532379150390625,
+      "LineTotalInclVat" : 6.8468526983526398765889098285697400569915771484375,
       "ChannelProductNo" : "ChannelProductNo"
     } ]
   } ],
-  "ItemsPerPage" : 6,
+  "ItemsPerPage" : 2,
   "Count" : 6,
-  "StatusCode" : 1,
-  "LogId" : 2,
+  "StatusCode" : 6,
+  "LogId" : 6,
   "Success" : true
 }}]
 
@@ -720,6 +803,54 @@ open class OrderAPI {
         let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Update Comment
+     
+     - parameter model: (body)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func orderUpdate(model: MerchantOrderCommentUpdateRequest, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+        orderUpdateWithRequestBuilder(model: model).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Update Comment
+     - PUT /v2/orders/comment
+     - Update the merchant comment for an order. Both the ChannelEngine order id as the   merchant order number can be used for updating a comment.
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apikey
+     - examples: [{contentType=application/json, example={
+  "Message" : "Message",
+  "ValidationErrors" : {
+    "key" : [ "ValidationErrors", "ValidationErrors" ]
+  },
+  "StatusCode" : 0,
+  "LogId" : 6,
+  "Success" : true
+}}]
+     
+     - parameter model: (body)  
+
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func orderUpdateWithRequestBuilder(model: MerchantOrderCommentUpdateRequest) -> RequestBuilder<ApiResponse> {
+        let path = "/v2/orders/comment"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: model)
+
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        ])
+
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
 }

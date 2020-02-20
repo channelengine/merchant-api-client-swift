@@ -30,16 +30,28 @@ public struct MerchantOrderResponse: Codable {
     }
     /** The unique identifier used by ChannelEngine. This identifier does  not have to be saved. It should only be used in a call to acknowledge the order. */
     public var _id: Int?
-    /** The name of the channel */
+    /** The name of the channel for this specific environment/account */
     public var channelName: String?
+    /** The unique ID of the channel for this specific environment/account */
+    public var channelId: Int?
+    /** The name of the channel across all of ChannelEngine */
+    public var globalChannelName: String?
+    /** The unique ID of the channel across all of ChannelEngine */
+    public var globalChannelId: Int?
     /** The type of orders the channel support. */
     public var channelOrderSupport: ChannelOrderSupport?
-    /** The unique order reference used by the channel */
+    /** The order reference used by the channel.   This number is not guaranteed to be unique accross all orders,  because different channels can use the same order number format. */
     public var channelOrderNo: String?
     /** The status of the order */
     public var status: Status?
     /** Indicating whether the order is a business order */
     public var isBusinessOrder: Bool?
+    /** The date the order was created in ChannelEngine */
+    public var createdAt: Date?
+    /** The date the order was last updated in ChannelEngine */
+    public var updatedAt: Date?
+    /** The optional comment a merchant can add to an order */
+    public var merchantComment: String?
     /** The billing or invoice address */
     public var billingAddress: MerchantAddressResponse?
     /** The shipping address */
@@ -81,20 +93,26 @@ public struct MerchantOrderResponse: Codable {
     public var shippingCostsInclVat: Double
     /** The currency code for the amounts of the order */
     public var currencyCode: String
-    /** The date the order was done */
+    /** The date the order was created at the channel */
     public var orderDate: Date
     /** The unique customer reference used by the channel */
     public var channelCustomerNo: String?
     /** Extra data on the order */
     public var extraData: [String:String]?
 
-    public init(_id: Int?, channelName: String?, channelOrderSupport: ChannelOrderSupport?, channelOrderNo: String?, status: Status?, isBusinessOrder: Bool?, billingAddress: MerchantAddressResponse?, shippingAddress: MerchantAddressResponse?, subTotalInclVat: Double?, subTotalVat: Double?, shippingCostsVat: Double?, totalInclVat: Double?, totalVat: Double?, originalSubTotalInclVat: Double?, originalSubTotalVat: Double?, originalShippingCostsInclVat: Double?, originalShippingCostsVat: Double?, originalTotalInclVat: Double?, originalTotalVat: Double?, lines: [MerchantOrderLineResponse]?, phone: String?, email: String, companyRegistrationNo: String?, vatNo: String?, paymentMethod: String?, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String?, extraData: [String:String]?) {
+    public init(_id: Int?, channelName: String?, channelId: Int?, globalChannelName: String?, globalChannelId: Int?, channelOrderSupport: ChannelOrderSupport?, channelOrderNo: String?, status: Status?, isBusinessOrder: Bool?, createdAt: Date?, updatedAt: Date?, merchantComment: String?, billingAddress: MerchantAddressResponse?, shippingAddress: MerchantAddressResponse?, subTotalInclVat: Double?, subTotalVat: Double?, shippingCostsVat: Double?, totalInclVat: Double?, totalVat: Double?, originalSubTotalInclVat: Double?, originalSubTotalVat: Double?, originalShippingCostsInclVat: Double?, originalShippingCostsVat: Double?, originalTotalInclVat: Double?, originalTotalVat: Double?, lines: [MerchantOrderLineResponse]?, phone: String?, email: String, companyRegistrationNo: String?, vatNo: String?, paymentMethod: String?, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String?, extraData: [String:String]?) {
         self._id = _id
         self.channelName = channelName
+        self.channelId = channelId
+        self.globalChannelName = globalChannelName
+        self.globalChannelId = globalChannelId
         self.channelOrderSupport = channelOrderSupport
         self.channelOrderNo = channelOrderNo
         self.status = status
         self.isBusinessOrder = isBusinessOrder
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.merchantComment = merchantComment
         self.billingAddress = billingAddress
         self.shippingAddress = shippingAddress
         self.subTotalInclVat = subTotalInclVat
@@ -124,10 +142,16 @@ public struct MerchantOrderResponse: Codable {
     public enum CodingKeys: String, CodingKey { 
         case _id = "Id"
         case channelName = "ChannelName"
+        case channelId = "ChannelId"
+        case globalChannelName = "GlobalChannelName"
+        case globalChannelId = "GlobalChannelId"
         case channelOrderSupport = "ChannelOrderSupport"
         case channelOrderNo = "ChannelOrderNo"
         case status = "Status"
         case isBusinessOrder = "IsBusinessOrder"
+        case createdAt = "CreatedAt"
+        case updatedAt = "UpdatedAt"
+        case merchantComment = "MerchantComment"
         case billingAddress = "BillingAddress"
         case shippingAddress = "ShippingAddress"
         case subTotalInclVat = "SubTotalInclVat"

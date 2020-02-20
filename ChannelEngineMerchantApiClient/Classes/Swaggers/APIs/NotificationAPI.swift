@@ -28,6 +28,12 @@ open class NotificationAPI {
         case returnOverdue = "RETURN_OVERDUE"
         case failedShipmentExport = "FAILED_SHIPMENT_EXPORT"
         case failedReturnImport = "FAILED_RETURN_IMPORT"
+        case supportNotification = "SUPPORT_NOTIFICATION"
+        case newOrder = "NEW_ORDER"
+        case newReturn = "NEW_RETURN"
+        case newOrderCancellationRequest = "NEW_ORDER_CANCELLATION_REQUEST"
+        case failedShipmentImport = "FAILED_SHIPMENT_IMPORT"
+        case failedReturnExport = "FAILED_RETURN_EXPORT"
     }
 
     /**

@@ -56,7 +56,8 @@ public struct MerchantOrderLineResponse: Codable {
     public var originalLineVat: Double?
     /** If the product is ordered part of a bundle, this field contains the MerchantProductNo of  the product bundle. */
     public var bundleProductMerchantProductNo: String?
-    /** The unique order reference used by the channel */
+    public var extraData: [MerchantOrderLineExtraDataResponse]?
+    /** The unique product reference used by the channel */
     public var channelProductNo: String
     /** The number of items of the product */
     public var quantity: Int
@@ -71,7 +72,7 @@ public struct MerchantOrderLineResponse: Codable {
     /** The condition of the product, this can be used to indicate that a product is a second-hand product */
     public var condition: Condition?
 
-    public init(status: Status?, isFulfillmentByMarketplace: Bool?, merchantProductNo: String?, gtin: String?, unitVat: Double?, lineTotalInclVat: Double?, lineVat: Double?, originalUnitPriceInclVat: Double?, originalUnitVat: Double?, originalLineTotalInclVat: Double?, originalLineVat: Double?, bundleProductMerchantProductNo: String?, channelProductNo: String, quantity: Int, cancellationRequestedQuantity: Int?, unitPriceInclVat: Double, feeFixed: Double?, feeRate: Double?, condition: Condition?) {
+    public init(status: Status?, isFulfillmentByMarketplace: Bool?, merchantProductNo: String?, gtin: String?, unitVat: Double?, lineTotalInclVat: Double?, lineVat: Double?, originalUnitPriceInclVat: Double?, originalUnitVat: Double?, originalLineTotalInclVat: Double?, originalLineVat: Double?, bundleProductMerchantProductNo: String?, extraData: [MerchantOrderLineExtraDataResponse]?, channelProductNo: String, quantity: Int, cancellationRequestedQuantity: Int?, unitPriceInclVat: Double, feeFixed: Double?, feeRate: Double?, condition: Condition?) {
         self.status = status
         self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
         self.merchantProductNo = merchantProductNo
@@ -84,6 +85,7 @@ public struct MerchantOrderLineResponse: Codable {
         self.originalLineTotalInclVat = originalLineTotalInclVat
         self.originalLineVat = originalLineVat
         self.bundleProductMerchantProductNo = bundleProductMerchantProductNo
+        self.extraData = extraData
         self.channelProductNo = channelProductNo
         self.quantity = quantity
         self.cancellationRequestedQuantity = cancellationRequestedQuantity
@@ -106,6 +108,7 @@ public struct MerchantOrderLineResponse: Codable {
         case originalLineTotalInclVat = "OriginalLineTotalInclVat"
         case originalLineVat = "OriginalLineVat"
         case bundleProductMerchantProductNo = "BundleProductMerchantProductNo"
+        case extraData = "ExtraData"
         case channelProductNo = "ChannelProductNo"
         case quantity = "Quantity"
         case cancellationRequestedQuantity = "CancellationRequestedQuantity"
