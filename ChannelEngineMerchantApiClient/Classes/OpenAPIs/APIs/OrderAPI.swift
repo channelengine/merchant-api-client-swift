@@ -57,8 +57,9 @@ open class OrderAPI {
      - parameter emailAddresses: (query) Client emailaddresses to filter on. (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
-     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
-     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
+     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive.&lt;br /&gt;The order date is based on the data we got from a channel. (optional)
+     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive.&lt;br /&gt;The order date is based on the data we got from a channel. (optional)
+     - parameter fromCreatedAtDate: (query) Filter on the created at date in ChannelEngine, starting from this date. This date is inclusive.&lt;br /&gt;The created date is set on the date and time when the order is created. (optional)
      - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.&lt;br /&gt;To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
      - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.&lt;br /&gt;Some channels allow a customer to cancel an order until it has been shipped.&lt;br /&gt;When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
@@ -66,8 +67,8 @@ open class OrderAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute(apiResponseQueue) { result -> Void in
+    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?,_ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -88,15 +89,16 @@ open class OrderAPI {
      - parameter emailAddresses: (query) Client emailaddresses to filter on. (optional)
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
-     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive. (optional)
-     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive. (optional)
+     - parameter fromDate: (query) Filter on the order date, starting from this date. This date is inclusive.&lt;br /&gt;The order date is based on the data we got from a channel. (optional)
+     - parameter toDate: (query) Filter on the order date, until this date. This date is exclusive.&lt;br /&gt;The order date is based on the data we got from a channel. (optional)
+     - parameter fromCreatedAtDate: (query) Filter on the created at date in ChannelEngine, starting from this date. This date is inclusive.&lt;br /&gt;The created date is set on the date and time when the order is created. (optional)
      - parameter excludeMarketplaceFulfilledOrdersAndLines: (query) Exclude order (lines) fulfilled by the marketplace (amazon:FBA, bol:LVB, etc.) (optional)
      - parameter fulfillmentType: (query) Filter orders on fulfillment type. This will include all orders lines, even if they are partially fulfilled by the marketplace.&lt;br /&gt;To exclude orders and lines that are fulfilled by the marketplace from the response, set ExcludeMarketplaceFulfilledOrdersAndLines to true. (optional)
      - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.&lt;br /&gt;Some channels allow a customer to cancel an order until it has been shipped.&lt;br /&gt;When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -109,6 +111,7 @@ open class OrderAPI {
             "channelOrderNos": channelOrderNos?.encodeToJSON(), 
             "fromDate": fromDate?.encodeToJSON(), 
             "toDate": toDate?.encodeToJSON(), 
+            "fromCreatedAtDate": fromCreatedAtDate?.encodeToJSON(), 
             "excludeMarketplaceFulfilledOrdersAndLines": excludeMarketplaceFulfilledOrdersAndLines?.encodeToJSON(), 
             "fulfillmentType": fulfillmentType?.encodeToJSON(), 
             "onlyWithCancellationRequests": onlyWithCancellationRequests?.encodeToJSON(), 

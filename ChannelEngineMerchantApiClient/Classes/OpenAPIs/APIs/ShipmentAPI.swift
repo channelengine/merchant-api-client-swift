@@ -51,6 +51,134 @@ open class ShipmentAPI {
     }
 
     /**
+     Create shipment for channel provided shipping labels
+     
+     - parameter merchantChannelLabelShipmentRequest: (body) The shipment to create (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func shipmentCreateForChannelMethod(merchantChannelLabelShipmentRequest: MerchantChannelLabelShipmentRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+        shipmentCreateForChannelMethodWithRequestBuilder(merchantChannelLabelShipmentRequest: merchantChannelLabelShipmentRequest).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Create shipment for channel provided shipping labels
+     - POST /v2/shipments/channelmethod
+     - Create a shipment, which will request a shipping label from the channel
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantChannelLabelShipmentRequest: (body) The shipment to create (optional)
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func shipmentCreateForChannelMethodWithRequestBuilder(merchantChannelLabelShipmentRequest: MerchantChannelLabelShipmentRequest? = nil) -> RequestBuilder<ApiResponse> {
+        let path = "/v2/shipments/channelmethod"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantChannelLabelShipmentRequest)
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
+     Get carriers for channel provided shipping labels
+     
+     - parameter merchantOrderNo: (path) The merchant&#39;s order reference. 
+     - parameter merchantShipmentLabelCarrierRequest: (body) The parcel information (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func shipmentGetShipmentLabelCarriers(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+        shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: merchantOrderNo, merchantShipmentLabelCarrierRequest: merchantShipmentLabelCarrierRequest).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get carriers for channel provided shipping labels
+     - POST /v2/carriers/{merchantOrderNo}
+     - Get the carriers for buying a shipping label from the channel
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantOrderNo: (path) The merchant&#39;s order reference. 
+     - parameter merchantShipmentLabelCarrierRequest: (body) The parcel information (optional)
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil) -> RequestBuilder<ApiResponse> {
+        var path = "/v2/carriers/{merchantOrderNo}"
+        let merchantOrderNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantOrderNo))"
+        let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentLabelCarrierRequest)
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
+     Download shipping label.
+     
+     - parameter merchantShipmentNo: (path) The unique shipment reference as used by the merchant. 
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func shipmentShippingLabel(merchantShipmentNo: String, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
+        shipmentShippingLabelWithRequestBuilder(merchantShipmentNo: merchantShipmentNo).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Download shipping label.
+     - GET /v2/orders/{merchantShipmentNo}/shippinglabel
+     - Downloads the shipping label for the shipment
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantShipmentNo: (path) The unique shipment reference as used by the merchant. 
+     - returns: RequestBuilder<URL> 
+     */
+    open class func shipmentShippingLabelWithRequestBuilder(merchantShipmentNo: String) -> RequestBuilder<URL> {
+        var path = "/v2/orders/{merchantShipmentNo}/shippinglabel"
+        let merchantShipmentNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantShipmentNo))"
+        let merchantShipmentNoPostEscape = merchantShipmentNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
      Update Shipment.
      
      - parameter merchantShipmentNo: (path) The merchant&#39;s shipment reference. 

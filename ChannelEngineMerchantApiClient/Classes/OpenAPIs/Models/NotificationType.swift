@@ -42,4 +42,9 @@ public enum NotificationType: String, Codable, CaseIterable {
     case pluginInvalidSetting = "PLUGIN_INVALID_SETTING"
     case pluginDeactivated = "PLUGIN_DEACTIVATED"
     case productBundleImportFailed = "PRODUCT_BUNDLE_IMPORT_FAILED"
+    case channelRefundLineItemsError = "CHANNEL_REFUND_LINE_ITEMS_ERROR"
+    case channelCancellationExportFailed = "CHANNEL_CANCELLATION_EXPORT_FAILED"
+    case merchantOrderExportLinesCancelled = "MERCHANT_ORDER_EXPORT_LINES_CANCELLED"
+    case oauthRefreshTokenExpiration = "OAUTH_REFRESH_TOKEN_EXPIRATION"
+    case merchantCancellationImportFailed = "MERCHANT_CANCELLATION_IMPORT_FAILED"
 }

@@ -14,8 +14,6 @@ public struct MerchantOrderLineResponse: Codable {
     public var status: OrderStatusView?
     /** Is the order fulfilled by the marketplace (amazon: FBA, bol: LVB, etc.)?. */
     public var isFulfillmentByMarketplace: Bool?
-    /** The unique product reference used by the Merchant (sku). */
-    public var merchantProductNo: String?
     /** Either the GTIN (EAN, ISBN, UPC etc) provided by the channel, or the the GTIN belonging to the MerchantProductNo in ChannelEngine. */
     public var gtin: String?
     /** The product description (or title) provided by the channel. */
@@ -41,6 +39,8 @@ public struct MerchantOrderLineResponse: Codable {
     public var extraData: [MerchantOrderLineExtraDataResponse]?
     /** The unique product reference used by the channel. */
     public var channelProductNo: String
+    /** The unique product reference used by the merchant. */
+    public var merchantProductNo: String?
     /** The number of items of the product. */
     public var quantity: Int
     /** The number of items for which cancellation was requested by the customer.  Some channels allow a customer to cancel an order until it has been shipped.  When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation.  Use this field to check whether it is still possible to cancel the order. If this is the case, submit a cancellation to ChannelEngine. */
@@ -55,10 +55,9 @@ public struct MerchantOrderLineResponse: Codable {
     /** Expected delivery date from channels, empty if channels not support this value */
     public var expectedDeliveryDate: Date?
 
-    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, merchantProductNo: String? = nil, gtin: String? = nil, description: String? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
+    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, gtin: String? = nil, description: String? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, merchantProductNo: String? = nil, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
         self.status = status
         self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
-        self.merchantProductNo = merchantProductNo
         self.gtin = gtin
         self.description = description
         self.unitVat = unitVat
@@ -72,6 +71,7 @@ public struct MerchantOrderLineResponse: Codable {
         self.bundleProductMerchantProductNo = bundleProductMerchantProductNo
         self.extraData = extraData
         self.channelProductNo = channelProductNo
+        self.merchantProductNo = merchantProductNo
         self.quantity = quantity
         self.cancellationRequestedQuantity = cancellationRequestedQuantity
         self.unitPriceInclVat = unitPriceInclVat
@@ -84,7 +84,6 @@ public struct MerchantOrderLineResponse: Codable {
     public enum CodingKeys: String, CodingKey, CaseIterable { 
         case status = "Status"
         case isFulfillmentByMarketplace = "IsFulfillmentByMarketplace"
-        case merchantProductNo = "MerchantProductNo"
         case gtin = "Gtin"
         case description = "Description"
         case unitVat = "UnitVat"
@@ -98,6 +97,7 @@ public struct MerchantOrderLineResponse: Codable {
         case bundleProductMerchantProductNo = "BundleProductMerchantProductNo"
         case extraData = "ExtraData"
         case channelProductNo = "ChannelProductNo"
+        case merchantProductNo = "MerchantProductNo"
         case quantity = "Quantity"
         case cancellationRequestedQuantity = "CancellationRequestedQuantity"
         case unitPriceInclVat = "UnitPriceInclVat"

@@ -13,4 +13,5 @@ public enum FulfillmentType: String, Codable, CaseIterable {
     case onlyMerchant = "ONLY_MERCHANT"
     case onlyChannel = "ONLY_CHANNEL"
     case mixed = "MIXED"
+    case includesMerchant = "INCLUDES_MERCHANT"
 }

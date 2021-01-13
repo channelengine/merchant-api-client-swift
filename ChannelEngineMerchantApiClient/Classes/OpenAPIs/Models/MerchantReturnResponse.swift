@@ -13,6 +13,8 @@ public struct MerchantReturnResponse: Codable {
 
     /** The unique order reference used by the Merchant. */
     public var merchantOrderNo: String?
+    /** The unique order reference used by the Channel. */
+    public var channelOrderNo: String?
     public var lines: [MerchantReturnLineResponse]?
     /** The date at which the return was created in ChannelEngine. */
     public var createdAt: Date?
@@ -34,8 +36,9 @@ public struct MerchantReturnResponse: Codable {
     /** Refund amount excl. VAT. */
     public var refundExclVat: Double?
 
-    public init(merchantOrderNo: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil) {
+    public init(merchantOrderNo: String? = nil, channelOrderNo: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil) {
         self.merchantOrderNo = merchantOrderNo
+        self.channelOrderNo = channelOrderNo
         self.lines = lines
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -51,6 +54,7 @@ public struct MerchantReturnResponse: Codable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
         case merchantOrderNo = "MerchantOrderNo"
+        case channelOrderNo = "ChannelOrderNo"
         case lines = "Lines"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
