@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantProductExtraDataItemRequest: Codable { 
-
+public struct MerchantProductExtraDataItemRequest: Codable, Hashable {
 
     /** Name of the extra data field. */
     public var key: String?
@@ -25,12 +24,23 @@ public struct MerchantProductExtraDataItemRequest: Codable {
         self.type = type
         self.isPublic = isPublic
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case key = "Key"
         case value = "Value"
         case type = "Type"
         case isPublic = "IsPublic"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(key, forKey: .key)
+        try container.encodeIfPresent(value, forKey: .value)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(isPublic, forKey: .isPublic)
+    }
+
+
 
 }

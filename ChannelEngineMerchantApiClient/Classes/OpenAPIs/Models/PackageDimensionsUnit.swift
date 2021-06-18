@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import AnyCodable
 
 public enum PackageDimensionsUnit: String, Codable, CaseIterable {
     case cm = "CM"

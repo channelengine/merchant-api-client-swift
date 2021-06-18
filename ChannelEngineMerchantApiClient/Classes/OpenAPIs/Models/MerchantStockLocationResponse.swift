@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantStockLocationResponse: Codable { 
-
+public struct MerchantStockLocationResponse: Codable, Hashable {
 
     /** The ChannelEngine id of the stock location. */
     public var id: Int?
@@ -20,10 +19,19 @@ public struct MerchantStockLocationResponse: Codable {
         self.id = id
         self.name = name
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id = "Id"
         case name = "Name"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(name, forKey: .name)
+    }
+
+
 
 }

@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantProductResponse: Codable { 
-
+public struct MerchantProductResponse: Codable, Hashable {
 
     /** Is the product active for the Merchant?. */
     public var isActive: Bool?
@@ -99,8 +98,7 @@ public struct MerchantProductResponse: Codable {
         self.extraImageUrl9 = extraImageUrl9
         self.categoryTrail = categoryTrail
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case isActive = "IsActive"
         case merchantProductNo = "MerchantProductNo"
         case extraData = "ExtraData"
@@ -131,5 +129,42 @@ public struct MerchantProductResponse: Codable {
         case extraImageUrl9 = "ExtraImageUrl9"
         case categoryTrail = "CategoryTrail"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(isActive, forKey: .isActive)
+        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(brand, forKey: .brand)
+        try container.encodeIfPresent(size, forKey: .size)
+        try container.encodeIfPresent(color, forKey: .color)
+        try container.encodeIfPresent(ean, forKey: .ean)
+        try container.encodeIfPresent(manufacturerProductNumber, forKey: .manufacturerProductNumber)
+        try container.encodeIfPresent(stock, forKey: .stock)
+        try container.encodeIfPresent(price, forKey: .price)
+        try container.encodeIfPresent(MSRP, forKey: .MSRP)
+        try container.encodeIfPresent(purchasePrice, forKey: .purchasePrice)
+        try container.encodeIfPresent(vatRateType, forKey: .vatRateType)
+        try container.encodeIfPresent(shippingCost, forKey: .shippingCost)
+        try container.encodeIfPresent(shippingTime, forKey: .shippingTime)
+        try container.encodeIfPresent(url, forKey: .url)
+        try container.encodeIfPresent(imageUrl, forKey: .imageUrl)
+        try container.encodeIfPresent(extraImageUrl1, forKey: .extraImageUrl1)
+        try container.encodeIfPresent(extraImageUrl2, forKey: .extraImageUrl2)
+        try container.encodeIfPresent(extraImageUrl3, forKey: .extraImageUrl3)
+        try container.encodeIfPresent(extraImageUrl4, forKey: .extraImageUrl4)
+        try container.encodeIfPresent(extraImageUrl5, forKey: .extraImageUrl5)
+        try container.encodeIfPresent(extraImageUrl6, forKey: .extraImageUrl6)
+        try container.encodeIfPresent(extraImageUrl7, forKey: .extraImageUrl7)
+        try container.encodeIfPresent(extraImageUrl8, forKey: .extraImageUrl8)
+        try container.encodeIfPresent(extraImageUrl9, forKey: .extraImageUrl9)
+        try container.encodeIfPresent(categoryTrail, forKey: .categoryTrail)
+    }
+
+
 
 }

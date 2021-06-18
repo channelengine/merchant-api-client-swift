@@ -6,15 +6,20 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantReturnResponse: Codable { 
-
+public struct MerchantReturnResponse: Codable, Hashable {
 
     /** The unique order reference used by the Merchant. */
     public var merchantOrderNo: String?
     /** The unique order reference used by the Channel. */
     public var channelOrderNo: String?
+    /** The id of the channel. */
+    public var channelId: Int?
+    /** The id of the Global Channel. */
+    public var globalChannelId: Int?
+    /** The name of the Global Channel. */
+    public var globalChannelName: String?
     public var lines: [MerchantReturnLineResponse]?
     /** The date at which the return was created in ChannelEngine. */
     public var createdAt: Date?
@@ -36,9 +41,12 @@ public struct MerchantReturnResponse: Codable {
     /** Refund amount excl. VAT. */
     public var refundExclVat: Double?
 
-    public init(merchantOrderNo: String? = nil, channelOrderNo: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil) {
+    public init(merchantOrderNo: String? = nil, channelOrderNo: String? = nil, channelId: Int? = nil, globalChannelId: Int? = nil, globalChannelName: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil) {
         self.merchantOrderNo = merchantOrderNo
         self.channelOrderNo = channelOrderNo
+        self.channelId = channelId
+        self.globalChannelId = globalChannelId
+        self.globalChannelName = globalChannelName
         self.lines = lines
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -51,10 +59,12 @@ public struct MerchantReturnResponse: Codable {
         self.refundInclVat = refundInclVat
         self.refundExclVat = refundExclVat
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantOrderNo = "MerchantOrderNo"
         case channelOrderNo = "ChannelOrderNo"
+        case channelId = "ChannelId"
+        case globalChannelId = "GlobalChannelId"
+        case globalChannelName = "GlobalChannelName"
         case lines = "Lines"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
@@ -67,5 +77,29 @@ public struct MerchantReturnResponse: Codable {
         case refundInclVat = "RefundInclVat"
         case refundExclVat = "RefundExclVat"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encodeIfPresent(channelOrderNo, forKey: .channelOrderNo)
+        try container.encodeIfPresent(channelId, forKey: .channelId)
+        try container.encodeIfPresent(globalChannelId, forKey: .globalChannelId)
+        try container.encodeIfPresent(globalChannelName, forKey: .globalChannelName)
+        try container.encodeIfPresent(lines, forKey: .lines)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
+        try container.encodeIfPresent(merchantReturnNo, forKey: .merchantReturnNo)
+        try container.encodeIfPresent(channelReturnNo, forKey: .channelReturnNo)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(reason, forKey: .reason)
+        try container.encodeIfPresent(customerComment, forKey: .customerComment)
+        try container.encodeIfPresent(merchantComment, forKey: .merchantComment)
+        try container.encodeIfPresent(refundInclVat, forKey: .refundInclVat)
+        try container.encodeIfPresent(refundExclVat, forKey: .refundExclVat)
+    }
+
+
 
 }

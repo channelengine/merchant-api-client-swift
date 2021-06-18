@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class ProductBundleAPI {
     /**
      Get product bundles.  You can get the full product information on bundles from the regular /products endpoint.
@@ -20,7 +18,7 @@ open class ProductBundleAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productBundleGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantProductBundleResponse?,_ error: Error?) -> Void)) {
+    open class func productBundleGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantProductBundleResponse?, _ error: Error?) -> Void)) {
         productBundleGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -46,19 +44,25 @@ open class ProductBundleAPI {
     open class func productBundleGetByFilterWithRequestBuilder(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductBundleResponse> {
         let path = "/v2/productbundles"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "search": search?.encodeToJSON(), 
-            "eanList": eanList?.encodeToJSON(), 
-            "merchantProductNoList": merchantProductNoList?.encodeToJSON(), 
-            "page": page?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "search": search?.encodeToJSON(),
+            "eanList": eanList?.encodeToJSON(),
+            "merchantProductNoList": merchantProductNoList?.encodeToJSON(),
+            "page": page?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantProductBundleResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

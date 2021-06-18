@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class ListedProductsAPI {
     /**
      Get Listed Products
@@ -18,7 +16,7 @@ open class ListedProductsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listedProductGetByFilter(channelId: Int, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfChannelListedProductResponse?,_ error: Error?) -> Void)) {
+    open class func listedProductGetByFilter(channelId: Int, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfChannelListedProductResponse?, _ error: Error?) -> Void)) {
         listedProductGetByFilterWithRequestBuilder(channelId: channelId, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -46,16 +44,22 @@ open class ListedProductsAPI {
         let channelIdPostEscape = channelIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{channelId}", with: channelIdPostEscape, options: .literal, range: nil)
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "page": page?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "page": page?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<CollectionOfChannelListedProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

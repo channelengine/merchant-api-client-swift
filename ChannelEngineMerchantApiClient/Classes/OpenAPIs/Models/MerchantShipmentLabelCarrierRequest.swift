@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantShipmentLabelCarrierRequest: Codable { 
-
+public struct MerchantShipmentLabelCarrierRequest: Codable, Hashable {
 
     public var lines: [MerchantShipmentLineRequest]
     public var dimensions: MerchantShipmentPackageDimensionsRequest
@@ -20,11 +19,21 @@ public struct MerchantShipmentLabelCarrierRequest: Codable {
         self.dimensions = dimensions
         self.weight = weight
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case lines = "Lines"
         case dimensions = "Dimensions"
         case weight = "Weight"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(lines, forKey: .lines)
+        try container.encode(dimensions, forKey: .dimensions)
+        try container.encode(weight, forKey: .weight)
+    }
+
+
 
 }

@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantShipmentPackageDimensionsRequest: Codable { 
-
+public struct MerchantShipmentPackageDimensionsRequest: Codable, Hashable {
 
     public var height: Double?
     public var width: Double?
@@ -22,12 +21,23 @@ public struct MerchantShipmentPackageDimensionsRequest: Codable {
         self.length = length
         self.unit = unit
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case height = "Height"
         case width = "Width"
         case length = "Length"
         case unit = "Unit"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(height, forKey: .height)
+        try container.encodeIfPresent(width, forKey: .width)
+        try container.encodeIfPresent(length, forKey: .length)
+        try container.encodeIfPresent(unit, forKey: .unit)
+    }
+
+
 
 }

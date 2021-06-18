@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantProductBundleResponse: Codable { 
-
+public struct MerchantProductBundleResponse: Codable, Hashable {
 
     public var merchantProductNo: String?
     public var ean: String?
@@ -24,13 +23,25 @@ public struct MerchantProductBundleResponse: Codable {
         self.price = price
         self.parts = parts
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
         case ean = "Ean"
         case name = "Name"
         case price = "Price"
         case parts = "Parts"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
+        try container.encodeIfPresent(ean, forKey: .ean)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(price, forKey: .price)
+        try container.encodeIfPresent(parts, forKey: .parts)
+    }
+
+
 
 }

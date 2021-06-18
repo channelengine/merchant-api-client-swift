@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantShipmentRequest: Codable { 
-
+public struct MerchantShipmentRequest: Codable, Hashable {
 
     /** The unique shipment reference used by the Merchant. */
     public var merchantShipmentNo: String
@@ -34,8 +33,7 @@ public struct MerchantShipmentRequest: Codable {
         self.returnTrackTraceNo = returnTrackTraceNo
         self.method = method
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantShipmentNo = "MerchantShipmentNo"
         case merchantOrderNo = "MerchantOrderNo"
         case lines = "Lines"
@@ -44,5 +42,20 @@ public struct MerchantShipmentRequest: Codable {
         case returnTrackTraceNo = "ReturnTrackTraceNo"
         case method = "Method"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(merchantShipmentNo, forKey: .merchantShipmentNo)
+        try container.encode(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encode(lines, forKey: .lines)
+        try container.encodeIfPresent(trackTraceNo, forKey: .trackTraceNo)
+        try container.encodeIfPresent(trackTraceUrl, forKey: .trackTraceUrl)
+        try container.encodeIfPresent(returnTrackTraceNo, forKey: .returnTrackTraceNo)
+        try container.encodeIfPresent(method, forKey: .method)
+    }
+
+
 
 }

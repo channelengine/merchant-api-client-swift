@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class OfferAPI {
     /**
      Get stock for products.
@@ -18,7 +16,7 @@ open class OfferAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func offerGetStock(skus: [String], stockLocationIds: [Int], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?,_ error: Error?) -> Void)) {
+    open class func offerGetStock(skus: [String], stockLocationIds: [Int], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?, _ error: Error?) -> Void)) {
         offerGetStockWithRequestBuilder(skus: skus, stockLocationIds: stockLocationIds).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -43,17 +41,23 @@ open class OfferAPI {
     open class func offerGetStockWithRequestBuilder(skus: [String], stockLocationIds: [Int]) -> RequestBuilder<CollectionOfMerchantOfferGetStockResponse> {
         let path = "/v2/offer/stock"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "skus": skus.encodeToJSON(), 
-            "stockLocationIds": stockLocationIds.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "skus": skus.encodeToJSON(),
+            "stockLocationIds": stockLocationIds.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantOfferGetStockResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -63,7 +67,7 @@ open class OfferAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func offerStockPriceUpdate(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?,_ error: Error?) -> Void)) {
+    open class func offerStockPriceUpdate(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
         offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: merchantStockPriceUpdateRequest).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -88,11 +92,17 @@ open class OfferAPI {
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockPriceUpdateRequest)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class ChannelsAPI {
     /**
      Get Channels.
@@ -16,7 +14,7 @@ open class ChannelsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func channelPluginsGet(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfChannelGlobalChannelResponse?,_ error: Error?) -> Void)) {
+    open class func channelPluginsGet(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfChannelGlobalChannelResponse?, _ error: Error?) -> Void)) {
         channelPluginsGetWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -39,13 +37,19 @@ open class ChannelsAPI {
     open class func channelPluginsGetWithRequestBuilder() -> RequestBuilder<CollectionOfChannelGlobalChannelResponse> {
         let path = "/v2/channels"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<CollectionOfChannelGlobalChannelResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

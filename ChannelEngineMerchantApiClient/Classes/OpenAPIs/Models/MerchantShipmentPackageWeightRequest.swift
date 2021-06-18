@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantShipmentPackageWeightRequest: Codable { 
-
+public struct MerchantShipmentPackageWeightRequest: Codable, Hashable {
 
     public var value: Double?
     public var unit: PackageWeightUnit?
@@ -18,10 +17,19 @@ public struct MerchantShipmentPackageWeightRequest: Codable {
         self.value = value
         self.unit = unit
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case value = "Value"
         case unit = "Unit"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(value, forKey: .value)
+        try container.encodeIfPresent(unit, forKey: .unit)
+    }
+
+
 
 }

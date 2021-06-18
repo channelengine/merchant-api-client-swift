@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import AnyCodable
 
 public enum PackageWeightUnit: String, Codable, CaseIterable {
     case gram = "GRAM"

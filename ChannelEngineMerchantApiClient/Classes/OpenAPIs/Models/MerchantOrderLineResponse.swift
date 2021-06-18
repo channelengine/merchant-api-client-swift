@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantOrderLineResponse: Codable { 
-
+public struct MerchantOrderLineResponse: Codable, Hashable {
 
     public var status: OrderStatusView?
     /** Is the order fulfilled by the marketplace (amazon: FBA, bol: LVB, etc.)?. */
@@ -80,8 +79,7 @@ public struct MerchantOrderLineResponse: Codable {
         self.condition = condition
         self.expectedDeliveryDate = expectedDeliveryDate
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case status = "Status"
         case isFulfillmentByMarketplace = "IsFulfillmentByMarketplace"
         case gtin = "Gtin"
@@ -106,5 +104,36 @@ public struct MerchantOrderLineResponse: Codable {
         case condition = "Condition"
         case expectedDeliveryDate = "ExpectedDeliveryDate"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(status, forKey: .status)
+        try container.encodeIfPresent(isFulfillmentByMarketplace, forKey: .isFulfillmentByMarketplace)
+        try container.encodeIfPresent(gtin, forKey: .gtin)
+        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(unitVat, forKey: .unitVat)
+        try container.encodeIfPresent(lineTotalInclVat, forKey: .lineTotalInclVat)
+        try container.encodeIfPresent(lineVat, forKey: .lineVat)
+        try container.encodeIfPresent(originalUnitPriceInclVat, forKey: .originalUnitPriceInclVat)
+        try container.encodeIfPresent(originalUnitVat, forKey: .originalUnitVat)
+        try container.encodeIfPresent(originalLineTotalInclVat, forKey: .originalLineTotalInclVat)
+        try container.encodeIfPresent(originalLineVat, forKey: .originalLineVat)
+        try container.encodeIfPresent(originalFeeFixed, forKey: .originalFeeFixed)
+        try container.encodeIfPresent(bundleProductMerchantProductNo, forKey: .bundleProductMerchantProductNo)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
+        try container.encode(channelProductNo, forKey: .channelProductNo)
+        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
+        try container.encode(quantity, forKey: .quantity)
+        try container.encodeIfPresent(cancellationRequestedQuantity, forKey: .cancellationRequestedQuantity)
+        try container.encode(unitPriceInclVat, forKey: .unitPriceInclVat)
+        try container.encodeIfPresent(feeFixed, forKey: .feeFixed)
+        try container.encodeIfPresent(feeRate, forKey: .feeRate)
+        try container.encodeIfPresent(condition, forKey: .condition)
+        try container.encodeIfPresent(expectedDeliveryDate, forKey: .expectedDeliveryDate)
+    }
+
+
 
 }

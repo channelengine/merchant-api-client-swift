@@ -6,21 +6,38 @@
 //
 
 import Foundation
+import AnyCodable
 
+public struct Operation: Codable, Hashable {
 
-public struct Operation: Codable { 
-
-
-    public var value: Any?
+    public var value: AnyCodable?
     public var path: String?
     public var op: String?
     public var from: String?
 
-    public init(value: Any? = nil, path: String? = nil, op: String? = nil, from: String? = nil) {
+    public init(value: AnyCodable? = nil, path: String? = nil, op: String? = nil, from: String? = nil) {
         self.value = value
         self.path = path
         self.op = op
         self.from = from
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case value
+        case path
+        case op
+        case from
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(value, forKey: .value)
+        try container.encodeIfPresent(path, forKey: .path)
+        try container.encodeIfPresent(op, forKey: .op)
+        try container.encodeIfPresent(from, forKey: .from)
+    }
+
+
 
 }

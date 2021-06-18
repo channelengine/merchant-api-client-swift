@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantOrderAcknowledgementRequest: Codable { 
-
+public struct MerchantOrderAcknowledgementRequest: Codable, Hashable {
 
     /** Your own order reference, this will be used in consecutive order processing API calls. */
     public var merchantOrderNo: String
@@ -20,10 +19,19 @@ public struct MerchantOrderAcknowledgementRequest: Codable {
         self.merchantOrderNo = merchantOrderNo
         self.orderId = orderId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantOrderNo = "MerchantOrderNo"
         case orderId = "OrderId"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encode(orderId, forKey: .orderId)
+    }
+
+
 
 }

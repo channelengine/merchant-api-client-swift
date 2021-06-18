@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct ProductMessage: Codable { 
-
+public struct ProductMessage: Codable, Hashable {
 
     public var name: String?
     public var reference: String?
@@ -22,12 +21,23 @@ public struct ProductMessage: Codable {
         self.warnings = warnings
         self.errors = errors
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case reference = "Reference"
         case warnings = "Warnings"
         case errors = "Errors"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(reference, forKey: .reference)
+        try container.encodeIfPresent(warnings, forKey: .warnings)
+        try container.encodeIfPresent(errors, forKey: .errors)
+    }
+
+
 
 }

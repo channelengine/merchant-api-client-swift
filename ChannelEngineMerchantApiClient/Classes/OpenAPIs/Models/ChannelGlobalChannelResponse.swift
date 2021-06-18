@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct ChannelGlobalChannelResponse: Codable { 
-
+public struct ChannelGlobalChannelResponse: Codable, Hashable {
 
     /** The country code of the Global Channel. */
     public var countryCode: String?
@@ -29,13 +28,25 @@ public struct ChannelGlobalChannelResponse: Codable {
         self.languageCode = languageCode
         self.globalChannelName = globalChannelName
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case countryCode = "CountryCode"
         case globalChannelId = "GlobalChannelId"
         case channels = "Channels"
         case languageCode = "LanguageCode"
         case globalChannelName = "GlobalChannelName"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(countryCode, forKey: .countryCode)
+        try container.encodeIfPresent(globalChannelId, forKey: .globalChannelId)
+        try container.encodeIfPresent(channels, forKey: .channels)
+        try container.encodeIfPresent(languageCode, forKey: .languageCode)
+        try container.encodeIfPresent(globalChannelName, forKey: .globalChannelName)
+    }
+
+
 
 }

@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct ProductCreationResult: Codable { 
-
+public struct ProductCreationResult: Codable, Hashable {
 
     public var rejectedCount: Int?
     public var acceptedCount: Int?
@@ -21,11 +20,21 @@ public struct ProductCreationResult: Codable {
         self.acceptedCount = acceptedCount
         self.productMessages = productMessages
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case rejectedCount = "RejectedCount"
         case acceptedCount = "AcceptedCount"
         case productMessages = "ProductMessages"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(rejectedCount, forKey: .rejectedCount)
+        try container.encodeIfPresent(acceptedCount, forKey: .acceptedCount)
+        try container.encodeIfPresent(productMessages, forKey: .productMessages)
+    }
+
+
 
 }

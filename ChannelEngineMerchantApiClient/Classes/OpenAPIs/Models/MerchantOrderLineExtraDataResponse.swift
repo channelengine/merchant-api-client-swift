@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantOrderLineExtraDataResponse: Codable { 
-
+public struct MerchantOrderLineExtraDataResponse: Codable, Hashable {
 
     public var key: String?
     public var value: String?
@@ -18,10 +17,19 @@ public struct MerchantOrderLineExtraDataResponse: Codable {
         self.key = key
         self.value = value
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case key = "Key"
         case value = "Value"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(key, forKey: .key)
+        try container.encodeIfPresent(value, forKey: .value)
+    }
+
+
 
 }

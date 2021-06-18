@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantOrderResponse: Codable { 
-
+public struct MerchantOrderResponse: Codable, Hashable {
 
     /** The unique identifier used by ChannelEngine. This identifier does  not have to be saved. It should only be used in a call to acknowledge the order. */
     public var id: Int?
@@ -77,9 +76,9 @@ public struct MerchantOrderResponse: Codable {
     /** The unique customer reference used by the channel. */
     public var channelCustomerNo: String?
     /** Extra data on the order. */
-    public var extraData: [String:String]?
+    public var extraData: [String: String]?
 
-    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String:String]? = nil) {
+    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
         self.id = id
         self.channelName = channelName
         self.channelId = channelId
@@ -117,8 +116,7 @@ public struct MerchantOrderResponse: Codable {
         self.channelCustomerNo = channelCustomerNo
         self.extraData = extraData
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id = "Id"
         case channelName = "ChannelName"
         case channelId = "ChannelId"
@@ -156,5 +154,49 @@ public struct MerchantOrderResponse: Codable {
         case channelCustomerNo = "ChannelCustomerNo"
         case extraData = "ExtraData"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(channelName, forKey: .channelName)
+        try container.encodeIfPresent(channelId, forKey: .channelId)
+        try container.encodeIfPresent(globalChannelName, forKey: .globalChannelName)
+        try container.encodeIfPresent(globalChannelId, forKey: .globalChannelId)
+        try container.encodeIfPresent(channelOrderSupport, forKey: .channelOrderSupport)
+        try container.encodeIfPresent(channelOrderNo, forKey: .channelOrderNo)
+        try container.encodeIfPresent(status, forKey: .status)
+        try container.encodeIfPresent(isBusinessOrder, forKey: .isBusinessOrder)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
+        try container.encodeIfPresent(merchantComment, forKey: .merchantComment)
+        try container.encodeIfPresent(billingAddress, forKey: .billingAddress)
+        try container.encodeIfPresent(shippingAddress, forKey: .shippingAddress)
+        try container.encodeIfPresent(subTotalInclVat, forKey: .subTotalInclVat)
+        try container.encodeIfPresent(subTotalVat, forKey: .subTotalVat)
+        try container.encodeIfPresent(shippingCostsVat, forKey: .shippingCostsVat)
+        try container.encodeIfPresent(totalInclVat, forKey: .totalInclVat)
+        try container.encodeIfPresent(totalVat, forKey: .totalVat)
+        try container.encodeIfPresent(originalSubTotalInclVat, forKey: .originalSubTotalInclVat)
+        try container.encodeIfPresent(originalSubTotalVat, forKey: .originalSubTotalVat)
+        try container.encodeIfPresent(originalShippingCostsInclVat, forKey: .originalShippingCostsInclVat)
+        try container.encodeIfPresent(originalShippingCostsVat, forKey: .originalShippingCostsVat)
+        try container.encodeIfPresent(originalTotalInclVat, forKey: .originalTotalInclVat)
+        try container.encodeIfPresent(originalTotalVat, forKey: .originalTotalVat)
+        try container.encodeIfPresent(lines, forKey: .lines)
+        try container.encodeIfPresent(phone, forKey: .phone)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(companyRegistrationNo, forKey: .companyRegistrationNo)
+        try container.encodeIfPresent(vatNo, forKey: .vatNo)
+        try container.encodeIfPresent(paymentMethod, forKey: .paymentMethod)
+        try container.encode(shippingCostsInclVat, forKey: .shippingCostsInclVat)
+        try container.encode(currencyCode, forKey: .currencyCode)
+        try container.encode(orderDate, forKey: .orderDate)
+        try container.encodeIfPresent(channelCustomerNo, forKey: .channelCustomerNo)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
+    }
+
+
 
 }

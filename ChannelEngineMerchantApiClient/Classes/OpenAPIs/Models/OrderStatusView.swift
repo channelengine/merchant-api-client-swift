@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import AnyCodable
 
 public enum OrderStatusView: String, Codable, CaseIterable {
     case inProgress = "IN_PROGRESS"
@@ -19,4 +19,5 @@ public enum OrderStatusView: String, Codable, CaseIterable {
     case new = "NEW"
     case returned = "RETURNED"
     case requiresCorrection = "REQUIRES_CORRECTION"
+    case awaitingPayment = "AWAITING_PAYMENT"
 }

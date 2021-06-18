@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantReturnLineRequest: Codable { 
-
+public struct MerchantReturnLineRequest: Codable, Hashable {
 
     /** The unique product reference used by the Merchant (sku). */
     public var merchantProductNo: String
@@ -20,10 +19,19 @@ public struct MerchantReturnLineRequest: Codable {
         self.merchantProductNo = merchantProductNo
         self.quantity = quantity
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
         case quantity = "Quantity"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(merchantProductNo, forKey: .merchantProductNo)
+        try container.encode(quantity, forKey: .quantity)
+    }
+
+
 
 }

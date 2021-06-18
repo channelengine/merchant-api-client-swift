@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct ChannelChannelResponse: Codable { 
-
+public struct ChannelChannelResponse: Codable, Hashable {
 
     /** The ID of the Channel. */
     public var channelId: Int?
@@ -23,11 +22,21 @@ public struct ChannelChannelResponse: Codable {
         self.isEnabled = isEnabled
         self.channelName = channelName
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case channelId = "ChannelId"
         case isEnabled = "IsEnabled"
         case channelName = "ChannelName"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(channelId, forKey: .channelId)
+        try container.encodeIfPresent(isEnabled, forKey: .isEnabled)
+        try container.encodeIfPresent(channelName, forKey: .channelName)
+    }
+
+
 
 }

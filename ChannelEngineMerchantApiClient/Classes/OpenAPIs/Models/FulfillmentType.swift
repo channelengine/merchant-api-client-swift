@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import AnyCodable
 
 public enum FulfillmentType: String, Codable, CaseIterable {
     case all = "ALL"

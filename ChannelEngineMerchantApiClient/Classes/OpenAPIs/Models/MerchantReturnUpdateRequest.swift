@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantReturnUpdateRequest: Codable { 
-
+public struct MerchantReturnUpdateRequest: Codable, Hashable {
 
     /** The ChannelEngine return ID of the return you would like to update. */
     public var returnId: Int
@@ -19,10 +18,19 @@ public struct MerchantReturnUpdateRequest: Codable {
         self.returnId = returnId
         self.lines = lines
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case returnId = "ReturnId"
         case lines = "Lines"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(returnId, forKey: .returnId)
+        try container.encode(lines, forKey: .lines)
+    }
+
+
 
 }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class StockLocationAPI {
     /**
      Get the stock locations (or virtual warehouses).
@@ -16,7 +14,7 @@ open class StockLocationAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func stockLocationIndex(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantStockLocationResponse?,_ error: Error?) -> Void)) {
+    open class func stockLocationIndex(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantStockLocationResponse?, _ error: Error?) -> Void)) {
         stockLocationIndexWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -39,13 +37,19 @@ open class StockLocationAPI {
     open class func stockLocationIndexWithRequestBuilder() -> RequestBuilder<CollectionOfMerchantStockLocationResponse> {
         let path = "/v2/stocklocations"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<CollectionOfMerchantStockLocationResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

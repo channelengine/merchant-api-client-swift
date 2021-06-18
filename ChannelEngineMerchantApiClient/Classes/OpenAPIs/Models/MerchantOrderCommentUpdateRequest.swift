@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantOrderCommentUpdateRequest: Codable { 
-
+public struct MerchantOrderCommentUpdateRequest: Codable, Hashable {
 
     /** Your own order reference for the order you would like to update the comment for. */
     public var merchantOrderNo: String?
@@ -23,11 +22,21 @@ public struct MerchantOrderCommentUpdateRequest: Codable {
         self.orderId = orderId
         self.merchantComment = merchantComment
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantOrderNo = "MerchantOrderNo"
         case orderId = "OrderId"
         case merchantComment = "MerchantComment"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encodeIfPresent(orderId, forKey: .orderId)
+        try container.encode(merchantComment, forKey: .merchantComment)
+    }
+
+
 
 }

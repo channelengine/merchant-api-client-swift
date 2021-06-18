@@ -6,24 +6,40 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct MerchantReturnLineResponse: Codable { 
-
+public struct MerchantReturnLineResponse: Codable, Hashable {
 
     /** The unique product reference used by the Merchant (sku). */
     public var merchantProductNo: String?
+    public var orderLine: MerchantOrderLineResponse?
+    public var shipmentStatus: ShipmentLineStatus?
     /** Number of items of the product in this return. */
     public var quantity: Int
 
-    public init(merchantProductNo: String? = nil, quantity: Int) {
+    public init(merchantProductNo: String? = nil, orderLine: MerchantOrderLineResponse? = nil, shipmentStatus: ShipmentLineStatus? = nil, quantity: Int) {
         self.merchantProductNo = merchantProductNo
+        self.orderLine = orderLine
+        self.shipmentStatus = shipmentStatus
         self.quantity = quantity
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
+        case orderLine = "OrderLine"
+        case shipmentStatus = "ShipmentStatus"
         case quantity = "Quantity"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
+        try container.encodeIfPresent(orderLine, forKey: .orderLine)
+        try container.encodeIfPresent(shipmentStatus, forKey: .shipmentStatus)
+        try container.encode(quantity, forKey: .quantity)
+    }
+
+
 
 }
