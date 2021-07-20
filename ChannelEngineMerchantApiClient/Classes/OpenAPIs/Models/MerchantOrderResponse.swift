@@ -67,6 +67,8 @@ public struct MerchantOrderResponse: Codable, Hashable {
     public var vatNo: String?
     /** The payment method used on the order. */
     public var paymentMethod: String?
+    /** Reference or transaction id for the payment */
+    public var paymentReferenceNo: String?
     /** The shipping fee including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var shippingCostsInclVat: Double
     /** The currency code for the amounts of the order. */
@@ -78,7 +80,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
     /** Extra data on the order. */
     public var extraData: [String: String]?
 
-    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
+    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, paymentReferenceNo: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
         self.id = id
         self.channelName = channelName
         self.channelId = channelId
@@ -110,6 +112,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         self.companyRegistrationNo = companyRegistrationNo
         self.vatNo = vatNo
         self.paymentMethod = paymentMethod
+        self.paymentReferenceNo = paymentReferenceNo
         self.shippingCostsInclVat = shippingCostsInclVat
         self.currencyCode = currencyCode
         self.orderDate = orderDate
@@ -148,6 +151,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         case companyRegistrationNo = "CompanyRegistrationNo"
         case vatNo = "VatNo"
         case paymentMethod = "PaymentMethod"
+        case paymentReferenceNo = "PaymentReferenceNo"
         case shippingCostsInclVat = "ShippingCostsInclVat"
         case currencyCode = "CurrencyCode"
         case orderDate = "OrderDate"
@@ -190,6 +194,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         try container.encodeIfPresent(companyRegistrationNo, forKey: .companyRegistrationNo)
         try container.encodeIfPresent(vatNo, forKey: .vatNo)
         try container.encodeIfPresent(paymentMethod, forKey: .paymentMethod)
+        try container.encodeIfPresent(paymentReferenceNo, forKey: .paymentReferenceNo)
         try container.encode(shippingCostsInclVat, forKey: .shippingCostsInclVat)
         try container.encode(currencyCode, forKey: .currencyCode)
         try container.encode(orderDate, forKey: .orderDate)
