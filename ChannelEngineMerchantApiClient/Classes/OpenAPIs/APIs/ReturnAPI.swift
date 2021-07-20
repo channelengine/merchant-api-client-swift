@@ -109,7 +109,6 @@ open class ReturnAPI {
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
      - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
-     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
@@ -118,8 +117,8 @@ open class ReturnAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetDeclaredByChannel(merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, createdSince: Date? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
-        returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, createdSince: createdSince, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
+    open class func returnGetDeclaredByChannel(merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
+        returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -139,7 +138,6 @@ open class ReturnAPI {
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
      - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
-     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
@@ -147,7 +145,7 @@ open class ReturnAPI {
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, createdSince: Date? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetDeclaredByChannelWithRequestBuilder(merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let path = "/v2/returns/merchant"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String: Any]? = nil
@@ -157,7 +155,6 @@ open class ReturnAPI {
             "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
             "channelOrderNos": channelOrderNos?.encodeToJSON(),
             "fulfillmentType": fulfillmentType?.encodeToJSON(),
-            "createdSince": createdSince?.encodeToJSON(),
             "statuses": statuses?.encodeToJSON(),
             "reasons": reasons?.encodeToJSON(),
             "fromDate": fromDate?.encodeToJSON(),
@@ -183,7 +180,6 @@ open class ReturnAPI {
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
      - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
-     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
@@ -192,8 +188,8 @@ open class ReturnAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetReturns(creatorType: CreatorFilter? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, createdSince: Date? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
-        returnGetReturnsWithRequestBuilder(creatorType: creatorType, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, createdSince: createdSince, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
+    open class func returnGetReturns(creatorType: CreatorFilter? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
+        returnGetReturnsWithRequestBuilder(creatorType: creatorType, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -214,7 +210,6 @@ open class ReturnAPI {
      - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
      - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
      - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
-     - parameter createdSince: (query) Deprecated, please use FromDate instead. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
@@ -222,7 +217,7 @@ open class ReturnAPI {
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetReturnsWithRequestBuilder(creatorType: CreatorFilter? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, createdSince: Date? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetReturnsWithRequestBuilder(creatorType: CreatorFilter? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let path = "/v2/returns"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String: Any]? = nil
@@ -233,7 +228,6 @@ open class ReturnAPI {
             "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
             "channelOrderNos": channelOrderNos?.encodeToJSON(),
             "fulfillmentType": fulfillmentType?.encodeToJSON(),
-            "createdSince": createdSince?.encodeToJSON(),
             "statuses": statuses?.encodeToJSON(),
             "reasons": reasons?.encodeToJSON(),
             "fromDate": fromDate?.encodeToJSON(),
