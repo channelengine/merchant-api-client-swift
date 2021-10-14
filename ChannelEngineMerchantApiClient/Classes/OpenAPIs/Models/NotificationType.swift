@@ -26,6 +26,7 @@ public enum NotificationType: String, Codable, CaseIterable {
     case channelReturnOverdue = "CHANNEL_RETURN_OVERDUE"
     case channelRefundExportFailed = "CHANNEL_REFUND_EXPORT_FAILED"
     case channelRefundLineItemsError = "CHANNEL_REFUND_LINE_ITEMS_ERROR"
+    case channelReturnDeleted = "CHANNEL_RETURN_DELETED"
     case channelShipmentImportFailed = "CHANNEL_SHIPMENT_IMPORT_FAILED"
     case channelShipmentImportStatusFailed = "CHANNEL_SHIPMENT_IMPORT_STATUS_FAILED"
     case channelShipmentExportFailed = "CHANNEL_SHIPMENT_EXPORT_FAILED"
@@ -53,4 +54,5 @@ public enum NotificationType: String, Codable, CaseIterable {
     case channelShipmentExportInvalidMerchantshipmentno = "CHANNEL_SHIPMENT_EXPORT_INVALID_MERCHANTSHIPMENTNO"
     case channelProductOfferExportFailed = "CHANNEL_PRODUCT_OFFER_EXPORT_FAILED"
     case tranlationsImageTagsBroken = "TRANLATIONS_IMAGE_TAGS_BROKEN"
+    case taxProviderNotActivated = "TAX_PROVIDER_NOT_ACTIVATED"
 }

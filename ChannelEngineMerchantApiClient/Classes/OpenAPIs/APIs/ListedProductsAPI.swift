@@ -11,7 +11,7 @@ open class ListedProductsAPI {
     /**
      Get Listed Products
      
-     - parameter channelId: (path)  
+     - parameter channelId: (path) The id of a channel 
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
@@ -34,7 +34,7 @@ open class ListedProductsAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter channelId: (path)  
+     - parameter channelId: (path) The id of a channel 
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfChannelListedProductResponse> 
      */

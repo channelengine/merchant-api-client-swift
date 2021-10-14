@@ -11,11 +11,11 @@ open class ProductAPI {
     /**
      Delete multiple Products.
      
-     - parameter requestBody: (body)  (optional)
+     - parameter requestBody: (body) The list of MerchantProductNo of the products you wish to delete. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productBulkDelete(requestBody: [String]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
+    open class func productBulkDelete(requestBody: [String], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
         productBulkDeleteWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -29,14 +29,14 @@ open class ProductAPI {
     /**
      Delete multiple Products.
      - POST /v2/products/bulkdelete
-     - Delete the products based on the merchant references.<br />Note that we do not really delete a products, as the products<br />might still be referenced by orders etc. Therefore, the references<br />used for these products cannot be reused. We do however deactivate the products<br />which means that they will not be sent to channels.
+     - Delete the products based on the merchant references.<br />Note that we do not really delete products, as the products<br />might still be referenced by orders. Therefore, the references<br />used for these products cannot be reused. We do however deactivate the products<br />which means that they will not be sent to channels.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter requestBody: (body)  (optional)
+     - parameter requestBody: (body) The list of MerchantProductNo of the products you wish to delete. 
      - returns: RequestBuilder<ApiResponse> 
      */
-    open class func productBulkDeleteWithRequestBuilder(requestBody: [String]? = nil) -> RequestBuilder<ApiResponse> {
+    open class func productBulkDeleteWithRequestBuilder(requestBody: [String]) -> RequestBuilder<ApiResponse> {
         let path = "/v2/products/bulkdelete"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestBody)
@@ -103,11 +103,11 @@ open class ProductAPI {
     /**
      Upsert Products.
      
-     - parameter merchantProductRequest: (body)  (optional)
+     - parameter merchantProductRequest: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productCreate(merchantProductRequest: [MerchantProductRequest]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
+    open class func productCreate(merchantProductRequest: [MerchantProductRequest], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
         productCreateWithRequestBuilder(merchantProductRequest: merchantProductRequest).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -125,10 +125,10 @@ open class ProductAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter merchantProductRequest: (body)  (optional)
+     - parameter merchantProductRequest: (body)  
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
-    open class func productCreateWithRequestBuilder(merchantProductRequest: [MerchantProductRequest]? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
+    open class func productCreateWithRequestBuilder(merchantProductRequest: [MerchantProductRequest]) -> RequestBuilder<SingleOfProductCreationResult> {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantProductRequest)
@@ -149,7 +149,7 @@ open class ProductAPI {
     /**
      Delete Product.
      
-     - parameter merchantProductNo: (path)  
+     - parameter merchantProductNo: (path) The MerchantProductNo of the product you wish to delete. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -171,7 +171,7 @@ open class ProductAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter merchantProductNo: (path)  
+     - parameter merchantProductNo: (path) The MerchantProductNo of the product you wish to delete. 
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func productDeleteWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<ApiResponse> {
@@ -256,7 +256,7 @@ open class ProductAPI {
     /**
      Get Product.
      
-     - parameter merchantProductNo: (path)  
+     - parameter merchantProductNo: (path) The unique product reference used by the Merchant (sku). 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -278,7 +278,7 @@ open class ProductAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter merchantProductNo: (path)  
+     - parameter merchantProductNo: (path) The unique product reference used by the Merchant (sku). 
      - returns: RequestBuilder<SingleOfMerchantProductResponse> 
      */
     open class func productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<SingleOfMerchantProductResponse> {

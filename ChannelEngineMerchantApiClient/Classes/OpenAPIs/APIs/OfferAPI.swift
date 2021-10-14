@@ -61,14 +61,15 @@ open class OfferAPI {
     }
 
     /**
-     Update stock or price.
+     Update stock and/or price.
      
-     - parameter merchantStockPriceUpdateRequest: (body) References to the products that should be updated, and the new values&lt;br /&gt;for the stock or price fields. It is possible to supply only one of the two fields&lt;br /&gt;or both. (optional)
+     - parameter merchantStockPriceUpdateRequest: (body) References to the products that should be updated, and the new values&lt;br /&gt;for the stock or price fields. It is possible to supply only one of the two fields&lt;br /&gt;or both. 
+     - parameter stockLocationId: (query) The ChannelEngine id of the stock location. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func offerStockPriceUpdate(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
-        offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: merchantStockPriceUpdateRequest).execute(apiResponseQueue) { result -> Void in
+    open class func offerStockPriceUpdate(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest], stockLocationId: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
+        offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: merchantStockPriceUpdateRequest, stockLocationId: stockLocationId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -79,20 +80,25 @@ open class OfferAPI {
     }
 
     /**
-     Update stock or price.
+     Update stock and/or price.
      - PUT /v2/offer
+     - Update stock and/or price of product(s).
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter merchantStockPriceUpdateRequest: (body) References to the products that should be updated, and the new values&lt;br /&gt;for the stock or price fields. It is possible to supply only one of the two fields&lt;br /&gt;or both. (optional)
+     - parameter merchantStockPriceUpdateRequest: (body) References to the products that should be updated, and the new values&lt;br /&gt;for the stock or price fields. It is possible to supply only one of the two fields&lt;br /&gt;or both. 
+     - parameter stockLocationId: (query) The ChannelEngine id of the stock location. (optional)
      - returns: RequestBuilder<SingleOfDictionaryOfStringAndListOfString> 
      */
-    open class func offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest]? = nil) -> RequestBuilder<SingleOfDictionaryOfStringAndListOfString> {
+    open class func offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest], stockLocationId: Int? = nil) -> RequestBuilder<SingleOfDictionaryOfStringAndListOfString> {
         let path = "/v2/offer"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockPriceUpdateRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "stockLocationId": stockLocationId?.encodeToJSON(),
+        ])
 
         let nillableHeaders: [String: Any?] = [
             :
