@@ -17,14 +17,17 @@ public struct MerchantChannelLabelShipmentRequest: Codable, Hashable {
     public var merchantShipmentNo: String
     /** The unique order reference used by the Merchant. */
     public var merchantOrderNo: String
+    /** The code of the country from where the package is being shipped. */
+    public var shippedFromCountryCode: String?
     public var lines: [MerchantShipmentLineRequest]
 
-    public init(dimensions: MerchantShipmentPackageDimensionsRequest, weight: MerchantShipmentPackageWeightRequest, channelMethodCode: String, merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest]) {
+    public init(dimensions: MerchantShipmentPackageDimensionsRequest, weight: MerchantShipmentPackageWeightRequest, channelMethodCode: String, merchantShipmentNo: String, merchantOrderNo: String, shippedFromCountryCode: String? = nil, lines: [MerchantShipmentLineRequest]) {
         self.dimensions = dimensions
         self.weight = weight
         self.channelMethodCode = channelMethodCode
         self.merchantShipmentNo = merchantShipmentNo
         self.merchantOrderNo = merchantOrderNo
+        self.shippedFromCountryCode = shippedFromCountryCode
         self.lines = lines
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -33,6 +36,7 @@ public struct MerchantChannelLabelShipmentRequest: Codable, Hashable {
         case channelMethodCode = "ChannelMethodCode"
         case merchantShipmentNo = "MerchantShipmentNo"
         case merchantOrderNo = "MerchantOrderNo"
+        case shippedFromCountryCode = "ShippedFromCountryCode"
         case lines = "Lines"
     }
 
@@ -45,6 +49,7 @@ public struct MerchantChannelLabelShipmentRequest: Codable, Hashable {
         try container.encode(channelMethodCode, forKey: .channelMethodCode)
         try container.encode(merchantShipmentNo, forKey: .merchantShipmentNo)
         try container.encode(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encodeIfPresent(shippedFromCountryCode, forKey: .shippedFromCountryCode)
         try container.encode(lines, forKey: .lines)
     }
 

@@ -18,18 +18,22 @@ public struct MerchantShipmentTrackingRequest: Codable, Hashable {
     public var returnTrackTraceNo: String?
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
+    /** The code of the country from where the package is being shipped. */
+    public var shippedFromCountryCode: String?
 
-    public init(method: String, trackTraceNo: String, returnTrackTraceNo: String? = nil, trackTraceUrl: String? = nil) {
+    public init(method: String, trackTraceNo: String, returnTrackTraceNo: String? = nil, trackTraceUrl: String? = nil, shippedFromCountryCode: String? = nil) {
         self.method = method
         self.trackTraceNo = trackTraceNo
         self.returnTrackTraceNo = returnTrackTraceNo
         self.trackTraceUrl = trackTraceUrl
+        self.shippedFromCountryCode = shippedFromCountryCode
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case method = "Method"
         case trackTraceNo = "TrackTraceNo"
         case returnTrackTraceNo = "ReturnTrackTraceNo"
         case trackTraceUrl = "TrackTraceUrl"
+        case shippedFromCountryCode = "ShippedFromCountryCode"
     }
 
     // Encodable protocol methods
@@ -40,6 +44,7 @@ public struct MerchantShipmentTrackingRequest: Codable, Hashable {
         try container.encode(trackTraceNo, forKey: .trackTraceNo)
         try container.encodeIfPresent(returnTrackTraceNo, forKey: .returnTrackTraceNo)
         try container.encodeIfPresent(trackTraceUrl, forKey: .trackTraceUrl)
+        try container.encodeIfPresent(shippedFromCountryCode, forKey: .shippedFromCountryCode)
     }
 
 

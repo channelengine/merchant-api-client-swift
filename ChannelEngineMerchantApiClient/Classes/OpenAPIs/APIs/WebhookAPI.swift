@@ -57,7 +57,7 @@ open class WebhookAPI {
     /**
      Delete Webhook.
      
-     - parameter webhookName: (path)  
+     - parameter webhookName: (path) The unique name of a webhook you want to delete. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -79,7 +79,7 @@ open class WebhookAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter webhookName: (path)  
+     - parameter webhookName: (path) The unique name of a webhook you want to delete. 
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func webhooksDeleteWithRequestBuilder(webhookName: String) -> RequestBuilder<ApiResponse> {

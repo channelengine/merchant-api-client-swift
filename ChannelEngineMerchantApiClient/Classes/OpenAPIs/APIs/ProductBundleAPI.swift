@@ -9,7 +9,7 @@ import Foundation
 
 open class ProductBundleAPI {
     /**
-     Get product bundles.  You can get the full product information on bundles from the regular /products endpoint.
+     Get product bundles.
      
      - parameter search: (query) Search product(s) by Name, MerchantProductNo, Ean or Brand&lt;br /&gt;This search is applied to the result after applying the other filters. (optional)
      - parameter eanList: (query) Search products by submitting a list of EAN&#39;s. (optional)
@@ -30,8 +30,9 @@ open class ProductBundleAPI {
     }
 
     /**
-     Get product bundles.  You can get the full product information on bundles from the regular /products endpoint.
+     Get product bundles.
      - GET /v2/productbundles
+     - You can get the full product information on bundles from the regular /products endpoint.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey

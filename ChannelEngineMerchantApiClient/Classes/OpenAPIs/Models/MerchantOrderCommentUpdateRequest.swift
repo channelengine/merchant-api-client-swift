@@ -10,9 +10,9 @@ import AnyCodable
 
 public struct MerchantOrderCommentUpdateRequest: Codable, Hashable {
 
-    /** Your own order reference for the order you would like to update the comment for. */
+    /** Your own order reference for the order you would like to update the comment for.  Either this field or OrderId is required */
     public var merchantOrderNo: String?
-    /** The ChannelEngine order ID of the order you would like to update the comment for. */
+    /** The ChannelEngine order ID of the order you would like to update the comment for.  Either this field or MerchantOrderNo is required */
     public var orderId: Int?
     /** The merchant comment you would like add / update for the order. */
     public var merchantComment: String

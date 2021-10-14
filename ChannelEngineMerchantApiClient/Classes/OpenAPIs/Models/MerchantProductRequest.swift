@@ -11,7 +11,7 @@ import AnyCodable
 public struct MerchantProductRequest: Codable, Hashable {
 
     /** A unique identifier of the product. (sku). */
-    public var merchantProductNo: String?
+    public var merchantProductNo: String
     /** If this product is a different version of another  product (for example, all fields are the same except  size), then this field should contain  the &#39;MerchantProductNo&#39; of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the parent is behind the child in the list). */
     public var parentMerchantProductNo: String?
     /** If this product is a different version of another  product (for example, all fields are the same except  color) and itself is a parent with child products (e.g. of sizes),  then this field should contain the &#39;MerchantProductNo&#39; of the grandparent. The grandparent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the grandparent is behind the child in the list).  When you set this field, the ParentMerchantProductNo should be left empty.                Use this field in case of three level product hierarchy,  e.g. model - color - size.  This is required for channels like Otto. */
@@ -70,7 +70,7 @@ public struct MerchantProductRequest: Codable, Hashable {
     /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &gt; category &gt; subcategory&#39;  For example:  &#39;vehicles &gt; bikes &gt; mountainbike&#39;. */
     public var categoryTrail: String?
 
-    public init(merchantProductNo: String? = nil, parentMerchantProductNo: String? = nil, parentMerchantProductNo2: String? = nil, extraData: [MerchantProductExtraDataItemRequest]? = nil, name: String? = nil, description: String? = nil, brand: String? = nil, size: String? = nil, color: String? = nil, ean: String? = nil, manufacturerProductNumber: String? = nil, stock: Int? = nil, price: Double? = nil, MSRP: Double? = nil, purchasePrice: Double? = nil, vatRateType: VatRateType? = nil, shippingCost: Double? = nil, shippingTime: String? = nil, url: String? = nil, imageUrl: String? = nil, extraImageUrl1: String? = nil, extraImageUrl2: String? = nil, extraImageUrl3: String? = nil, extraImageUrl4: String? = nil, extraImageUrl5: String? = nil, extraImageUrl6: String? = nil, extraImageUrl7: String? = nil, extraImageUrl8: String? = nil, extraImageUrl9: String? = nil, categoryTrail: String? = nil) {
+    public init(merchantProductNo: String, parentMerchantProductNo: String? = nil, parentMerchantProductNo2: String? = nil, extraData: [MerchantProductExtraDataItemRequest]? = nil, name: String? = nil, description: String? = nil, brand: String? = nil, size: String? = nil, color: String? = nil, ean: String? = nil, manufacturerProductNumber: String? = nil, stock: Int? = nil, price: Double? = nil, MSRP: Double? = nil, purchasePrice: Double? = nil, vatRateType: VatRateType? = nil, shippingCost: Double? = nil, shippingTime: String? = nil, url: String? = nil, imageUrl: String? = nil, extraImageUrl1: String? = nil, extraImageUrl2: String? = nil, extraImageUrl3: String? = nil, extraImageUrl4: String? = nil, extraImageUrl5: String? = nil, extraImageUrl6: String? = nil, extraImageUrl7: String? = nil, extraImageUrl8: String? = nil, extraImageUrl9: String? = nil, categoryTrail: String? = nil) {
         self.merchantProductNo = merchantProductNo
         self.parentMerchantProductNo = parentMerchantProductNo
         self.parentMerchantProductNo2 = parentMerchantProductNo2
@@ -139,7 +139,7 @@ public struct MerchantProductRequest: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
+        try container.encode(merchantProductNo, forKey: .merchantProductNo)
         try container.encodeIfPresent(parentMerchantProductNo, forKey: .parentMerchantProductNo)
         try container.encodeIfPresent(parentMerchantProductNo2, forKey: .parentMerchantProductNo2)
         try container.encodeIfPresent(extraData, forKey: .extraData)
