@@ -9,10 +9,10 @@ import Foundation
 import AnyCodable
 
 public enum WebhookEventType: String, Codable, CaseIterable {
-    case ordersChange = "ORDERS_CHANGE"
+    case ordersCreate = "ORDERS_CREATE"
     case productsChange = "PRODUCTS_CHANGE"
     case returnsChange = "RETURNS_CHANGE"
     case shipmentsChange = "SHIPMENTS_CHANGE"
-    case notificationsChange = "NOTIFICATIONS_CHANGE"
+    case notificationsCreate = "NOTIFICATIONS_CREATE"
     case bundleProductsChange = "BUNDLE_PRODUCTS_CHANGE"
 }

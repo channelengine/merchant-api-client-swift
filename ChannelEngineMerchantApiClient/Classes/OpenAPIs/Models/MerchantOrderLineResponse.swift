@@ -35,6 +35,12 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
     public var originalFeeFixed: Double?
     /** If the product is ordered part of a bundle, this field contains the MerchantProductNo of  the product bundle. */
     public var bundleProductMerchantProductNo: String?
+    /** State assigned code identifying the jurisdiction. */
+    public var jurisCode: String?
+    /** Name of a tax jurisdiction. */
+    public var jurisName: String?
+    /** VAT rate of the orderline. */
+    public var vatRate: Double?
     public var extraData: [MerchantOrderLineExtraDataResponse]?
     /** The unique product reference used by the channel. */
     public var channelProductNo: String
@@ -54,7 +60,7 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
     /** Expected delivery date from channels, empty if channels not support this value */
     public var expectedDeliveryDate: Date?
 
-    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, gtin: String? = nil, description: String? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, merchantProductNo: String? = nil, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
+    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, gtin: String? = nil, description: String? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, jurisCode: String? = nil, jurisName: String? = nil, vatRate: Double? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, merchantProductNo: String? = nil, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
         self.status = status
         self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
         self.gtin = gtin
@@ -68,6 +74,9 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
         self.originalLineVat = originalLineVat
         self.originalFeeFixed = originalFeeFixed
         self.bundleProductMerchantProductNo = bundleProductMerchantProductNo
+        self.jurisCode = jurisCode
+        self.jurisName = jurisName
+        self.vatRate = vatRate
         self.extraData = extraData
         self.channelProductNo = channelProductNo
         self.merchantProductNo = merchantProductNo
@@ -93,6 +102,9 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
         case originalLineVat = "OriginalLineVat"
         case originalFeeFixed = "OriginalFeeFixed"
         case bundleProductMerchantProductNo = "BundleProductMerchantProductNo"
+        case jurisCode = "JurisCode"
+        case jurisName = "JurisName"
+        case vatRate = "VatRate"
         case extraData = "ExtraData"
         case channelProductNo = "ChannelProductNo"
         case merchantProductNo = "MerchantProductNo"
@@ -122,6 +134,9 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
         try container.encodeIfPresent(originalLineVat, forKey: .originalLineVat)
         try container.encodeIfPresent(originalFeeFixed, forKey: .originalFeeFixed)
         try container.encodeIfPresent(bundleProductMerchantProductNo, forKey: .bundleProductMerchantProductNo)
+        try container.encodeIfPresent(jurisCode, forKey: .jurisCode)
+        try container.encodeIfPresent(jurisName, forKey: .jurisName)
+        try container.encodeIfPresent(vatRate, forKey: .vatRate)
         try container.encodeIfPresent(extraData, forKey: .extraData)
         try container.encode(channelProductNo, forKey: .channelProductNo)
         try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)

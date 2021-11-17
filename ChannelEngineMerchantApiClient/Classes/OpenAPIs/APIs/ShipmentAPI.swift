@@ -108,7 +108,7 @@ open class ShipmentAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func shipmentGetShipmentLabelCarriers(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
+    open class func shipmentGetShipmentLabelCarriers(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantShipmentLabelCarrierResponse?, _ error: Error?) -> Void)) {
         shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: merchantOrderNo, merchantShipmentLabelCarrierRequest: merchantShipmentLabelCarrierRequest).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -128,9 +128,9 @@ open class ShipmentAPI {
        - name: apiKey
      - parameter merchantOrderNo: (path) The merchant&#39;s order reference. 
      - parameter merchantShipmentLabelCarrierRequest: (body) The parcel information (optional)
-     - returns: RequestBuilder<ApiResponse> 
+     - returns: RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse> 
      */
-    open class func shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil) -> RequestBuilder<ApiResponse> {
+    open class func shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil) -> RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse> {
         var path = "/v2/carriers/{merchantOrderNo}"
         let merchantOrderNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantOrderNo))"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -146,7 +146,7 @@ open class ShipmentAPI {
 
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
@@ -172,7 +172,7 @@ open class ShipmentAPI {
     /**
      Download shipping label.
      - GET /v2/orders/{merchantShipmentNo}/shippinglabel
-     - Downloads the shipping label for the shipment
+     - Downloads the shipping label for the shipment. There may pass some time between creating the shipment<br />and the availability of the label. So '404 Not Found' might incidate it is not available yet.
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
