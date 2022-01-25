@@ -12,15 +12,19 @@ public struct MerchantShipmentLineRequest: Codable, Hashable {
 
     /** The unique product reference used by the Merchant (sku). */
     public var merchantProductNo: String
+    /** Extra data on the order. Each item must have an unqiue key */
+    public var extraData: [String: String]?
     /** Number of items of the product in the shipment. */
     public var quantity: Int
 
-    public init(merchantProductNo: String, quantity: Int) {
+    public init(merchantProductNo: String, extraData: [String: String]? = nil, quantity: Int) {
         self.merchantProductNo = merchantProductNo
+        self.extraData = extraData
         self.quantity = quantity
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
+        case extraData = "ExtraData"
         case quantity = "Quantity"
     }
 
@@ -29,6 +33,7 @@ public struct MerchantShipmentLineRequest: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(merchantProductNo, forKey: .merchantProductNo)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
         try container.encode(quantity, forKey: .quantity)
     }
 

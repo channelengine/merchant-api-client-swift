@@ -23,6 +23,8 @@ public struct MerchantOrderResponse: Codable, Hashable {
     public var channelOrderSupport: OrderSupport?
     /** The order reference used by the channel.  This number is not guaranteed to be unique accross all orders,  because different channels can use the same order number format. */
     public var channelOrderNo: String?
+    /** The unique order reference used by the Merchant */
+    public var merchantOrderNo: String?
     public var status: OrderStatusView?
     /** Indicating whether the order is a business order. */
     public var isBusinessOrder: Bool?
@@ -80,7 +82,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
     /** Extra data on the order. */
     public var extraData: [String: String]?
 
-    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, paymentReferenceNo: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
+    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, merchantOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, paymentReferenceNo: String? = nil, shippingCostsInclVat: Double, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
         self.id = id
         self.channelName = channelName
         self.channelId = channelId
@@ -88,6 +90,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         self.globalChannelId = globalChannelId
         self.channelOrderSupport = channelOrderSupport
         self.channelOrderNo = channelOrderNo
+        self.merchantOrderNo = merchantOrderNo
         self.status = status
         self.isBusinessOrder = isBusinessOrder
         self.createdAt = createdAt
@@ -127,6 +130,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         case globalChannelId = "GlobalChannelId"
         case channelOrderSupport = "ChannelOrderSupport"
         case channelOrderNo = "ChannelOrderNo"
+        case merchantOrderNo = "MerchantOrderNo"
         case status = "Status"
         case isBusinessOrder = "IsBusinessOrder"
         case createdAt = "CreatedAt"
@@ -170,6 +174,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         try container.encodeIfPresent(globalChannelId, forKey: .globalChannelId)
         try container.encodeIfPresent(channelOrderSupport, forKey: .channelOrderSupport)
         try container.encodeIfPresent(channelOrderNo, forKey: .channelOrderNo)
+        try container.encodeIfPresent(merchantOrderNo, forKey: .merchantOrderNo)
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(isBusinessOrder, forKey: .isBusinessOrder)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)

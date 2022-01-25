@@ -15,6 +15,8 @@ public struct MerchantShipmentRequest: Codable, Hashable {
     /** The unique order reference used by the Merchant. */
     public var merchantOrderNo: String
     public var lines: [MerchantShipmentLineRequest]
+    /** Extra data on the order. Each item must have an unqiue key */
+    public var extraData: [String: String]?
     /** The unique shipping reference used by the Shipping carrier (track&amp;trace number). */
     public var trackTraceNo: String?
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
@@ -26,10 +28,11 @@ public struct MerchantShipmentRequest: Codable, Hashable {
     /** The code of the country from where the package is being shipped. */
     public var shippedFromCountryCode: String?
 
-    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil) {
+    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], extraData: [String: String]? = nil, trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil) {
         self.merchantShipmentNo = merchantShipmentNo
         self.merchantOrderNo = merchantOrderNo
         self.lines = lines
+        self.extraData = extraData
         self.trackTraceNo = trackTraceNo
         self.trackTraceUrl = trackTraceUrl
         self.returnTrackTraceNo = returnTrackTraceNo
@@ -40,6 +43,7 @@ public struct MerchantShipmentRequest: Codable, Hashable {
         case merchantShipmentNo = "MerchantShipmentNo"
         case merchantOrderNo = "MerchantOrderNo"
         case lines = "Lines"
+        case extraData = "ExtraData"
         case trackTraceNo = "TrackTraceNo"
         case trackTraceUrl = "TrackTraceUrl"
         case returnTrackTraceNo = "ReturnTrackTraceNo"
@@ -54,6 +58,7 @@ public struct MerchantShipmentRequest: Codable, Hashable {
         try container.encode(merchantShipmentNo, forKey: .merchantShipmentNo)
         try container.encode(merchantOrderNo, forKey: .merchantOrderNo)
         try container.encode(lines, forKey: .lines)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
         try container.encodeIfPresent(trackTraceNo, forKey: .trackTraceNo)
         try container.encodeIfPresent(trackTraceUrl, forKey: .trackTraceUrl)
         try container.encodeIfPresent(returnTrackTraceNo, forKey: .returnTrackTraceNo)

@@ -17,6 +17,7 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
     public var gtin: String?
     /** The product description (or title) provided by the channel. */
     public var description: String?
+    public var stockLocation: MerchantStockLocationResponse?
     /** The total amount of VAT charged over the value of a single unit of the ordered product  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
     public var unitVat: Double?
     /** The total value of the order line (quantity * unit price) including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
@@ -60,11 +61,12 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
     /** Expected delivery date from channels, empty if channels not support this value */
     public var expectedDeliveryDate: Date?
 
-    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, gtin: String? = nil, description: String? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, jurisCode: String? = nil, jurisName: String? = nil, vatRate: Double? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, merchantProductNo: String? = nil, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
+    public init(status: OrderStatusView? = nil, isFulfillmentByMarketplace: Bool? = nil, gtin: String? = nil, description: String? = nil, stockLocation: MerchantStockLocationResponse? = nil, unitVat: Double? = nil, lineTotalInclVat: Double? = nil, lineVat: Double? = nil, originalUnitPriceInclVat: Double? = nil, originalUnitVat: Double? = nil, originalLineTotalInclVat: Double? = nil, originalLineVat: Double? = nil, originalFeeFixed: Double? = nil, bundleProductMerchantProductNo: String? = nil, jurisCode: String? = nil, jurisName: String? = nil, vatRate: Double? = nil, extraData: [MerchantOrderLineExtraDataResponse]? = nil, channelProductNo: String, merchantProductNo: String? = nil, quantity: Int, cancellationRequestedQuantity: Int? = nil, unitPriceInclVat: Double, feeFixed: Double? = nil, feeRate: Double? = nil, condition: Condition? = nil, expectedDeliveryDate: Date? = nil) {
         self.status = status
         self.isFulfillmentByMarketplace = isFulfillmentByMarketplace
         self.gtin = gtin
         self.description = description
+        self.stockLocation = stockLocation
         self.unitVat = unitVat
         self.lineTotalInclVat = lineTotalInclVat
         self.lineVat = lineVat
@@ -93,6 +95,7 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
         case isFulfillmentByMarketplace = "IsFulfillmentByMarketplace"
         case gtin = "Gtin"
         case description = "Description"
+        case stockLocation = "StockLocation"
         case unitVat = "UnitVat"
         case lineTotalInclVat = "LineTotalInclVat"
         case lineVat = "LineVat"
@@ -125,6 +128,7 @@ public struct MerchantOrderLineResponse: Codable, Hashable {
         try container.encodeIfPresent(isFulfillmentByMarketplace, forKey: .isFulfillmentByMarketplace)
         try container.encodeIfPresent(gtin, forKey: .gtin)
         try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(stockLocation, forKey: .stockLocation)
         try container.encodeIfPresent(unitVat, forKey: .unitVat)
         try container.encodeIfPresent(lineTotalInclVat, forKey: .lineTotalInclVat)
         try container.encodeIfPresent(lineVat, forKey: .lineVat)

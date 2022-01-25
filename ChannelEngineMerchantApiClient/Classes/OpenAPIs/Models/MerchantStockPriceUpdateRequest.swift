@@ -16,16 +16,20 @@ public struct MerchantStockPriceUpdateRequest: Codable, Hashable {
     public var stock: Int?
     /** The price of the product. Should not be negative. */
     public var price: Double?
+    /** The stock location id of updated stok.  If not provided stock from default stock location will be updated. */
+    public var stockLocationId: Int?
 
-    public init(merchantProductNo: String, stock: Int? = nil, price: Double? = nil) {
+    public init(merchantProductNo: String, stock: Int? = nil, price: Double? = nil, stockLocationId: Int? = nil) {
         self.merchantProductNo = merchantProductNo
         self.stock = stock
         self.price = price
+        self.stockLocationId = stockLocationId
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
         case stock = "Stock"
         case price = "Price"
+        case stockLocationId = "StockLocationId"
     }
 
     // Encodable protocol methods
@@ -35,6 +39,7 @@ public struct MerchantStockPriceUpdateRequest: Codable, Hashable {
         try container.encode(merchantProductNo, forKey: .merchantProductNo)
         try container.encodeIfPresent(stock, forKey: .stock)
         try container.encodeIfPresent(price, forKey: .price)
+        try container.encodeIfPresent(stockLocationId, forKey: .stockLocationId)
     }
 
 

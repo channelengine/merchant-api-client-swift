@@ -55,4 +55,5 @@ public enum NotificationType: String, Codable, CaseIterable {
     case channelProductOfferExportFailed = "CHANNEL_PRODUCT_OFFER_EXPORT_FAILED"
     case tranlationsImageTagsBroken = "TRANLATIONS_IMAGE_TAGS_BROKEN"
     case taxProviderNotActivated = "TAX_PROVIDER_NOT_ACTIVATED"
+    case stockLocationNotFound = "STOCK_LOCATION_NOT_FOUND"
 }
