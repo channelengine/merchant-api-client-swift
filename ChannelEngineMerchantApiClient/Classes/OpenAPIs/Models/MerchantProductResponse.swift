@@ -12,8 +12,6 @@ public struct MerchantProductResponse: Codable, Hashable {
 
     /** Is the product active for the Merchant?. */
     public var isActive: Bool?
-    /** A unique identifier of the product. (sku). */
-    public var merchantProductNo: String?
     public var extraData: [MerchantProductExtraDataItemResponse]?
     /** The name of the product. */
     public var name: String?
@@ -29,6 +27,8 @@ public struct MerchantProductResponse: Codable, Hashable {
     public var ean: String?
     /** The unique product reference used by the manufacturer/vendor of the product. */
     public var manufacturerProductNumber: String?
+    /** A unique identifier of the product. (sku). */
+    public var merchantProductNo: String
     /** The number of items in stock. */
     public var stock: Int?
     /** Price, including VAT. */
@@ -67,9 +67,8 @@ public struct MerchantProductResponse: Codable, Hashable {
     /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &gt; category &gt; subcategory&#39;  For example:  &#39;vehicles &gt; bikes &gt; mountainbike&#39;. */
     public var categoryTrail: String?
 
-    public init(isActive: Bool? = nil, merchantProductNo: String? = nil, extraData: [MerchantProductExtraDataItemResponse]? = nil, name: String? = nil, description: String? = nil, brand: String? = nil, size: String? = nil, color: String? = nil, ean: String? = nil, manufacturerProductNumber: String? = nil, stock: Int? = nil, price: Double? = nil, MSRP: Double? = nil, purchasePrice: Double? = nil, vatRateType: VatRateType? = nil, shippingCost: Double? = nil, shippingTime: String? = nil, url: String? = nil, imageUrl: String? = nil, extraImageUrl1: String? = nil, extraImageUrl2: String? = nil, extraImageUrl3: String? = nil, extraImageUrl4: String? = nil, extraImageUrl5: String? = nil, extraImageUrl6: String? = nil, extraImageUrl7: String? = nil, extraImageUrl8: String? = nil, extraImageUrl9: String? = nil, categoryTrail: String? = nil) {
+    public init(isActive: Bool? = nil, extraData: [MerchantProductExtraDataItemResponse]? = nil, name: String? = nil, description: String? = nil, brand: String? = nil, size: String? = nil, color: String? = nil, ean: String? = nil, manufacturerProductNumber: String? = nil, merchantProductNo: String, stock: Int? = nil, price: Double? = nil, MSRP: Double? = nil, purchasePrice: Double? = nil, vatRateType: VatRateType? = nil, shippingCost: Double? = nil, shippingTime: String? = nil, url: String? = nil, imageUrl: String? = nil, extraImageUrl1: String? = nil, extraImageUrl2: String? = nil, extraImageUrl3: String? = nil, extraImageUrl4: String? = nil, extraImageUrl5: String? = nil, extraImageUrl6: String? = nil, extraImageUrl7: String? = nil, extraImageUrl8: String? = nil, extraImageUrl9: String? = nil, categoryTrail: String? = nil) {
         self.isActive = isActive
-        self.merchantProductNo = merchantProductNo
         self.extraData = extraData
         self.name = name
         self.description = description
@@ -78,6 +77,7 @@ public struct MerchantProductResponse: Codable, Hashable {
         self.color = color
         self.ean = ean
         self.manufacturerProductNumber = manufacturerProductNumber
+        self.merchantProductNo = merchantProductNo
         self.stock = stock
         self.price = price
         self.MSRP = MSRP
@@ -100,7 +100,6 @@ public struct MerchantProductResponse: Codable, Hashable {
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case isActive = "IsActive"
-        case merchantProductNo = "MerchantProductNo"
         case extraData = "ExtraData"
         case name = "Name"
         case description = "Description"
@@ -109,6 +108,7 @@ public struct MerchantProductResponse: Codable, Hashable {
         case color = "Color"
         case ean = "Ean"
         case manufacturerProductNumber = "ManufacturerProductNumber"
+        case merchantProductNo = "MerchantProductNo"
         case stock = "Stock"
         case price = "Price"
         case MSRP
@@ -135,7 +135,6 @@ public struct MerchantProductResponse: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(isActive, forKey: .isActive)
-        try container.encodeIfPresent(merchantProductNo, forKey: .merchantProductNo)
         try container.encodeIfPresent(extraData, forKey: .extraData)
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(description, forKey: .description)
@@ -144,6 +143,7 @@ public struct MerchantProductResponse: Codable, Hashable {
         try container.encodeIfPresent(color, forKey: .color)
         try container.encodeIfPresent(ean, forKey: .ean)
         try container.encodeIfPresent(manufacturerProductNumber, forKey: .manufacturerProductNumber)
+        try container.encode(merchantProductNo, forKey: .merchantProductNo)
         try container.encodeIfPresent(stock, forKey: .stock)
         try container.encodeIfPresent(price, forKey: .price)
         try container.encodeIfPresent(MSRP, forKey: .MSRP)

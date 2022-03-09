@@ -57,12 +57,12 @@ open class ProductAPI {
     /**
      Bulk Patch Products
      
-     - parameter patchMerchantProductDto: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
+     - parameter operation: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productBulkPatch(patchMerchantProductDto: PatchMerchantProductDto? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
-        productBulkPatchWithRequestBuilder(patchMerchantProductDto: patchMerchantProductDto).execute(apiResponseQueue) { result -> Void in
+    open class func productBulkPatch(operation: [Operation]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
+        productBulkPatchWithRequestBuilder(operation: operation).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -79,13 +79,13 @@ open class ProductAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter patchMerchantProductDto: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
+     - parameter operation: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
-    open class func productBulkPatchWithRequestBuilder(patchMerchantProductDto: PatchMerchantProductDto? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
+    open class func productBulkPatchWithRequestBuilder(operation: [Operation]? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: patchMerchantProductDto)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: operation)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -104,11 +104,12 @@ open class ProductAPI {
      Upsert Products.
      
      - parameter merchantProductRequest: (body)  
+     - parameter ignoreStock: (query)  (optional, default to false)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productCreate(merchantProductRequest: [MerchantProductRequest], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
-        productCreateWithRequestBuilder(merchantProductRequest: merchantProductRequest).execute(apiResponseQueue) { result -> Void in
+    open class func productCreate(merchantProductRequest: [MerchantProductRequest], ignoreStock: Bool? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
+        productCreateWithRequestBuilder(merchantProductRequest: merchantProductRequest, ignoreStock: ignoreStock).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -121,19 +122,23 @@ open class ProductAPI {
     /**
      Upsert Products.
      - POST /v2/products
-     - Upsert (update or create) products. The parent serves as the 'base' product of the children.<br />For example, the children could be different sizes or colors of the parent product.<br />For channels where every size and color are different products this does not make any difference<br />(the children will just be sent separately, while ignoring the parent).<br />But there are channels where the parent and the children need to be sent together, for example<br />when there is one product with a list of sizes. In this case all the product information is retrieved<br />from the parent product while the size list is generated from the children.<br /> <br />Note that the parent itself is a 'blueprint' of the child products and we do our best to make sure it<br />does not end up on the marketplaces itself. Only the children can be purchased.<br /> <br />It's not possible to nest parent and children more than one level (A parent can have many children,<br />but any child cannot itself also have children).<br /> <br />The supplied MerchantProductNo needs to be unique.
+     - Upsert (update or create) products. The parent serves as the 'base' product of the children.<br />For example, the children could be different sizes or colors of the parent product.<br />For channels where every size and color are different products this does not make any difference<br />(the children will just be sent separately, while ignoring the parent).<br />But there are channels where the parent and the children need to be sent together, for example<br />when there is one product with a list of sizes. In this case all the product information is retrieved<br />from the parent product while the size list is generated from the children.<br /> <br />Note that the parent itself is a 'blueprint' of the child products and we do our best to make sure it<br />does not end up on the marketplaces itself. Only the children can be purchased.<br /> <br />It's not possible to nest parent and children more than one level (A parent can have many children,<br />but any child cannot itself also have children).<br /> <br />The supplied MerchantProductNo needs to be unique.<br /> <br />When \"ignoreStock\" query string parameter is set to \"true\", stock will not be updated<br />When \"ignorePrice\" query string parameter is set to \"true\", all price related fields will not be updated (price, shipping cost, MSRP, var rate etc.)
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
      - parameter merchantProductRequest: (body)  
+     - parameter ignoreStock: (query)  (optional, default to false)
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
-    open class func productCreateWithRequestBuilder(merchantProductRequest: [MerchantProductRequest]) -> RequestBuilder<SingleOfProductCreationResult> {
+    open class func productCreateWithRequestBuilder(merchantProductRequest: [MerchantProductRequest], ignoreStock: Bool? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
         let path = "/v2/products"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantProductRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "ignoreStock": ignoreStock?.encodeToJSON(),
+        ])
 
         let nillableHeaders: [String: Any?] = [
             :

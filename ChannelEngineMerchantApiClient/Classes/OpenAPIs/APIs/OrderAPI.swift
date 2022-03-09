@@ -70,12 +70,15 @@ open class OrderAPI {
      - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.&lt;br /&gt;Some channels allow a customer to cancel an order until it has been shipped.&lt;br /&gt;When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
      - parameter channelIds: (query) Filter orders on channel(s). (optional)
      - parameter stockLocationIds: (query) Filter on stock locations (optional)
+     - parameter isAcknowledged: (query) Filter on acknowledged value (optional)
+     - parameter fromUpdatedAtDate: (query) Filter on the order update date, starting from this date. This date is inclusive. (optional)
+     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl from this date. This date is exclusive. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, page: page).execute(apiResponseQueue) { result -> Void in
+    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, isAcknowledged: isAcknowledged, fromUpdatedAtDate: fromUpdatedAtDate, toUpdatedAtDate: toUpdatedAtDate, page: page).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -105,10 +108,13 @@ open class OrderAPI {
      - parameter onlyWithCancellationRequests: (query) Filter on orders containing cancellation requests.&lt;br /&gt;Some channels allow a customer to cancel an order until it has been shipped.&lt;br /&gt;When an order has already been acknowledged in ChannelEngine, it can only be cancelled by creating a cancellation. (optional)
      - parameter channelIds: (query) Filter orders on channel(s). (optional)
      - parameter stockLocationIds: (query) Filter on stock locations (optional)
+     - parameter isAcknowledged: (query) Filter on acknowledged value (optional)
+     - parameter fromUpdatedAtDate: (query) Filter on the order update date, starting from this date. This date is inclusive. (optional)
+     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl from this date. This date is exclusive. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let path = "/v2/orders"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String: Any]? = nil
@@ -128,6 +134,9 @@ open class OrderAPI {
             "onlyWithCancellationRequests": onlyWithCancellationRequests?.encodeToJSON(),
             "channelIds": channelIds?.encodeToJSON(),
             "stockLocationIds": stockLocationIds?.encodeToJSON(),
+            "isAcknowledged": isAcknowledged?.encodeToJSON(),
+            "fromUpdatedAtDate": fromUpdatedAtDate?.encodeToJSON(),
+            "toUpdatedAtDate": toUpdatedAtDate?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 
