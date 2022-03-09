@@ -11,13 +11,15 @@ open class OfferAPI {
     /**
      Get stock for products.
      
-     - parameter skus: (query) List of your products&#39; sku&#39;s. 
      - parameter stockLocationIds: (query) The ChannelEngine id of the stock location(s). 
+     - parameter skus: (query) List of your products&#39; sku&#39;s. (optional)
+     - parameter pageIndex: (query) A page index to get the items (starts from 0) (optional)
+     - parameter pageSize: (query) Number of items to return (default 100) (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func offerGetStock(skus: [String], stockLocationIds: [Int], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?, _ error: Error?) -> Void)) {
-        offerGetStockWithRequestBuilder(skus: skus, stockLocationIds: stockLocationIds).execute(apiResponseQueue) { result -> Void in
+    open class func offerGetStock(stockLocationIds: [Int], skus: [String]? = nil, pageIndex: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?, _ error: Error?) -> Void)) {
+        offerGetStockWithRequestBuilder(stockLocationIds: stockLocationIds, skus: skus, pageIndex: pageIndex, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -34,19 +36,23 @@ open class OfferAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter skus: (query) List of your products&#39; sku&#39;s. 
      - parameter stockLocationIds: (query) The ChannelEngine id of the stock location(s). 
+     - parameter skus: (query) List of your products&#39; sku&#39;s. (optional)
+     - parameter pageIndex: (query) A page index to get the items (starts from 0) (optional)
+     - parameter pageSize: (query) Number of items to return (default 100) (optional)
      - returns: RequestBuilder<CollectionOfMerchantOfferGetStockResponse> 
      */
-    open class func offerGetStockWithRequestBuilder(skus: [String], stockLocationIds: [Int]) -> RequestBuilder<CollectionOfMerchantOfferGetStockResponse> {
+    open class func offerGetStockWithRequestBuilder(stockLocationIds: [Int], skus: [String]? = nil, pageIndex: Int? = nil, pageSize: Int? = nil) -> RequestBuilder<CollectionOfMerchantOfferGetStockResponse> {
         let path = "/v2/offer/stock"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters: [String: Any]? = nil
 
         var urlComponents = URLComponents(string: URLString)
         urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "skus": skus.encodeToJSON(),
+            "skus": skus?.encodeToJSON(),
             "stockLocationIds": stockLocationIds.encodeToJSON(),
+            "pageIndex": pageIndex?.encodeToJSON(),
+            "pageSize": pageSize?.encodeToJSON(),
         ])
 
         let nillableHeaders: [String: Any?] = [
@@ -92,6 +98,52 @@ open class OfferAPI {
         let path = "/v2/offer"
         let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockPriceUpdateRequest)
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+    }
+
+    /**
+     Update only stock.
+     
+     - parameter merchantOfferStockUpdateRequest: (body) References to the new values for the stock fields 
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func offerStockUpdate(merchantOfferStockUpdateRequest: [MerchantOfferStockUpdateRequest], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
+        offerStockUpdateWithRequestBuilder(merchantOfferStockUpdateRequest: merchantOfferStockUpdateRequest).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Update only stock.
+     - PUT /v2/offer/stock
+     - Update only stock of product(s).
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantOfferStockUpdateRequest: (body) References to the new values for the stock fields 
+     - returns: RequestBuilder<SingleOfDictionaryOfStringAndListOfString> 
+     */
+    open class func offerStockUpdateWithRequestBuilder(merchantOfferStockUpdateRequest: [MerchantOfferStockUpdateRequest]) -> RequestBuilder<SingleOfDictionaryOfStringAndListOfString> {
+        let path = "/v2/offer/stock"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOfferStockUpdateRequest)
 
         let urlComponents = URLComponents(string: URLString)
 

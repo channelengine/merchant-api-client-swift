@@ -27,8 +27,10 @@ public struct MerchantShipmentRequest: Codable, Hashable {
     public var method: String?
     /** The code of the country from where the package is being shipped. */
     public var shippedFromCountryCode: String?
+    /** The date at which the shipment was originally created in the source system (if available). */
+    public var shipmentDate: Date?
 
-    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], extraData: [String: String]? = nil, trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil) {
+    public init(merchantShipmentNo: String, merchantOrderNo: String, lines: [MerchantShipmentLineRequest], extraData: [String: String]? = nil, trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil, shipmentDate: Date? = nil) {
         self.merchantShipmentNo = merchantShipmentNo
         self.merchantOrderNo = merchantOrderNo
         self.lines = lines
@@ -38,6 +40,7 @@ public struct MerchantShipmentRequest: Codable, Hashable {
         self.returnTrackTraceNo = returnTrackTraceNo
         self.method = method
         self.shippedFromCountryCode = shippedFromCountryCode
+        self.shipmentDate = shipmentDate
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantShipmentNo = "MerchantShipmentNo"
@@ -49,6 +52,7 @@ public struct MerchantShipmentRequest: Codable, Hashable {
         case returnTrackTraceNo = "ReturnTrackTraceNo"
         case method = "Method"
         case shippedFromCountryCode = "ShippedFromCountryCode"
+        case shipmentDate = "ShipmentDate"
     }
 
     // Encodable protocol methods
@@ -64,6 +68,7 @@ public struct MerchantShipmentRequest: Codable, Hashable {
         try container.encodeIfPresent(returnTrackTraceNo, forKey: .returnTrackTraceNo)
         try container.encodeIfPresent(method, forKey: .method)
         try container.encodeIfPresent(shippedFromCountryCode, forKey: .shippedFromCountryCode)
+        try container.encodeIfPresent(shipmentDate, forKey: .shipmentDate)
     }
 
 

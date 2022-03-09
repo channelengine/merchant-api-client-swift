@@ -40,8 +40,10 @@ public struct MerchantReturnResponse: Codable, Hashable {
     public var refundInclVat: Double?
     /** Refund amount excl. VAT. */
     public var refundExclVat: Double?
+    /** The date at which the return was originally created in the source system (if available). */
+    public var returnDate: Date?
 
-    public init(merchantOrderNo: String? = nil, channelOrderNo: String? = nil, channelId: Int? = nil, globalChannelId: Int? = nil, globalChannelName: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil) {
+    public init(merchantOrderNo: String? = nil, channelOrderNo: String? = nil, channelId: Int? = nil, globalChannelId: Int? = nil, globalChannelName: String? = nil, lines: [MerchantReturnLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantReturnNo: String? = nil, channelReturnNo: String? = nil, id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil, returnDate: Date? = nil) {
         self.merchantOrderNo = merchantOrderNo
         self.channelOrderNo = channelOrderNo
         self.channelId = channelId
@@ -58,6 +60,7 @@ public struct MerchantReturnResponse: Codable, Hashable {
         self.merchantComment = merchantComment
         self.refundInclVat = refundInclVat
         self.refundExclVat = refundExclVat
+        self.returnDate = returnDate
     }
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantOrderNo = "MerchantOrderNo"
@@ -76,6 +79,7 @@ public struct MerchantReturnResponse: Codable, Hashable {
         case merchantComment = "MerchantComment"
         case refundInclVat = "RefundInclVat"
         case refundExclVat = "RefundExclVat"
+        case returnDate = "ReturnDate"
     }
 
     // Encodable protocol methods
@@ -98,6 +102,7 @@ public struct MerchantReturnResponse: Codable, Hashable {
         try container.encodeIfPresent(merchantComment, forKey: .merchantComment)
         try container.encodeIfPresent(refundInclVat, forKey: .refundInclVat)
         try container.encodeIfPresent(refundExclVat, forKey: .refundExclVat)
+        try container.encodeIfPresent(returnDate, forKey: .returnDate)
     }
 
 

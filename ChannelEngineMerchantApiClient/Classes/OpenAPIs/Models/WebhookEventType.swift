@@ -15,4 +15,5 @@ public enum WebhookEventType: String, Codable, CaseIterable {
     case shipmentsChange = "SHIPMENTS_CHANGE"
     case notificationsCreate = "NOTIFICATIONS_CREATE"
     case bundleProductsChange = "BUNDLE_PRODUCTS_CHANGE"
+    case ordersChange = "ORDERS_CHANGE"
 }
