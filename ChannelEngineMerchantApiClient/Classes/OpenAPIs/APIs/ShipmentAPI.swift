@@ -152,6 +152,73 @@ open class ShipmentAPI {
     }
 
     /**
+     Get Shipments
+     
+     - parameter merchantShipmentNos: (query) Filter on the unique references (ids) as used by the merchant. (optional)
+     - parameter merchantOrderNos: (query) Filter on the unique references (ids) of order as used by the merchant. (optional)
+     - parameter method: (query) Filter on the shipping method. (optional)
+     - parameter shippedFromCountryCodes: (query) 2-digit Country code (optional)
+     - parameter fromDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func shipmentIndex(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantShipmentResponse?, _ error: Error?) -> Void)) {
+        shipmentIndexWithRequestBuilder(merchantShipmentNos: merchantShipmentNos, merchantOrderNos: merchantOrderNos, method: method, shippedFromCountryCodes: shippedFromCountryCodes, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get Shipments
+     - GET /v2/shipments/merchant
+     - Gets all shipments that meet conditions.<br />If all filters are empty return all in default order (from the oldest one).
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantShipmentNos: (query) Filter on the unique references (ids) as used by the merchant. (optional)
+     - parameter merchantOrderNos: (query) Filter on the unique references (ids) of order as used by the merchant. (optional)
+     - parameter method: (query) Filter on the shipping method. (optional)
+     - parameter shippedFromCountryCodes: (query) 2-digit Country code (optional)
+     - parameter fromDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
+     - parameter toDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - returns: RequestBuilder<CollectionOfMerchantShipmentResponse> 
+     */
+    open class func shipmentIndexWithRequestBuilder(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantShipmentResponse> {
+        let path = "/v2/shipments/merchant"
+        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "merchantShipmentNos": merchantShipmentNos?.encodeToJSON(),
+            "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
+            "method": method?.encodeToJSON(),
+            "shippedFromCountryCodes": shippedFromCountryCodes?.encodeToJSON(),
+            "fromDate": fromDate?.encodeToJSON(),
+            "toDate": toDate?.encodeToJSON(),
+            "page": page?.encodeToJSON(),
+        ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<CollectionOfMerchantShipmentResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+    }
+
+    /**
      Download shipping label.
      
      - parameter merchantShipmentNo: (path) The unique shipment reference as used by the merchant. 
