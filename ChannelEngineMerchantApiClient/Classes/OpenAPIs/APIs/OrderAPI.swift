@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class OrderAPI {
+
     /**
      Acknowledge Order.
      
@@ -16,7 +20,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderAcknowledge(merchantOrderAcknowledgementRequest: MerchantOrderAcknowledgementRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        orderAcknowledgeWithRequestBuilder(merchantOrderAcknowledgementRequest: merchantOrderAcknowledgementRequest).execute(apiResponseQueue) { result -> Void in
+        orderAcknowledgeWithRequestBuilder(merchantOrderAcknowledgementRequest: merchantOrderAcknowledgementRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -37,21 +41,21 @@ open class OrderAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func orderAcknowledgeWithRequestBuilder(merchantOrderAcknowledgementRequest: MerchantOrderAcknowledgementRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/orders/acknowledge"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOrderAcknowledgementRequest)
+        let localVariablePath = "/v2/orders/acknowledge"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOrderAcknowledgementRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -78,7 +82,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, isAcknowledged: isAcknowledged, fromUpdatedAtDate: fromUpdatedAtDate, toUpdatedAtDate: toUpdatedAtDate, page: page).execute(apiResponseQueue) { result -> Void in
+        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, isAcknowledged: isAcknowledged, fromUpdatedAtDate: fromUpdatedAtDate, toUpdatedAtDate: toUpdatedAtDate, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -115,12 +119,12 @@ open class OrderAPI {
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
     open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
-        let path = "/v2/orders"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/orders"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "statuses": statuses?.encodeToJSON(),
             "emailAddresses": emailAddresses?.encodeToJSON(),
             "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
@@ -140,15 +144,15 @@ open class OrderAPI {
             "page": page?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -159,7 +163,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderGetNew(stockLocationId: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
-        orderGetNewWithRequestBuilder(stockLocationId: stockLocationId).execute(apiResponseQueue) { result -> Void in
+        orderGetNewWithRequestBuilder(stockLocationId: stockLocationId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -180,24 +184,24 @@ open class OrderAPI {
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
     open class func orderGetNewWithRequestBuilder(stockLocationId: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
-        let path = "/v2/orders/new"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/orders/new"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "stockLocationId": stockLocationId?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantOrderResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -209,7 +213,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderInvoice(merchantOrderNo: String, useCustomerCulture: Bool? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: URL?, _ error: Error?) -> Void)) {
-        orderInvoiceWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute(apiResponseQueue) { result -> Void in
+        orderInvoiceWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -231,27 +235,27 @@ open class OrderAPI {
      - returns: RequestBuilder<URL> 
      */
     open class func orderInvoiceWithRequestBuilder(merchantOrderNo: String, useCustomerCulture: Bool? = nil) -> RequestBuilder<URL> {
-        var path = "/v2/orders/{merchantOrderNo}/invoice"
+        var localVariablePath = "/v2/orders/{merchantOrderNo}/invoice"
         let merchantOrderNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantOrderNo))"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "useCustomerCulture": useCustomerCulture?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -263,7 +267,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderPackingSlip(merchantOrderNo: String, useCustomerCulture: Bool? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: URL?, _ error: Error?) -> Void)) {
-        orderPackingSlipWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute(apiResponseQueue) { result -> Void in
+        orderPackingSlipWithRequestBuilder(merchantOrderNo: merchantOrderNo, useCustomerCulture: useCustomerCulture).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -285,27 +289,27 @@ open class OrderAPI {
      - returns: RequestBuilder<URL> 
      */
     open class func orderPackingSlipWithRequestBuilder(merchantOrderNo: String, useCustomerCulture: Bool? = nil) -> RequestBuilder<URL> {
-        var path = "/v2/orders/{merchantOrderNo}/packingslip"
+        var localVariablePath = "/v2/orders/{merchantOrderNo}/packingslip"
         let merchantOrderNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantOrderNo))"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "useCustomerCulture": useCustomerCulture?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -316,7 +320,7 @@ open class OrderAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func orderUpdate(merchantOrderCommentUpdateRequest: MerchantOrderCommentUpdateRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        orderUpdateWithRequestBuilder(merchantOrderCommentUpdateRequest: merchantOrderCommentUpdateRequest).execute(apiResponseQueue) { result -> Void in
+        orderUpdateWithRequestBuilder(merchantOrderCommentUpdateRequest: merchantOrderCommentUpdateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -337,21 +341,20 @@ open class OrderAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func orderUpdateWithRequestBuilder(merchantOrderCommentUpdateRequest: MerchantOrderCommentUpdateRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/orders/comment"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOrderCommentUpdateRequest)
+        let localVariablePath = "/v2/orders/comment"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOrderCommentUpdateRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

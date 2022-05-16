@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public enum CreatorFilter: String, Codable, CaseIterable {
     case onlyFromMerchant = "ONLY_FROM_MERCHANT"

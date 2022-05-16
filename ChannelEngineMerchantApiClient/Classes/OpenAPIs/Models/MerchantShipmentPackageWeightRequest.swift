@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentPackageWeightRequest: Codable, Hashable {
 
@@ -17,6 +19,7 @@ public struct MerchantShipmentPackageWeightRequest: Codable, Hashable {
         self.value = value
         self.unit = unit
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case value = "Value"
         case unit = "Unit"
@@ -29,7 +32,5 @@ public struct MerchantShipmentPackageWeightRequest: Codable, Hashable {
         try container.encodeIfPresent(value, forKey: .value)
         try container.encodeIfPresent(unit, forKey: .unit)
     }
-
-
-
 }
+

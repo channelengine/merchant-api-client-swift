@@ -6,15 +6,17 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentTrackingRequest: Codable, Hashable {
 
     /** Shipment method (carrier). */
     public var method: String
-    /** The unique shipping reference used by the Shipping carrier (track &amp; trace number). */
+    /** The unique shipping reference used by the Shipping carrier (track & trace number). */
     public var trackTraceNo: String
-    /** The unique return shipping reference that may be used by the Shipping carrier (track &amp; trace number) if the shipment is returned. */
+    /** The unique return shipping reference that may be used by the Shipping carrier (track & trace number) if the shipment is returned. */
     public var returnTrackTraceNo: String?
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
@@ -28,6 +30,7 @@ public struct MerchantShipmentTrackingRequest: Codable, Hashable {
         self.trackTraceUrl = trackTraceUrl
         self.shippedFromCountryCode = shippedFromCountryCode
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case method = "Method"
         case trackTraceNo = "TrackTraceNo"
@@ -46,7 +49,5 @@ public struct MerchantShipmentTrackingRequest: Codable, Hashable {
         try container.encodeIfPresent(trackTraceUrl, forKey: .trackTraceUrl)
         try container.encodeIfPresent(shippedFromCountryCode, forKey: .shippedFromCountryCode)
     }
-
-
-
 }
+

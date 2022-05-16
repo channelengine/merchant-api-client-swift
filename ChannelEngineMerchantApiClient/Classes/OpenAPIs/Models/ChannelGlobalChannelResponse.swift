@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ChannelGlobalChannelResponse: Codable, Hashable {
 
@@ -28,6 +30,7 @@ public struct ChannelGlobalChannelResponse: Codable, Hashable {
         self.languageCode = languageCode
         self.globalChannelName = globalChannelName
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case countryCode = "CountryCode"
         case globalChannelId = "GlobalChannelId"
@@ -46,7 +49,5 @@ public struct ChannelGlobalChannelResponse: Codable, Hashable {
         try container.encodeIfPresent(languageCode, forKey: .languageCode)
         try container.encodeIfPresent(globalChannelName, forKey: .globalChannelName)
     }
-
-
-
 }
+

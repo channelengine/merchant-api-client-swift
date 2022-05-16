@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct VatSettingsResponse: Codable, Hashable {
 
@@ -23,6 +25,7 @@ public struct VatSettingsResponse: Codable, Hashable {
         self.reducedRate = reducedRate
         self.superReducedRate = superReducedRate
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case countryIso = "CountryIso"
         case no = "No"
@@ -41,7 +44,5 @@ public struct VatSettingsResponse: Codable, Hashable {
         try container.encodeIfPresent(reducedRate, forKey: .reducedRate)
         try container.encodeIfPresent(superReducedRate, forKey: .superReducedRate)
     }
-
-
-
 }
+

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantReturnRequest: Codable, Hashable {
 
@@ -41,6 +43,7 @@ public struct MerchantReturnRequest: Codable, Hashable {
         self.refundExclVat = refundExclVat
         self.returnDate = returnDate
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantOrderNo = "MerchantOrderNo"
         case merchantReturnNo = "MerchantReturnNo"
@@ -69,7 +72,5 @@ public struct MerchantReturnRequest: Codable, Hashable {
         try container.encodeIfPresent(refundExclVat, forKey: .refundExclVat)
         try container.encodeIfPresent(returnDate, forKey: .returnDate)
     }
-
-
-
 }
+

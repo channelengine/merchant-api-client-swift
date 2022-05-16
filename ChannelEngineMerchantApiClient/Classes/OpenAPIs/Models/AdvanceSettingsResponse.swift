@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct AdvanceSettingsResponse: Codable, Hashable {
 
@@ -33,6 +35,7 @@ public struct AdvanceSettingsResponse: Codable, Hashable {
         self.defaultVatRate = defaultVatRate
         self.orderTooLongOnNewHoursOffset = orderTooLongOnNewHoursOffset
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case manageStock = "ManageStock"
         case disableAddressValidation = "DisableAddressValidation"
@@ -61,7 +64,5 @@ public struct AdvanceSettingsResponse: Codable, Hashable {
         try container.encodeIfPresent(defaultVatRate, forKey: .defaultVatRate)
         try container.encodeIfPresent(orderTooLongOnNewHoursOffset, forKey: .orderTooLongOnNewHoursOffset)
     }
-
-
-
 }
+

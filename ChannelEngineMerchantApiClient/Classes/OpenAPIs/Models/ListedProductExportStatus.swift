@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public enum ListedProductExportStatus: String, Codable, CaseIterable {
     case created = "CREATED"

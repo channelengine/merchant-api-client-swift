@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantWebhookResponse: Codable, Hashable {
 
@@ -21,6 +23,7 @@ public struct MerchantWebhookResponse: Codable, Hashable {
         self.isActive = isActive
         self.events = events
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case url = "Url"
@@ -37,7 +40,5 @@ public struct MerchantWebhookResponse: Codable, Hashable {
         try container.encodeIfPresent(isActive, forKey: .isActive)
         try container.encodeIfPresent(events, forKey: .events)
     }
-
-
-
 }
+

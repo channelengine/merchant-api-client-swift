@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class SettingsAPI {
+
     /**
      Get settings.
      
@@ -15,7 +19,7 @@ open class SettingsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func settingsGet(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfMerchantSettingsResponse?, _ error: Error?) -> Void)) {
-        settingsGetWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+        settingsGetWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -35,21 +39,20 @@ open class SettingsAPI {
      - returns: RequestBuilder<SingleOfMerchantSettingsResponse> 
      */
     open class func settingsGetWithRequestBuilder() -> RequestBuilder<SingleOfMerchantSettingsResponse> {
-        let path = "/v2/settings"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/settings"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfMerchantSettingsResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfMerchantSettingsResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

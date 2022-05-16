@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public enum OrderSupport: String, Codable, CaseIterable {
     case _none = "NONE"

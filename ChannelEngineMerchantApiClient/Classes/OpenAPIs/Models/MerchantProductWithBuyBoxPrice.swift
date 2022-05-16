@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantProductWithBuyBoxPrice: Codable, Hashable {
 
@@ -28,6 +30,7 @@ public struct MerchantProductWithBuyBoxPrice: Codable, Hashable {
         self.buyBoxPriceInclShipping = buyBoxPriceInclShipping
         self.isMerchantBuyBoxWinner = isMerchantBuyBoxWinner
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case sku = "Sku"
         case gtin = "Gtin"
@@ -46,7 +49,5 @@ public struct MerchantProductWithBuyBoxPrice: Codable, Hashable {
         try container.encodeIfPresent(buyBoxPriceInclShipping, forKey: .buyBoxPriceInclShipping)
         try container.encodeIfPresent(isMerchantBuyBoxWinner, forKey: .isMerchantBuyBoxWinner)
     }
-
-
-
 }
+

@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class WebhookAPI {
+
     /**
      Create Webhook.
      
@@ -16,7 +20,7 @@ open class WebhookAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func webhooksCreate(merchantWebhookRequest: MerchantWebhookRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        webhooksCreateWithRequestBuilder(merchantWebhookRequest: merchantWebhookRequest).execute(apiResponseQueue) { result -> Void in
+        webhooksCreateWithRequestBuilder(merchantWebhookRequest: merchantWebhookRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -37,21 +41,21 @@ open class WebhookAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func webhooksCreateWithRequestBuilder(merchantWebhookRequest: MerchantWebhookRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/webhooks"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantWebhookRequest)
+        let localVariablePath = "/v2/webhooks"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantWebhookRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -62,7 +66,7 @@ open class WebhookAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func webhooksDelete(webhookName: String, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        webhooksDeleteWithRequestBuilder(webhookName: webhookName).execute(apiResponseQueue) { result -> Void in
+        webhooksDeleteWithRequestBuilder(webhookName: webhookName).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -83,24 +87,24 @@ open class WebhookAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func webhooksDeleteWithRequestBuilder(webhookName: String) -> RequestBuilder<ApiResponse> {
-        var path = "/v2/webhooks/{webhookName}"
+        var localVariablePath = "/v2/webhooks/{webhookName}"
         let webhookNamePreEscape = "\(APIHelper.mapValueToPathItem(webhookName))"
         let webhookNamePostEscape = webhookNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{webhookName}", with: webhookNamePostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{webhookName}", with: webhookNamePostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -110,7 +114,7 @@ open class WebhookAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func webhooksGetAll(apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantWebhookResponse?, _ error: Error?) -> Void)) {
-        webhooksGetAllWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+        webhooksGetAllWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -130,21 +134,21 @@ open class WebhookAPI {
      - returns: RequestBuilder<CollectionOfMerchantWebhookResponse> 
      */
     open class func webhooksGetAllWithRequestBuilder() -> RequestBuilder<CollectionOfMerchantWebhookResponse> {
-        let path = "/v2/webhooks"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/webhooks"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantWebhookResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantWebhookResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -155,7 +159,7 @@ open class WebhookAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func webhooksUpdate(merchantWebhookRequest: MerchantWebhookRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        webhooksUpdateWithRequestBuilder(merchantWebhookRequest: merchantWebhookRequest).execute(apiResponseQueue) { result -> Void in
+        webhooksUpdateWithRequestBuilder(merchantWebhookRequest: merchantWebhookRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -176,21 +180,20 @@ open class WebhookAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func webhooksUpdateWithRequestBuilder(merchantWebhookRequest: MerchantWebhookRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/webhooks"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantWebhookRequest)
+        let localVariablePath = "/v2/webhooks"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantWebhookRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

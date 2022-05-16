@@ -6,13 +6,15 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantProductRequest: Codable, Hashable {
 
-    /** If this product is a different version of another  product (for example, all fields are the same except  size), then this field should contain  the &#39;MerchantProductNo&#39; of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the parent is behind the child in the list). */
+    /** If this product is a different version of another  product (for example, all fields are the same except  size), then this field should contain  the 'MerchantProductNo' of the parent. The parent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the parent is behind the child in the list). */
     public var parentMerchantProductNo: String?
-    /** If this product is a different version of another  product (for example, all fields are the same except  color) and itself is a parent with child products (e.g. of sizes),  then this field should contain the &#39;MerchantProductNo&#39; of the grandparent. The grandparent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the grandparent is behind the child in the list).  When you set this field, the ParentMerchantProductNo should be left empty.                Use this field in case of three level product hierarchy,  e.g. model - color - size.  This is required for channels like Otto. */
+    /** If this product is a different version of another  product (for example, all fields are the same except  color) and itself is a parent with child products (e.g. of sizes),  then this field should contain the 'MerchantProductNo' of the grandparent. The grandparent  should already exist (or be present between the products  in the content of the API call, it does not matter whether  the grandparent is behind the child in the list).  When you set this field, the ParentMerchantProductNo should be left empty.                Use this field in case of three level product hierarchy,  e.g. model - color - size.  This is required for channels like Otto. */
     public var parentMerchantProductNo2: String?
     /** An optional list of key-value pairs containing  extra data about this product. This data can be  sent to channels or used for filtering products. */
     public var extraData: [MerchantProductExtraDataItemRequest]?
@@ -36,16 +38,16 @@ public struct MerchantProductRequest: Codable, Hashable {
     public var stock: Int?
     /** Price, including VAT. */
     public var price: Double?
-    /** Manufacturer&#39;s suggested retail price. */
+    /** Manufacturer's suggested retail price. */
     public var MSRP: Double?
     /** Optional. The purchase price of the product. Useful for repricing. */
     public var purchasePrice: Double?
     public var vatRateType: VatRateType?
     /** Shipping cost of the product. */
     public var shippingCost: Double?
-    /** A textual representation of the shippingtime.  For example, in Dutch: &#39;Op werkdagen voor 22:00 uur besteld, morgen in huis&#39;. */
+    /** A textual representation of the shippingtime.  For example, in Dutch: 'Op werkdagen voor 22:00 uur besteld, morgen in huis'. */
     public var shippingTime: String?
-    /** A URL pointing to the merchant&#39;s webpage  which displays this product. */
+    /** A URL pointing to the merchant's webpage  which displays this product. */
     public var url: String?
     /** A URL at which an image of this product  can be found. */
     public var imageUrl: String?
@@ -67,7 +69,7 @@ public struct MerchantProductRequest: Codable, Hashable {
     public var extraImageUrl8: String?
     /** Url to an additional image of product (9). */
     public var extraImageUrl9: String?
-    /** The category to which this product belongs.  Please supply this field in the following format:  &#39;maincategory &gt; category &gt; subcategory&#39;  For example:  &#39;vehicles &gt; bikes &gt; mountainbike&#39;. */
+    /** The category to which this product belongs.  Please supply this field in the following format:  'maincategory > category > subcategory'  For example:  'vehicles > bikes > mountainbike'. */
     public var categoryTrail: String?
 
     public init(parentMerchantProductNo: String? = nil, parentMerchantProductNo2: String? = nil, extraData: [MerchantProductExtraDataItemRequest]? = nil, name: String? = nil, description: String? = nil, brand: String? = nil, size: String? = nil, color: String? = nil, ean: String? = nil, manufacturerProductNumber: String? = nil, merchantProductNo: String, stock: Int? = nil, price: Double? = nil, MSRP: Double? = nil, purchasePrice: Double? = nil, vatRateType: VatRateType? = nil, shippingCost: Double? = nil, shippingTime: String? = nil, url: String? = nil, imageUrl: String? = nil, extraImageUrl1: String? = nil, extraImageUrl2: String? = nil, extraImageUrl3: String? = nil, extraImageUrl4: String? = nil, extraImageUrl5: String? = nil, extraImageUrl6: String? = nil, extraImageUrl7: String? = nil, extraImageUrl8: String? = nil, extraImageUrl9: String? = nil, categoryTrail: String? = nil) {
@@ -102,6 +104,7 @@ public struct MerchantProductRequest: Codable, Hashable {
         self.extraImageUrl9 = extraImageUrl9
         self.categoryTrail = categoryTrail
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case parentMerchantProductNo = "ParentMerchantProductNo"
         case parentMerchantProductNo2 = "ParentMerchantProductNo2"
@@ -170,7 +173,5 @@ public struct MerchantProductRequest: Codable, Hashable {
         try container.encodeIfPresent(extraImageUrl9, forKey: .extraImageUrl9)
         try container.encodeIfPresent(categoryTrail, forKey: .categoryTrail)
     }
-
-
-
 }
+

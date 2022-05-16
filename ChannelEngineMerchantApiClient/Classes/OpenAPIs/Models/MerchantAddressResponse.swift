@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantAddressResponse: Codable, Hashable {
 
@@ -21,7 +23,7 @@ public struct MerchantAddressResponse: Codable, Hashable {
     public var companyName: String?
     /** The first name of the customer. */
     public var firstName: String?
-    /** The last name of the customer (includes the surname prefix [tussenvoegsel] like &#39;de&#39;, &#39;van&#39;, &#39;du&#39;). */
+    /** The last name of the customer (includes the surname prefix [tussenvoegsel] like 'de', 'van', 'du'). */
     public var lastName: String?
     /** The name of the street (without house number information)  This field might be empty if address validation is disabled in ChannelEngine. */
     public var streetName: String?
@@ -57,6 +59,7 @@ public struct MerchantAddressResponse: Codable, Hashable {
         self.countryIso = countryIso
         self.original = original
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case line1 = "Line1"
         case line2 = "Line2"
@@ -95,7 +98,5 @@ public struct MerchantAddressResponse: Codable, Hashable {
         try container.encodeIfPresent(countryIso, forKey: .countryIso)
         try container.encodeIfPresent(original, forKey: .original)
     }
-
-
-
 }
+

@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class OfferAPI {
+
     /**
      Get stock for products.
      
@@ -19,7 +23,7 @@ open class OfferAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func offerGetStock(stockLocationIds: [Int], skus: [String]? = nil, pageIndex: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOfferGetStockResponse?, _ error: Error?) -> Void)) {
-        offerGetStockWithRequestBuilder(stockLocationIds: stockLocationIds, skus: skus, pageIndex: pageIndex, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+        offerGetStockWithRequestBuilder(stockLocationIds: stockLocationIds, skus: skus, pageIndex: pageIndex, pageSize: pageSize).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -43,27 +47,27 @@ open class OfferAPI {
      - returns: RequestBuilder<CollectionOfMerchantOfferGetStockResponse> 
      */
     open class func offerGetStockWithRequestBuilder(stockLocationIds: [Int], skus: [String]? = nil, pageIndex: Int? = nil, pageSize: Int? = nil) -> RequestBuilder<CollectionOfMerchantOfferGetStockResponse> {
-        let path = "/v2/offer/stock"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/offer/stock"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "skus": skus?.encodeToJSON(),
             "stockLocationIds": stockLocationIds.encodeToJSON(),
             "pageIndex": pageIndex?.encodeToJSON(),
             "pageSize": pageSize?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantOfferGetStockResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantOfferGetStockResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -74,7 +78,7 @@ open class OfferAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func offerStockPriceUpdate(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
-        offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: merchantStockPriceUpdateRequest).execute(apiResponseQueue) { result -> Void in
+        offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: merchantStockPriceUpdateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -95,21 +99,21 @@ open class OfferAPI {
      - returns: RequestBuilder<SingleOfDictionaryOfStringAndListOfString> 
      */
     open class func offerStockPriceUpdateWithRequestBuilder(merchantStockPriceUpdateRequest: [MerchantStockPriceUpdateRequest]) -> RequestBuilder<SingleOfDictionaryOfStringAndListOfString> {
-        let path = "/v2/offer"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockPriceUpdateRequest)
+        let localVariablePath = "/v2/offer"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockPriceUpdateRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -120,7 +124,7 @@ open class OfferAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func offerStockUpdate(merchantOfferStockUpdateRequest: [MerchantOfferStockUpdateRequest], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfDictionaryOfStringAndListOfString?, _ error: Error?) -> Void)) {
-        offerStockUpdateWithRequestBuilder(merchantOfferStockUpdateRequest: merchantOfferStockUpdateRequest).execute(apiResponseQueue) { result -> Void in
+        offerStockUpdateWithRequestBuilder(merchantOfferStockUpdateRequest: merchantOfferStockUpdateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -141,21 +145,20 @@ open class OfferAPI {
      - returns: RequestBuilder<SingleOfDictionaryOfStringAndListOfString> 
      */
     open class func offerStockUpdateWithRequestBuilder(merchantOfferStockUpdateRequest: [MerchantOfferStockUpdateRequest]) -> RequestBuilder<SingleOfDictionaryOfStringAndListOfString> {
-        let path = "/v2/offer/stock"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOfferStockUpdateRequest)
+        let localVariablePath = "/v2/offer/stock"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantOfferStockUpdateRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfDictionaryOfStringAndListOfString>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

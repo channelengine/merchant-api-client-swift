@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantProductBundlePartResponse: Codable, Hashable {
 
@@ -23,6 +25,7 @@ public struct MerchantProductBundlePartResponse: Codable, Hashable {
         self.quantity = quantity
         self.price = price
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
         case ean = "Ean"
@@ -41,7 +44,5 @@ public struct MerchantProductBundlePartResponse: Codable, Hashable {
         try container.encodeIfPresent(quantity, forKey: .quantity)
         try container.encodeIfPresent(price, forKey: .price)
     }
-
-
-
 }
+

@@ -6,13 +6,15 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentLabelCarrierResponse: Codable, Hashable {
 
-    /** The channel&#39;s name for the shipping label carrier */
+    /** The channel's name for the shipping label carrier */
     public var name: String?
-    /** The channel&#39;s code for the shipping label carrier */
+    /** The channel's code for the shipping label carrier */
     public var code: String?
     /** Optional. Any restrictions on this carriers, e.g. weight and/or dimensions */
     public var restrictions: String?
@@ -32,6 +34,7 @@ public struct MerchantShipmentLabelCarrierResponse: Codable, Hashable {
         self.collectionMethod = collectionMethod
         self.handoverDateTime = handoverDateTime
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case code = "Code"
@@ -54,7 +57,5 @@ public struct MerchantShipmentLabelCarrierResponse: Codable, Hashable {
         try container.encodeIfPresent(collectionMethod, forKey: .collectionMethod)
         try container.encodeIfPresent(handoverDateTime, forKey: .handoverDateTime)
     }
-
-
-
 }
+

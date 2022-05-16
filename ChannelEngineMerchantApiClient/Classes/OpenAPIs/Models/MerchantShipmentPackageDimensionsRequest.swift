@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentPackageDimensionsRequest: Codable, Hashable {
 
@@ -21,6 +23,7 @@ public struct MerchantShipmentPackageDimensionsRequest: Codable, Hashable {
         self.length = length
         self.unit = unit
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case height = "Height"
         case width = "Width"
@@ -37,7 +40,5 @@ public struct MerchantShipmentPackageDimensionsRequest: Codable, Hashable {
         try container.encodeIfPresent(length, forKey: .length)
         try container.encodeIfPresent(unit, forKey: .unit)
     }
-
-
-
 }
+

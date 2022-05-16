@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentResponse: Codable, Hashable {
 
@@ -14,6 +16,10 @@ public struct MerchantShipmentResponse: Codable, Hashable {
     public var merchantShipmentNo: String
     /** The unique order reference used by the Merchant. */
     public var merchantOrderNo: String?
+    /** The unique shipment reference used by the Channel. */
+    public var channelShipmentNo: String?
+    /** The unique order reference used by the Channel. */
+    public var channelOrderNo: String?
     public var lines: [MerchantShipmentLineResponse]?
     /** The date at which the shipment was created in ChannelEngine. */
     public var createdAt: Date?
@@ -21,11 +27,11 @@ public struct MerchantShipmentResponse: Codable, Hashable {
     public var updatedAt: Date?
     /** Extra data on the order. Each item must have an unqiue key */
     public var extraData: [String: String]?
-    /** The unique shipping reference used by the Shipping carrier (track&amp;trace number). */
+    /** The unique shipping reference used by the Shipping carrier (track&trace number). */
     public var trackTraceNo: String?
     /** A link to a page of the carrier where the customer can track the shipping of her package. */
     public var trackTraceUrl: String?
-    /** The unique return shipping reference that may be used by the Shipping carrier (track &amp; trace number) if the shipment is returned. */
+    /** The unique return shipping reference that may be used by the Shipping carrier (track & trace number) if the shipment is returned. */
     public var returnTrackTraceNo: String?
     /** Shipment method: the carrier used for shipping the package. E.g. DHL, postNL. */
     public var method: String?
@@ -34,9 +40,11 @@ public struct MerchantShipmentResponse: Codable, Hashable {
     /** The date at which the shipment was originally created in the source system (if available). */
     public var shipmentDate: Date?
 
-    public init(merchantShipmentNo: String, merchantOrderNo: String? = nil, lines: [MerchantShipmentLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, extraData: [String: String]? = nil, trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil, shipmentDate: Date? = nil) {
+    public init(merchantShipmentNo: String, merchantOrderNo: String? = nil, channelShipmentNo: String? = nil, channelOrderNo: String? = nil, lines: [MerchantShipmentLineResponse]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, extraData: [String: String]? = nil, trackTraceNo: String? = nil, trackTraceUrl: String? = nil, returnTrackTraceNo: String? = nil, method: String? = nil, shippedFromCountryCode: String? = nil, shipmentDate: Date? = nil) {
         self.merchantShipmentNo = merchantShipmentNo
         self.merchantOrderNo = merchantOrderNo
+        self.channelShipmentNo = channelShipmentNo
+        self.channelOrderNo = channelOrderNo
         self.lines = lines
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -48,9 +56,12 @@ public struct MerchantShipmentResponse: Codable, Hashable {
         self.shippedFromCountryCode = shippedFromCountryCode
         self.shipmentDate = shipmentDate
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantShipmentNo = "MerchantShipmentNo"
         case merchantOrderNo = "MerchantOrderNo"
+        case channelShipmentNo = "ChannelShipmentNo"
+        case channelOrderNo = "ChannelOrderNo"
         case lines = "Lines"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
@@ -69,6 +80,8 @@ public struct MerchantShipmentResponse: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(merchantShipmentNo, forKey: .merchantShipmentNo)
         try container.encodeIfPresent(merchantOrderNo, forKey: .merchantOrderNo)
+        try container.encodeIfPresent(channelShipmentNo, forKey: .channelShipmentNo)
+        try container.encodeIfPresent(channelOrderNo, forKey: .channelOrderNo)
         try container.encodeIfPresent(lines, forKey: .lines)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
@@ -80,7 +93,5 @@ public struct MerchantShipmentResponse: Codable, Hashable {
         try container.encodeIfPresent(shippedFromCountryCode, forKey: .shippedFromCountryCode)
         try container.encodeIfPresent(shipmentDate, forKey: .shipmentDate)
     }
-
-
-
 }
+

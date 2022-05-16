@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public enum NotificationType: String, Codable, CaseIterable {
     case channelOrderAnonymizedByRequest = "CHANNEL_ORDER_ANONYMIZED_BY_REQUEST"
@@ -52,9 +54,11 @@ public enum NotificationType: String, Codable, CaseIterable {
     case feedInvalidProductsOccured = "FEED_INVALID_PRODUCTS_OCCURED"
     case channelShipmentExportInvalidMerchantshipmentno = "CHANNEL_SHIPMENT_EXPORT_INVALID_MERCHANTSHIPMENTNO"
     case channelProductOfferExportFailed = "CHANNEL_PRODUCT_OFFER_EXPORT_FAILED"
-    case tranlationsImageTagsBroken = "TRANLATIONS_IMAGE_TAGS_BROKEN"
+    case translationImageTagsBroken = "TRANSLATION_IMAGE_TAGS_BROKEN"
     case channelReturnDeleted = "CHANNEL_RETURN_DELETED"
     case taxProviderNotActivated = "TAX_PROVIDER_NOT_ACTIVATED"
     case stockLocationNotFound = "STOCK_LOCATION_NOT_FOUND"
     case customVatRateOverlappingRates = "CUSTOM_VAT_RATE_OVERLAPPING_RATES"
+    case translationFailed = "TRANSLATION_FAILED"
+    case orderCannotBeFulfilled = "ORDER_CANNOT_BE_FULFILLED"
 }

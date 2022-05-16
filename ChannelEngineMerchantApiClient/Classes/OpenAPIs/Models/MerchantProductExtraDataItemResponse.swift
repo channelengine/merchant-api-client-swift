@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantProductExtraDataItemResponse: Codable, Hashable {
 
@@ -24,6 +26,7 @@ public struct MerchantProductExtraDataItemResponse: Codable, Hashable {
         self.type = type
         self.isPublic = isPublic
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case key = "Key"
         case value = "Value"
@@ -40,7 +43,5 @@ public struct MerchantProductExtraDataItemResponse: Codable, Hashable {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(isPublic, forKey: .isPublic)
     }
-
-
-
 }
+

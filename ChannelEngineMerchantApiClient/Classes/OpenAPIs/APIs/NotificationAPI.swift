@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class NotificationAPI {
+
     /**
      Get Notifications.
      
@@ -24,7 +28,7 @@ open class NotificationAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func notificationIndex(fromDate: Date? = nil, toDate: Date? = nil, types: [NotificationType]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, merchantReturnNos: [String]? = nil, channelReturnNos: [String]? = nil, merchantShipmentNos: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantNotificationResponse?, _ error: Error?) -> Void)) {
-        notificationIndexWithRequestBuilder(fromDate: fromDate, toDate: toDate, types: types, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, merchantReturnNos: merchantReturnNos, channelReturnNos: channelReturnNos, merchantShipmentNos: merchantShipmentNos, page: page).execute(apiResponseQueue) { result -> Void in
+        notificationIndexWithRequestBuilder(fromDate: fromDate, toDate: toDate, types: types, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, merchantReturnNos: merchantReturnNos, channelReturnNos: channelReturnNos, merchantShipmentNos: merchantShipmentNos, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -53,12 +57,12 @@ open class NotificationAPI {
      - returns: RequestBuilder<CollectionOfMerchantNotificationResponse> 
      */
     open class func notificationIndexWithRequestBuilder(fromDate: Date? = nil, toDate: Date? = nil, types: [NotificationType]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, merchantReturnNos: [String]? = nil, channelReturnNos: [String]? = nil, merchantShipmentNos: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantNotificationResponse> {
-        let path = "/v2/notifications"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/notifications"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "fromDate": fromDate?.encodeToJSON(),
             "toDate": toDate?.encodeToJSON(),
             "types": types?.encodeToJSON(),
@@ -70,15 +74,14 @@ open class NotificationAPI {
             "page": page?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantNotificationResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantNotificationResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

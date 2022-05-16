@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class ProductAPI {
+
     /**
      Delete multiple Products.
      
@@ -16,7 +20,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productBulkDelete(requestBody: [String], apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        productBulkDeleteWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result -> Void in
+        productBulkDeleteWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -37,32 +41,32 @@ open class ProductAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func productBulkDeleteWithRequestBuilder(requestBody: [String]) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/products/bulkdelete"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestBody)
+        let localVariablePath = "/v2/products/bulkdelete"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestBody)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
      Bulk Patch Products
      
-     - parameter operation: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
+     - parameter patchMerchantProductDto: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func productBulkPatch(operation: [Operation]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
-        productBulkPatchWithRequestBuilder(operation: operation).execute(apiResponseQueue) { result -> Void in
+    open class func productBulkPatch(patchMerchantProductDto: PatchMerchantProductDto? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
+        productBulkPatchWithRequestBuilder(patchMerchantProductDto: patchMerchantProductDto).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -79,25 +83,25 @@ open class ProductAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter operation: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
+     - parameter patchMerchantProductDto: (body) 1) PropertiesToUpdate: Fields to update&lt;br /&gt;2) MerchantProductRequestModels: Products to be updated (optional)
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
-    open class func productBulkPatchWithRequestBuilder(operation: [Operation]? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
-        let path = "/v2/products"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: operation)
+    open class func productBulkPatchWithRequestBuilder(patchMerchantProductDto: PatchMerchantProductDto? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
+        let localVariablePath = "/v2/products"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: patchMerchantProductDto)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -109,7 +113,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productCreate(merchantProductRequest: [MerchantProductRequest], ignoreStock: Bool? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
-        productCreateWithRequestBuilder(merchantProductRequest: merchantProductRequest, ignoreStock: ignoreStock).execute(apiResponseQueue) { result -> Void in
+        productCreateWithRequestBuilder(merchantProductRequest: merchantProductRequest, ignoreStock: ignoreStock).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -131,24 +135,24 @@ open class ProductAPI {
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
     open class func productCreateWithRequestBuilder(merchantProductRequest: [MerchantProductRequest], ignoreStock: Bool? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
-        let path = "/v2/products"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantProductRequest)
+        let localVariablePath = "/v2/products"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantProductRequest)
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "ignoreStock": ignoreStock?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -159,7 +163,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productDelete(merchantProductNo: String, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        productDeleteWithRequestBuilder(merchantProductNo: merchantProductNo).execute(apiResponseQueue) { result -> Void in
+        productDeleteWithRequestBuilder(merchantProductNo: merchantProductNo).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -180,24 +184,24 @@ open class ProductAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func productDeleteWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<ApiResponse> {
-        var path = "/v2/products/{merchantProductNo}"
+        var localVariablePath = "/v2/products/{merchantProductNo}"
         let merchantProductNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantProductNo))"
         let merchantProductNoPostEscape = merchantProductNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -211,7 +215,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productGetByFilter(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantProductResponse?, _ error: Error?) -> Void)) {
-        productGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute(apiResponseQueue) { result -> Void in
+        productGetByFilterWithRequestBuilder(search: search, eanList: eanList, merchantProductNoList: merchantProductNoList, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -235,27 +239,27 @@ open class ProductAPI {
      - returns: RequestBuilder<CollectionOfMerchantProductResponse> 
      */
     open class func productGetByFilterWithRequestBuilder(search: String? = nil, eanList: [String]? = nil, merchantProductNoList: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductResponse> {
-        let path = "/v2/products"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/products"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "search": search?.encodeToJSON(),
             "eanList": eanList?.encodeToJSON(),
             "merchantProductNoList": merchantProductNoList?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -266,7 +270,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productGetByMerchantProductNo(merchantProductNo: String, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfMerchantProductResponse?, _ error: Error?) -> Void)) {
-        productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: merchantProductNo).execute(apiResponseQueue) { result -> Void in
+        productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: merchantProductNo).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -287,24 +291,24 @@ open class ProductAPI {
      - returns: RequestBuilder<SingleOfMerchantProductResponse> 
      */
     open class func productGetByMerchantProductNoWithRequestBuilder(merchantProductNo: String) -> RequestBuilder<SingleOfMerchantProductResponse> {
-        var path = "/v2/products/{merchantProductNo}"
+        var localVariablePath = "/v2/products/{merchantProductNo}"
         let merchantProductNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantProductNo))"
         let merchantProductNoPostEscape = merchantProductNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfMerchantProductResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -316,7 +320,7 @@ open class ProductAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func productPatch(merchantProductNo: String, operation: [Operation]? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: SingleOfProductCreationResult?, _ error: Error?) -> Void)) {
-        productPatchWithRequestBuilder(merchantProductNo: merchantProductNo, operation: operation).execute(apiResponseQueue) { result -> Void in
+        productPatchWithRequestBuilder(merchantProductNo: merchantProductNo, operation: operation).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -329,7 +333,7 @@ open class ProductAPI {
     /**
      Patch product
      - PATCH /v2/products/{merchantProductNo}
-     - Patch products. This endpoint allows you to update single fields on a product using patch operations,<br />without having to supply the other product information.<br /><br />The format of this endpoint is a JsonPatchDocument. Examples of how this format works can be found here:<br />http://jsonpatch.com/<br /> <br />It's not possible to nest parent and children more than one level (A parent can have many children,<br />but any child cannot itself also have children).<br /> <br />The supplied MerchantProductNo needs to be unique.<br /><br /><br />Sample request:<br /> <br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"value\": \"Value\",<br /> \"path\": \"Name\",<br /> \"op\": \"replace\"<br /> }
+     - Patch products. This endpoint allows you to update single fields on a product using patch operations,<br />without having to supply the other product information.<br /><br />The format of this endpoint is a JsonPatchDocument. Examples of how this format works can be found here:<br />http://jsonpatch.com/<br /> <br />It's not possible to nest parent and children more than one level (A parent can have many children,<br />but any child cannot itself also have children).<br /> <br />The supplied MerchantProductNo needs to be unique.<br /><br /> <br />ExtraData used as translations is ignored and cannot be changed.<br /><br />Sample request:<br /> <br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"value\": \"Value\",<br /> \"path\": \"Name\",<br /> \"op\": \"replace\"<br /> }<br /> <br />Adding ExtraData:<br /><br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"value\": {\"key\": \"Key1\", \"value\": \"value1\"},<br /> \"path\": \"extraData/0\",<br /> \"op\": \"add\"<br /> }<br /> <br />Replacing ExtraData (will replace entire ExtraData collection):<br /><br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"value\": [{\"key\": \"Key1\", \"value\": \"value1\"}],<br /> \"path\": \"extraData\",<br /> \"op\": \"replace\"<br /> }<br /> <br />Removing all ExtraData:<br /><br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"path\": \"extraData\",<br /> \"op\": \"replace\"<br /> }<br /> <br /> Or:<br /> <br /> PATCH /v2/products/{merchantProductNo}<br /> {<br /> \"path\": \"extraData\",<br /> \"op\": \"remove\"<br /> }
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
@@ -338,24 +342,23 @@ open class ProductAPI {
      - returns: RequestBuilder<SingleOfProductCreationResult> 
      */
     open class func productPatchWithRequestBuilder(merchantProductNo: String, operation: [Operation]? = nil) -> RequestBuilder<SingleOfProductCreationResult> {
-        var path = "/v2/products/{merchantProductNo}"
+        var localVariablePath = "/v2/products/{merchantProductNo}"
         let merchantProductNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantProductNo))"
         let merchantProductNoPostEscape = merchantProductNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: operation)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantProductNo}", with: merchantProductNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: operation)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleOfProductCreationResult>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

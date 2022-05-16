@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantShipmentLabelCarrierRequest: Codable, Hashable {
 
@@ -19,6 +21,7 @@ public struct MerchantShipmentLabelCarrierRequest: Codable, Hashable {
         self.dimensions = dimensions
         self.weight = weight
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case lines = "Lines"
         case dimensions = "Dimensions"
@@ -33,7 +36,5 @@ public struct MerchantShipmentLabelCarrierRequest: Codable, Hashable {
         try container.encode(dimensions, forKey: .dimensions)
         try container.encode(weight, forKey: .weight)
     }
-
-
-
 }
+

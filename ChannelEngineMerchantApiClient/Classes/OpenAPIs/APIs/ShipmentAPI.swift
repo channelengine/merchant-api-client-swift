@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class ShipmentAPI {
+
     /**
      Create Shipment.
      
@@ -16,7 +20,7 @@ open class ShipmentAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func shipmentCreate(merchantShipmentRequest: MerchantShipmentRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        shipmentCreateWithRequestBuilder(merchantShipmentRequest: merchantShipmentRequest).execute(apiResponseQueue) { result -> Void in
+        shipmentCreateWithRequestBuilder(merchantShipmentRequest: merchantShipmentRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -37,21 +41,21 @@ open class ShipmentAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func shipmentCreateWithRequestBuilder(merchantShipmentRequest: MerchantShipmentRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/shipments"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentRequest)
+        let localVariablePath = "/v2/shipments"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -62,7 +66,7 @@ open class ShipmentAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func shipmentCreateForChannelMethod(merchantChannelLabelShipmentRequest: MerchantChannelLabelShipmentRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        shipmentCreateForChannelMethodWithRequestBuilder(merchantChannelLabelShipmentRequest: merchantChannelLabelShipmentRequest).execute(apiResponseQueue) { result -> Void in
+        shipmentCreateForChannelMethodWithRequestBuilder(merchantChannelLabelShipmentRequest: merchantChannelLabelShipmentRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -83,21 +87,21 @@ open class ShipmentAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func shipmentCreateForChannelMethodWithRequestBuilder(merchantChannelLabelShipmentRequest: MerchantChannelLabelShipmentRequest? = nil) -> RequestBuilder<ApiResponse> {
-        let path = "/v2/shipments/channelmethod"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantChannelLabelShipmentRequest)
+        let localVariablePath = "/v2/shipments/channelmethod"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantChannelLabelShipmentRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -109,7 +113,7 @@ open class ShipmentAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func shipmentGetShipmentLabelCarriers(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantShipmentLabelCarrierResponse?, _ error: Error?) -> Void)) {
-        shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: merchantOrderNo, merchantShipmentLabelCarrierRequest: merchantShipmentLabelCarrierRequest).execute(apiResponseQueue) { result -> Void in
+        shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: merchantOrderNo, merchantShipmentLabelCarrierRequest: merchantShipmentLabelCarrierRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -131,24 +135,24 @@ open class ShipmentAPI {
      - returns: RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse> 
      */
     open class func shipmentGetShipmentLabelCarriersWithRequestBuilder(merchantOrderNo: String, merchantShipmentLabelCarrierRequest: MerchantShipmentLabelCarrierRequest? = nil) -> RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse> {
-        var path = "/v2/carriers/{merchantOrderNo}"
+        var localVariablePath = "/v2/carriers/{merchantOrderNo}"
         let merchantOrderNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantOrderNo))"
         let merchantOrderNoPostEscape = merchantOrderNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentLabelCarrierRequest)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantOrderNo}", with: merchantOrderNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentLabelCarrierRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantShipmentLabelCarrierResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -158,14 +162,21 @@ open class ShipmentAPI {
      - parameter merchantOrderNos: (query) Filter on the unique references (ids) of order as used by the merchant. (optional)
      - parameter method: (query) Filter on the shipping method. (optional)
      - parameter shippedFromCountryCodes: (query) 2-digit Country code (optional)
-     - parameter fromDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
-     - parameter toDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter fromShipmentDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
+     - parameter toShipmentDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter fromCreateDate: (query) Filter on the create date of the shipment in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter toCreateDate: (query) Filter on the create date of the shipment in ChannelEngine, until this date. This date is exclusive. (optional)
+     - parameter fromUpdateDate: (query) Filter on the update date of the shipment in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter toUpdateDate: (query) Filter on the update date of the shipment in ChannelEngine, until this date. This date is exclusive. (optional)
+     - parameter fulfillmentType: (query) Filter on the fulfillment type of the shipment. (optional)
+     - parameter channelShipmentNos: (query) Filter on the unique references (ids) as used by the channel. (optional)
+     - parameter channelOrderNos: (query) Filter on the unique references (ids) of order as used by the channel. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func shipmentIndex(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantShipmentResponse?, _ error: Error?) -> Void)) {
-        shipmentIndexWithRequestBuilder(merchantShipmentNos: merchantShipmentNos, merchantOrderNos: merchantOrderNos, method: method, shippedFromCountryCodes: shippedFromCountryCodes, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result -> Void in
+    open class func shipmentIndex(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromShipmentDate: Date? = nil, toShipmentDate: Date? = nil, fromCreateDate: Date? = nil, toCreateDate: Date? = nil, fromUpdateDate: Date? = nil, toUpdateDate: Date? = nil, fulfillmentType: ShipmentFulfillmentType? = nil, channelShipmentNos: [String]? = nil, channelOrderNos: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantShipmentResponse?, _ error: Error?) -> Void)) {
+        shipmentIndexWithRequestBuilder(merchantShipmentNos: merchantShipmentNos, merchantOrderNos: merchantOrderNos, method: method, shippedFromCountryCodes: shippedFromCountryCodes, fromShipmentDate: fromShipmentDate, toShipmentDate: toShipmentDate, fromCreateDate: fromCreateDate, toCreateDate: toCreateDate, fromUpdateDate: fromUpdateDate, toUpdateDate: toUpdateDate, fulfillmentType: fulfillmentType, channelShipmentNos: channelShipmentNos, channelOrderNos: channelOrderNos, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -186,36 +197,50 @@ open class ShipmentAPI {
      - parameter merchantOrderNos: (query) Filter on the unique references (ids) of order as used by the merchant. (optional)
      - parameter method: (query) Filter on the shipping method. (optional)
      - parameter shippedFromCountryCodes: (query) 2-digit Country code (optional)
-     - parameter fromDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
-     - parameter toDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter fromShipmentDate: (query) Filter on the shipment date, starting from this date. This date is inclusive. (optional)
+     - parameter toShipmentDate: (query) Filter on the shipment date, until this date. This date is exclusive. (optional)
+     - parameter fromCreateDate: (query) Filter on the create date of the shipment in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter toCreateDate: (query) Filter on the create date of the shipment in ChannelEngine, until this date. This date is exclusive. (optional)
+     - parameter fromUpdateDate: (query) Filter on the update date of the shipment in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter toUpdateDate: (query) Filter on the update date of the shipment in ChannelEngine, until this date. This date is exclusive. (optional)
+     - parameter fulfillmentType: (query) Filter on the fulfillment type of the shipment. (optional)
+     - parameter channelShipmentNos: (query) Filter on the unique references (ids) as used by the channel. (optional)
+     - parameter channelOrderNos: (query) Filter on the unique references (ids) of order as used by the channel. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantShipmentResponse> 
      */
-    open class func shipmentIndexWithRequestBuilder(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantShipmentResponse> {
-        let path = "/v2/shipments/merchant"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+    open class func shipmentIndexWithRequestBuilder(merchantShipmentNos: [String]? = nil, merchantOrderNos: [String]? = nil, method: String? = nil, shippedFromCountryCodes: [String]? = nil, fromShipmentDate: Date? = nil, toShipmentDate: Date? = nil, fromCreateDate: Date? = nil, toCreateDate: Date? = nil, fromUpdateDate: Date? = nil, toUpdateDate: Date? = nil, fulfillmentType: ShipmentFulfillmentType? = nil, channelShipmentNos: [String]? = nil, channelOrderNos: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantShipmentResponse> {
+        let localVariablePath = "/v2/shipments/merchant"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "merchantShipmentNos": merchantShipmentNos?.encodeToJSON(),
             "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
             "method": method?.encodeToJSON(),
             "shippedFromCountryCodes": shippedFromCountryCodes?.encodeToJSON(),
-            "fromDate": fromDate?.encodeToJSON(),
-            "toDate": toDate?.encodeToJSON(),
+            "fromShipmentDate": fromShipmentDate?.encodeToJSON(),
+            "toShipmentDate": toShipmentDate?.encodeToJSON(),
+            "fromCreateDate": fromCreateDate?.encodeToJSON(),
+            "toCreateDate": toCreateDate?.encodeToJSON(),
+            "fromUpdateDate": fromUpdateDate?.encodeToJSON(),
+            "toUpdateDate": toUpdateDate?.encodeToJSON(),
+            "fulfillmentType": fulfillmentType?.encodeToJSON(),
+            "channelShipmentNos": channelShipmentNos?.encodeToJSON(),
+            "channelOrderNos": channelOrderNos?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantShipmentResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantShipmentResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -226,7 +251,7 @@ open class ShipmentAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func shipmentShippingLabel(merchantShipmentNo: String, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: URL?, _ error: Error?) -> Void)) {
-        shipmentShippingLabelWithRequestBuilder(merchantShipmentNo: merchantShipmentNo).execute(apiResponseQueue) { result -> Void in
+        shipmentShippingLabelWithRequestBuilder(merchantShipmentNo: merchantShipmentNo).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -247,24 +272,24 @@ open class ShipmentAPI {
      - returns: RequestBuilder<URL> 
      */
     open class func shipmentShippingLabelWithRequestBuilder(merchantShipmentNo: String) -> RequestBuilder<URL> {
-        var path = "/v2/orders/{merchantShipmentNo}/shippinglabel"
+        var localVariablePath = "/v2/orders/{merchantShipmentNo}/shippinglabel"
         let merchantShipmentNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantShipmentNo))"
         let merchantShipmentNoPostEscape = merchantShipmentNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<URL>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -276,7 +301,7 @@ open class ShipmentAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func shipmentUpdate(merchantShipmentNo: String, merchantShipmentTrackingRequest: MerchantShipmentTrackingRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
-        shipmentUpdateWithRequestBuilder(merchantShipmentNo: merchantShipmentNo, merchantShipmentTrackingRequest: merchantShipmentTrackingRequest).execute(apiResponseQueue) { result -> Void in
+        shipmentUpdateWithRequestBuilder(merchantShipmentNo: merchantShipmentNo, merchantShipmentTrackingRequest: merchantShipmentTrackingRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -298,24 +323,23 @@ open class ShipmentAPI {
      - returns: RequestBuilder<ApiResponse> 
      */
     open class func shipmentUpdateWithRequestBuilder(merchantShipmentNo: String, merchantShipmentTrackingRequest: MerchantShipmentTrackingRequest? = nil) -> RequestBuilder<ApiResponse> {
-        var path = "/v2/shipments/{merchantShipmentNo}"
+        var localVariablePath = "/v2/shipments/{merchantShipmentNo}"
         let merchantShipmentNoPreEscape = "\(APIHelper.mapValueToPathItem(merchantShipmentNo))"
         let merchantShipmentNoPostEscape = merchantShipmentNoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentTrackingRequest)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{merchantShipmentNo}", with: merchantShipmentNoPostEscape, options: .literal, range: nil)
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantShipmentTrackingRequest)
 
-        let urlComponents = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

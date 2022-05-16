@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ProductCreationResult: Codable, Hashable {
 
@@ -20,6 +22,7 @@ public struct ProductCreationResult: Codable, Hashable {
         self.acceptedCount = acceptedCount
         self.productMessages = productMessages
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case rejectedCount = "RejectedCount"
         case acceptedCount = "AcceptedCount"
@@ -34,7 +37,5 @@ public struct ProductCreationResult: Codable, Hashable {
         try container.encodeIfPresent(acceptedCount, forKey: .acceptedCount)
         try container.encodeIfPresent(productMessages, forKey: .productMessages)
     }
-
-
-
 }
+

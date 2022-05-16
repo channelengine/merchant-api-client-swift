@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ChannelChannelResponse: Codable, Hashable {
 
@@ -22,6 +24,7 @@ public struct ChannelChannelResponse: Codable, Hashable {
         self.isEnabled = isEnabled
         self.channelName = channelName
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case channelId = "ChannelId"
         case isEnabled = "IsEnabled"
@@ -36,7 +39,5 @@ public struct ChannelChannelResponse: Codable, Hashable {
         try container.encodeIfPresent(isEnabled, forKey: .isEnabled)
         try container.encodeIfPresent(channelName, forKey: .channelName)
     }
-
-
-
 }
+

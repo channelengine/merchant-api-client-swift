@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct MerchantOrderResponse: Codable, Hashable {
 
@@ -36,15 +38,15 @@ public struct MerchantOrderResponse: Codable, Hashable {
     public var merchantComment: String?
     public var billingAddress: MerchantAddressResponse?
     public var shippingAddress: MerchantAddressResponse?
-    /** The total value of the order lines including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The total value of the order lines including VAT  (in the shop's base currency calculated using the exchange rate at the time of ordering). */
     public var subTotalInclVat: Double?
-    /** The total amount of VAT charged over the order lines  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The total amount of VAT charged over the order lines  (in the shop's base currency calculated using the exchange rate at the time of ordering). */
     public var subTotalVat: Double?
-    /** The total amount of VAT charged over the shipping fee  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The total amount of VAT charged over the shipping fee  (in the shop's base currency calculated using the exchange rate at the time of ordering). */
     public var shippingCostsVat: Double?
-    /** The total value of the order including VAT  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The total value of the order including VAT  (in the shop's base currency calculated using the exchange rate at the time of ordering). */
     public var totalInclVat: Double?
-    /** The total amount of VAT charged over the total value of te order  (in the shop&#39;s base currency calculated using the exchange rate at the time of ordering). */
+    /** The total amount of VAT charged over the total value of te order  (in the shop's base currency calculated using the exchange rate at the time of ordering). */
     public var totalVat: Double?
     /** The total value of the order lines including VAT  (in the currency in which the order was paid for, see CurrencyCode). */
     public var originalSubTotalInclVat: Double?
@@ -60,13 +62,13 @@ public struct MerchantOrderResponse: Codable, Hashable {
     public var originalTotalVat: Double?
     public var lines: [MerchantOrderLineResponse]?
     public var shippingCostsInclVat: Double?
-    /** The customer&#39;s telephone number. */
+    /** The customer's telephone number. */
     public var phone: String?
-    /** The customer&#39;s email. */
+    /** The customer's email. */
     public var email: String
-    /** Optional. A company&#39;s chamber of commerce number. */
+    /** Optional. A company's chamber of commerce number. */
     public var companyRegistrationNo: String?
-    /** Optional. A company&#39;s VAT number. */
+    /** Optional. A company's VAT number. */
     public var vatNo: String?
     /** The payment method used on the order. */
     public var paymentMethod: String?
@@ -121,6 +123,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         self.channelCustomerNo = channelCustomerNo
         self.extraData = extraData
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case id = "Id"
         case channelName = "ChannelName"
@@ -205,7 +208,5 @@ public struct MerchantOrderResponse: Codable, Hashable {
         try container.encodeIfPresent(channelCustomerNo, forKey: .channelCustomerNo)
         try container.encodeIfPresent(extraData, forKey: .extraData)
     }
-
-
-
 }
+

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ChannelListedProductResponse: Codable, Hashable {
 
@@ -29,6 +31,7 @@ public struct ChannelListedProductResponse: Codable, Hashable {
         self.lastExportedPrice = lastExportedPrice
         self.lastExportedStock = lastExportedStock
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case channelStatus = "ChannelStatus"
         case ean = "Ean"
@@ -49,7 +52,5 @@ public struct ChannelListedProductResponse: Codable, Hashable {
         try container.encodeIfPresent(lastExportedPrice, forKey: .lastExportedPrice)
         try container.encodeIfPresent(lastExportedStock, forKey: .lastExportedStock)
     }
-
-
-
 }
+

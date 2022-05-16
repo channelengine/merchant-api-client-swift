@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ShipmentSettingsResponse: Codable, Hashable {
 
@@ -19,6 +21,7 @@ public struct ShipmentSettingsResponse: Codable, Hashable {
         self.defaultUntrackedShipmentMethod = defaultUntrackedShipmentMethod
         self.automaticallySetShipmentMethodAfterMinutes = automaticallySetShipmentMethodAfterMinutes
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case defaultTrackedShipmentMethod = "DefaultTrackedShipmentMethod"
         case defaultUntrackedShipmentMethod = "DefaultUntrackedShipmentMethod"
@@ -33,7 +36,5 @@ public struct ShipmentSettingsResponse: Codable, Hashable {
         try container.encodeIfPresent(defaultUntrackedShipmentMethod, forKey: .defaultUntrackedShipmentMethod)
         try container.encodeIfPresent(automaticallySetShipmentMethodAfterMinutes, forKey: .automaticallySetShipmentMethodAfterMinutes)
     }
-
-
-
 }
+

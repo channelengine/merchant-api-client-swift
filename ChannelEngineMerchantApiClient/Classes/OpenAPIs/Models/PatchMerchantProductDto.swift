@@ -6,17 +6,22 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct PatchMerchantProductDto: Codable, Hashable {
 
+    /** Fields to update */
     public var propertiesToUpdate: [String]?
+    /** Products to be updated */
     public var merchantProductRequestModels: [MerchantProductRequest]?
 
     public init(propertiesToUpdate: [String]? = nil, merchantProductRequestModels: [MerchantProductRequest]? = nil) {
         self.propertiesToUpdate = propertiesToUpdate
         self.merchantProductRequestModels = merchantProductRequestModels
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case propertiesToUpdate = "PropertiesToUpdate"
         case merchantProductRequestModels = "MerchantProductRequestModels"
@@ -29,7 +34,5 @@ public struct PatchMerchantProductDto: Codable, Hashable {
         try container.encodeIfPresent(propertiesToUpdate, forKey: .propertiesToUpdate)
         try container.encodeIfPresent(merchantProductRequestModels, forKey: .merchantProductRequestModels)
     }
-
-
-
 }
+

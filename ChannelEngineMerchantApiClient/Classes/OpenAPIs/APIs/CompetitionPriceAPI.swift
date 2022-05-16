@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class CompetitionPriceAPI {
+
     /**
      Get the BuyBox winner prices
      
@@ -19,7 +23,7 @@ open class CompetitionPriceAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func competitionPricesGetBuyBoxPrices(channelId: Int? = nil, gtinList: [String]? = nil, skuList: [String]? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantProductWithBuyBoxPrice?, _ error: Error?) -> Void)) {
-        competitionPricesGetBuyBoxPricesWithRequestBuilder(channelId: channelId, gtinList: gtinList, skuList: skuList, page: page).execute(apiResponseQueue) { result -> Void in
+        competitionPricesGetBuyBoxPricesWithRequestBuilder(channelId: channelId, gtinList: gtinList, skuList: skuList, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -43,27 +47,26 @@ open class CompetitionPriceAPI {
      - returns: RequestBuilder<CollectionOfMerchantProductWithBuyBoxPrice> 
      */
     open class func competitionPricesGetBuyBoxPricesWithRequestBuilder(channelId: Int? = nil, gtinList: [String]? = nil, skuList: [String]? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantProductWithBuyBoxPrice> {
-        let path = "/v2/competitionprices/buyboxprices"
-        let URLString = ChannelEngineMerchantApiClientAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        let localVariablePath = "/v2/competitionprices/buyboxprices"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var urlComponents = URLComponents(string: URLString)
-        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "channelId": channelId?.encodeToJSON(),
             "gtinList": gtinList?.encodeToJSON(),
             "skuList": skuList?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<CollectionOfMerchantProductWithBuyBoxPrice>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantProductWithBuyBoxPrice>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct JsonPatchOperationOfMerchantProductRequest: Codable, Hashable {
 
@@ -21,6 +23,7 @@ public struct JsonPatchOperationOfMerchantProductRequest: Codable, Hashable {
         self.op = op
         self.from = from
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case value
         case path
@@ -37,7 +40,5 @@ public struct JsonPatchOperationOfMerchantProductRequest: Codable, Hashable {
         try container.encodeIfPresent(op, forKey: .op)
         try container.encodeIfPresent(from, forKey: .from)
     }
-
-
-
 }
+

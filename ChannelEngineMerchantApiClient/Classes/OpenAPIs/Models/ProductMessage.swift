@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 public struct ProductMessage: Codable, Hashable {
 
@@ -21,6 +23,7 @@ public struct ProductMessage: Codable, Hashable {
         self.warnings = warnings
         self.errors = errors
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case reference = "Reference"
@@ -37,7 +40,5 @@ public struct ProductMessage: Codable, Hashable {
         try container.encodeIfPresent(warnings, forKey: .warnings)
         try container.encodeIfPresent(errors, forKey: .errors)
     }
-
-
-
 }
+
