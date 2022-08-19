@@ -76,13 +76,15 @@ open class OrderAPI {
      - parameter stockLocationIds: (query) Filter on stock locations (optional)
      - parameter isAcknowledged: (query) Filter on acknowledged value (optional)
      - parameter fromUpdatedAtDate: (query) Filter on the order update date, starting from this date. This date is inclusive. (optional)
-     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl from this date. This date is exclusive. (optional)
+     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl this date. This date is exclusive. (optional)
+     - parameter fromAcknowledgedDate: (query) Filter on the order acknowledged date, starting from this date. This date is inclusive. (optional)
+     - parameter toAcknowledgedDate: (query) Filter on the order acknowledged date, unitl this date. This date is exclusive. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
-        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, isAcknowledged: isAcknowledged, fromUpdatedAtDate: fromUpdatedAtDate, toUpdatedAtDate: toUpdatedAtDate, page: page).execute(apiResponseQueue) { result in
+    open class func orderGetByFilter(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, fromAcknowledgedDate: Date? = nil, toAcknowledgedDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantOrderResponse?, _ error: Error?) -> Void)) {
+        orderGetByFilterWithRequestBuilder(statuses: statuses, emailAddresses: emailAddresses, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fromDate: fromDate, toDate: toDate, fromCreatedAtDate: fromCreatedAtDate, toCreatedAtDate: toCreatedAtDate, excludeMarketplaceFulfilledOrdersAndLines: excludeMarketplaceFulfilledOrdersAndLines, fulfillmentType: fulfillmentType, onlyWithCancellationRequests: onlyWithCancellationRequests, channelIds: channelIds, stockLocationIds: stockLocationIds, isAcknowledged: isAcknowledged, fromUpdatedAtDate: fromUpdatedAtDate, toUpdatedAtDate: toUpdatedAtDate, fromAcknowledgedDate: fromAcknowledgedDate, toAcknowledgedDate: toAcknowledgedDate, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -114,11 +116,13 @@ open class OrderAPI {
      - parameter stockLocationIds: (query) Filter on stock locations (optional)
      - parameter isAcknowledged: (query) Filter on acknowledged value (optional)
      - parameter fromUpdatedAtDate: (query) Filter on the order update date, starting from this date. This date is inclusive. (optional)
-     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl from this date. This date is exclusive. (optional)
+     - parameter toUpdatedAtDate: (query) Filter on the order update date, unitl this date. This date is exclusive. (optional)
+     - parameter fromAcknowledgedDate: (query) Filter on the order acknowledged date, starting from this date. This date is inclusive. (optional)
+     - parameter toAcknowledgedDate: (query) Filter on the order acknowledged date, unitl this date. This date is exclusive. (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantOrderResponse> 
      */
-    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
+    open class func orderGetByFilterWithRequestBuilder(statuses: [OrderStatusView]? = nil, emailAddresses: [String]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fromDate: Date? = nil, toDate: Date? = nil, fromCreatedAtDate: Date? = nil, toCreatedAtDate: Date? = nil, excludeMarketplaceFulfilledOrdersAndLines: Bool? = nil, fulfillmentType: FulfillmentType? = nil, onlyWithCancellationRequests: Bool? = nil, channelIds: [Int]? = nil, stockLocationIds: [Int]? = nil, isAcknowledged: Bool? = nil, fromUpdatedAtDate: Date? = nil, toUpdatedAtDate: Date? = nil, fromAcknowledgedDate: Date? = nil, toAcknowledgedDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantOrderResponse> {
         let localVariablePath = "/v2/orders"
         let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -141,6 +145,8 @@ open class OrderAPI {
             "isAcknowledged": isAcknowledged?.encodeToJSON(),
             "fromUpdatedAtDate": fromUpdatedAtDate?.encodeToJSON(),
             "toUpdatedAtDate": toUpdatedAtDate?.encodeToJSON(),
+            "fromAcknowledgedDate": fromAcknowledgedDate?.encodeToJSON(),
+            "toAcknowledgedDate": toAcknowledgedDate?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 

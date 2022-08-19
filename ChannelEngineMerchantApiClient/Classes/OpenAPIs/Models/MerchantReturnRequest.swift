@@ -30,8 +30,10 @@ public struct MerchantReturnRequest: Codable, Hashable {
     public var refundExclVat: Double?
     /** The date at which the return was originally created in the source system (if available). */
     public var returnDate: Date?
+    /** Extra data on the return. Each item must have an unqiue key */
+    public var extraData: [String: String]?
 
-    public init(merchantOrderNo: String, merchantReturnNo: String, lines: [MerchantReturnLineRequest], id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil, returnDate: Date? = nil) {
+    public init(merchantOrderNo: String, merchantReturnNo: String, lines: [MerchantReturnLineRequest], id: Int? = nil, reason: ReturnReason? = nil, customerComment: String? = nil, merchantComment: String? = nil, refundInclVat: Double? = nil, refundExclVat: Double? = nil, returnDate: Date? = nil, extraData: [String: String]? = nil) {
         self.merchantOrderNo = merchantOrderNo
         self.merchantReturnNo = merchantReturnNo
         self.lines = lines
@@ -42,6 +44,7 @@ public struct MerchantReturnRequest: Codable, Hashable {
         self.refundInclVat = refundInclVat
         self.refundExclVat = refundExclVat
         self.returnDate = returnDate
+        self.extraData = extraData
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -55,6 +58,7 @@ public struct MerchantReturnRequest: Codable, Hashable {
         case refundInclVat = "RefundInclVat"
         case refundExclVat = "RefundExclVat"
         case returnDate = "ReturnDate"
+        case extraData = "ExtraData"
     }
 
     // Encodable protocol methods
@@ -71,6 +75,7 @@ public struct MerchantReturnRequest: Codable, Hashable {
         try container.encodeIfPresent(refundInclVat, forKey: .refundInclVat)
         try container.encodeIfPresent(refundExclVat, forKey: .refundExclVat)
         try container.encodeIfPresent(returnDate, forKey: .returnDate)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
     }
 }
 

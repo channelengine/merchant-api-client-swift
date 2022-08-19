@@ -30,6 +30,8 @@ public struct MerchantOrderResponse: Codable, Hashable {
     public var status: OrderStatusView?
     /** Indicating whether the order is a business order. */
     public var isBusinessOrder: Bool?
+    /** The date the order was acknowledged in ChannelEngine. */
+    public var acknowledgedDate: Date?
     /** The date the order was created in ChannelEngine. */
     public var createdAt: Date?
     /** The date the order was last updated in ChannelEngine. */
@@ -83,7 +85,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
     /** Extra data on the order. */
     public var extraData: [String: String]?
 
-    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, merchantOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, shippingCostsInclVat: Double? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, paymentReferenceNo: String? = nil, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
+    public init(id: Int? = nil, channelName: String? = nil, channelId: Int? = nil, globalChannelName: String? = nil, globalChannelId: Int? = nil, channelOrderSupport: OrderSupport? = nil, channelOrderNo: String? = nil, merchantOrderNo: String? = nil, status: OrderStatusView? = nil, isBusinessOrder: Bool? = nil, acknowledgedDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, merchantComment: String? = nil, billingAddress: MerchantAddressResponse? = nil, shippingAddress: MerchantAddressResponse? = nil, subTotalInclVat: Double? = nil, subTotalVat: Double? = nil, shippingCostsVat: Double? = nil, totalInclVat: Double? = nil, totalVat: Double? = nil, originalSubTotalInclVat: Double? = nil, originalSubTotalVat: Double? = nil, originalShippingCostsInclVat: Double? = nil, originalShippingCostsVat: Double? = nil, originalTotalInclVat: Double? = nil, originalTotalVat: Double? = nil, lines: [MerchantOrderLineResponse]? = nil, shippingCostsInclVat: Double? = nil, phone: String? = nil, email: String, companyRegistrationNo: String? = nil, vatNo: String? = nil, paymentMethod: String? = nil, paymentReferenceNo: String? = nil, currencyCode: String, orderDate: Date, channelCustomerNo: String? = nil, extraData: [String: String]? = nil) {
         self.id = id
         self.channelName = channelName
         self.channelId = channelId
@@ -94,6 +96,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         self.merchantOrderNo = merchantOrderNo
         self.status = status
         self.isBusinessOrder = isBusinessOrder
+        self.acknowledgedDate = acknowledgedDate
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.merchantComment = merchantComment
@@ -135,6 +138,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         case merchantOrderNo = "MerchantOrderNo"
         case status = "Status"
         case isBusinessOrder = "IsBusinessOrder"
+        case acknowledgedDate = "AcknowledgedDate"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
         case merchantComment = "MerchantComment"
@@ -179,6 +183,7 @@ public struct MerchantOrderResponse: Codable, Hashable {
         try container.encodeIfPresent(merchantOrderNo, forKey: .merchantOrderNo)
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(isBusinessOrder, forKey: .isBusinessOrder)
+        try container.encodeIfPresent(acknowledgedDate, forKey: .acknowledgedDate)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
         try container.encodeIfPresent(merchantComment, forKey: .merchantComment)

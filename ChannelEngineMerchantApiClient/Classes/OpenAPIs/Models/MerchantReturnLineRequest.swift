@@ -16,15 +16,19 @@ public struct MerchantReturnLineRequest: Codable, Hashable {
     public var merchantProductNo: String
     /** Number of items of the product in this return. */
     public var quantity: Int
+    /** Extra data on the returnline. Each item must have an unqiue key */
+    public var extraData: [String: String]?
 
-    public init(merchantProductNo: String, quantity: Int) {
+    public init(merchantProductNo: String, quantity: Int, extraData: [String: String]? = nil) {
         self.merchantProductNo = merchantProductNo
         self.quantity = quantity
+        self.extraData = extraData
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case merchantProductNo = "MerchantProductNo"
         case quantity = "Quantity"
+        case extraData = "ExtraData"
     }
 
     // Encodable protocol methods
@@ -33,6 +37,7 @@ public struct MerchantReturnLineRequest: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(merchantProductNo, forKey: .merchantProductNo)
         try container.encode(quantity, forKey: .quantity)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
     }
 }
 

@@ -13,6 +13,51 @@ import AnyCodable
 open class ReturnAPI {
 
     /**
+     Acknowledge Return.
+     
+     - parameter merchantReturnAcknowledgeRequest: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func returnAcknowledge(merchantReturnAcknowledgeRequest: MerchantReturnAcknowledgeRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
+        returnAcknowledgeWithRequestBuilder(merchantReturnAcknowledgeRequest: merchantReturnAcknowledgeRequest).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Acknowledge Return.
+     - POST /v2/returns/merchant/acknowledge
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantReturnAcknowledgeRequest: (body)  (optional)
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func returnAcknowledgeWithRequestBuilder(merchantReturnAcknowledgeRequest: MerchantReturnAcknowledgeRequest? = nil) -> RequestBuilder<ApiResponse> {
+        let localVariablePath = "/v2/returns/merchant/acknowledge"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantReturnAcknowledgeRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
      Create Return.
      
      - parameter merchantReturnRequest: (body)  (optional)
@@ -110,20 +155,21 @@ open class ReturnAPI {
     /**
      Get Returns.
      
-     - parameter channelIds: (query) Filter on Channel IDs (optional)
-     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
-     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
-     - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter isAcknowledged: (query) Filters based on acknowledgements (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - parameter channelIds: (query) Filter on Channel IDs (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
+     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
+     - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetDeclaredByChannel(channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
-        returnGetDeclaredByChannelWithRequestBuilder(channelIds: channelIds, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result in
+    open class func returnGetDeclaredByChannel(statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, isAcknowledged: Bool? = nil, page: Int? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
+        returnGetDeclaredByChannelWithRequestBuilder(statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, isAcknowledged: isAcknowledged, page: page, channelIds: channelIds, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -140,33 +186,35 @@ open class ReturnAPI {
      - API Key:
        - type: apiKey apikey (QUERY)
        - name: apiKey
-     - parameter channelIds: (query) Filter on Channel IDs (optional)
-     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
-     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
-     - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
      - parameter statuses: (query) Return status(es) to filter on. (optional)
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter isAcknowledged: (query) Filters based on acknowledgements (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - parameter channelIds: (query) Filter on Channel IDs (optional)
+     - parameter merchantOrderNos: (query) Filter on unique order reference used by the merchant. (optional)
+     - parameter channelOrderNos: (query) Filter on unique order reference used by the channel. (optional)
+     - parameter fulfillmentType: (query) Filter on the fulfillment type of the order. (optional)
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetDeclaredByChannelWithRequestBuilder(channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetDeclaredByChannelWithRequestBuilder(statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, isAcknowledged: Bool? = nil, page: Int? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let localVariablePath = "/v2/returns/merchant"
         let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "channelIds": channelIds?.encodeToJSON(),
-            "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
-            "channelOrderNos": channelOrderNos?.encodeToJSON(),
-            "fulfillmentType": fulfillmentType?.encodeToJSON(),
             "statuses": statuses?.encodeToJSON(),
             "reasons": reasons?.encodeToJSON(),
             "fromDate": fromDate?.encodeToJSON(),
             "toDate": toDate?.encodeToJSON(),
+            "isAcknowledged": isAcknowledged?.encodeToJSON(),
             "page": page?.encodeToJSON(),
+            "channelIds": channelIds?.encodeToJSON(),
+            "merchantOrderNos": merchantOrderNos?.encodeToJSON(),
+            "channelOrderNos": channelOrderNos?.encodeToJSON(),
+            "fulfillmentType": fulfillmentType?.encodeToJSON(),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -192,12 +240,13 @@ open class ReturnAPI {
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter isAcknowledged: (query) Filters based on acknowledgements (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func returnGetReturns(creatorType: CreatorFilter? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
-        returnGetReturnsWithRequestBuilder(creatorType: creatorType, channelIds: channelIds, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, page: page).execute(apiResponseQueue) { result in
+    open class func returnGetReturns(creatorType: CreatorFilter? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, isAcknowledged: Bool? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantReturnResponse?, _ error: Error?) -> Void)) {
+        returnGetReturnsWithRequestBuilder(creatorType: creatorType, channelIds: channelIds, merchantOrderNos: merchantOrderNos, channelOrderNos: channelOrderNos, fulfillmentType: fulfillmentType, statuses: statuses, reasons: reasons, fromDate: fromDate, toDate: toDate, isAcknowledged: isAcknowledged, page: page).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -223,10 +272,11 @@ open class ReturnAPI {
      - parameter reasons: (query) Return reason(s) to filter on. (optional)
      - parameter fromDate: (query) Filter on the creation date, starting from this date. This date is inclusive. (optional)
      - parameter toDate: (query) Filter on the creation date, until this date. This date is exclusive. (optional)
+     - parameter isAcknowledged: (query) Filters based on acknowledgements (optional)
      - parameter page: (query) The page to filter on. Starts at 1. (optional)
      - returns: RequestBuilder<CollectionOfMerchantReturnResponse> 
      */
-    open class func returnGetReturnsWithRequestBuilder(creatorType: CreatorFilter? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
+    open class func returnGetReturnsWithRequestBuilder(creatorType: CreatorFilter? = nil, channelIds: [Int]? = nil, merchantOrderNos: [String]? = nil, channelOrderNos: [String]? = nil, fulfillmentType: FulfillmentType? = nil, statuses: [ReturnStatus]? = nil, reasons: [ReturnReason]? = nil, fromDate: Date? = nil, toDate: Date? = nil, isAcknowledged: Bool? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantReturnResponse> {
         let localVariablePath = "/v2/returns"
         let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -242,6 +292,7 @@ open class ReturnAPI {
             "reasons": reasons?.encodeToJSON(),
             "fromDate": fromDate?.encodeToJSON(),
             "toDate": toDate?.encodeToJSON(),
+            "isAcknowledged": isAcknowledged?.encodeToJSON(),
             "page": page?.encodeToJSON(),
         ])
 
