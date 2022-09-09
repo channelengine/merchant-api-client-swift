@@ -13,6 +13,49 @@ import AnyCodable
 open class StockLocationAPI {
 
     /**
+
+     - parameter merchantStockLocationCreateRequest: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func stockLocationCreate(merchantStockLocationCreateRequest: MerchantStockLocationCreateRequest? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiResponse?, _ error: Error?) -> Void)) {
+        stockLocationCreateWithRequestBuilder(merchantStockLocationCreateRequest: merchantStockLocationCreateRequest).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     - POST /v2/stocklocations
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter merchantStockLocationCreateRequest: (body)  (optional)
+     - returns: RequestBuilder<ApiResponse> 
+     */
+    open class func stockLocationCreateWithRequestBuilder(merchantStockLocationCreateRequest: MerchantStockLocationCreateRequest? = nil) -> RequestBuilder<ApiResponse> {
+        let localVariablePath = "/v2/stocklocations"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: merchantStockLocationCreateRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ApiResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
      Get the stock locations (or virtual warehouses).
      
      - parameter apiResponseQueue: The queue on which api response is dispatched.

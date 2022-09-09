@@ -57,4 +57,56 @@ open class CancellationAPI {
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
+
+    /**
+     Get Cancellations.
+     
+     - parameter createdSince: (query) Filter on the create date of the cancellation in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func cancellationGetForMerchant(createdSince: Date? = nil, page: Int? = nil, apiResponseQueue: DispatchQueue = ChannelEngineMerchantApiClientAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionOfMerchantCancellationResponse?, _ error: Error?) -> Void)) {
+        cancellationGetForMerchantWithRequestBuilder(createdSince: createdSince, page: page).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get Cancellations.
+     - GET /v2/cancellations/merchant
+     - Gets cancellations created since the supplied date.
+     - API Key:
+       - type: apiKey apikey (QUERY)
+       - name: apiKey
+     - parameter createdSince: (query) Filter on the create date of the cancellation in ChannelEngine, starting from this date. This date is inclusive. (optional)
+     - parameter page: (query) The page to filter on. Starts at 1. (optional)
+     - returns: RequestBuilder<CollectionOfMerchantCancellationResponse> 
+     */
+    open class func cancellationGetForMerchantWithRequestBuilder(createdSince: Date? = nil, page: Int? = nil) -> RequestBuilder<CollectionOfMerchantCancellationResponse> {
+        let localVariablePath = "/v2/cancellations/merchant"
+        let localVariableURLString = ChannelEngineMerchantApiClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "createdSince": createdSince?.encodeToJSON(),
+            "page": page?.encodeToJSON(),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<CollectionOfMerchantCancellationResponse>.Type = ChannelEngineMerchantApiClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
 }
